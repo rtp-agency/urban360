@@ -1,0 +1,58 @@
+import Image from "next/image";
+
+/**
+ * Bildfläche mit definiertem Reservat.
+ *
+ * Solange kein Foto hinterlegt ist, rendert die Komponente eine ruhige
+ * Tonfläche mit der Beschreibung der benötigten Aufnahme. Die Seite bleibt
+ * dadurch vollständig und maßhaltig, es entsteht kein Layout Shift, und
+ * beim Austausch gegen echte Fotos verschiebt sich nichts.
+ *
+ * Aufnahmeliste: /docs/03-content-todo.md
+ */
+export function Figure({
+  src,
+  alt,
+  brief,
+  ratio = "4 / 3",
+  priority = false,
+  className = "",
+  sizes = "(min-width: 768px) 50vw, 100vw",
+}: {
+  src?: string;
+  alt?: string;
+  /** Beschreibung der benötigten Aufnahme, erscheint nur im Platzhalter. */
+  brief: string;
+  ratio?: string;
+  priority?: boolean;
+  className?: string;
+  sizes?: string;
+}) {
+  return (
+    <div
+      className={`relative overflow-hidden rounded-[var(--radius-panel)] bg-sunken ${className}`}
+      style={{ aspectRatio: ratio }}
+    >
+      {src ? (
+        <Image
+          src={src}
+          alt={alt ?? ""}
+          fill
+          priority={priority}
+          sizes={sizes}
+          className="object-cover"
+        />
+      ) : (
+        <div
+          className="absolute inset-0 flex items-end p-5 md:p-6"
+          style={{
+            backgroundImage:
+              "repeating-linear-gradient(135deg, var(--color-hairline) 0 1px, transparent 1px 11px)",
+          }}
+        >
+          <span className="max-w-[34ch] text-[13px] leading-snug text-muted">{brief}</span>
+        </div>
+      )}
+    </div>
+  );
+}

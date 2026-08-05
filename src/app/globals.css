@@ -1,0 +1,182 @@
+@import "tailwindcss";
+
+/* ---------------------------------------------------------------------------
+   TYPOGRAFIE
+
+   Es wird bewusst KEIN Webfont geladen.
+
+   1. Rechtlich: jeder Font von einem fremden CDN (Google Fonts) überträgt die
+      IP-Adresse des Besuchers an einen Dritten. Ohne Einwilligung ist das ein
+      DSGVO-Verstoß, für den es bereits Urteile und Abmahnwellen gibt.
+   2. Lizenzrechtlich: SF Pro darf nach Apples Font-Lizenz nicht als Webfont
+      ausgeliefert werden. Der System-Stack unten nutzt SF Pro nur dort, wo es
+      auf dem Gerät bereits installiert ist, also auf iPhone, iPad und Mac.
+      Auf Windows greift Segoe UI, auf Android Roboto. Alle drei sind die
+      native UI-Schrift der jeweiligen Plattform.
+   3. Performance: null zusätzliche Requests, kein FOUT, kein Layout Shift.
+--------------------------------------------------------------------------- */
+
+@theme {
+  --font-sans:
+    -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text",
+    "Helvetica Neue", "Segoe UI Variable Display", "Segoe UI", Roboto,
+    system-ui, sans-serif;
+
+  /* Neutrale Basis. Kühl, nicht warm. Eine Palette für die ganze Seite. */
+  --color-canvas: #fbfbfd;
+  --color-surface: #ffffff;
+  --color-sunken: #f2f2f4;
+  --color-ink: #1d1d1f;
+  --color-muted: #62626a;
+  --color-hairline: rgb(0 0 0 / 0.09);
+
+  /* Ein einziger Akzent, immergrün. Gilt für jede Sektion, ohne Ausnahme. */
+  --color-accent: #0f6b4f;
+  --color-accent-ink: #ffffff;
+  --color-accent-soft: #e8f2ee;
+
+  /* Zustandsfarbe für Formularfehler. Kein zweiter Markenakzent, sondern
+     Semantik: ein Fehler in Akzentgrün wäre für Nutzende nicht als Fehler
+     erkennbar. Die Meldung steht zusätzlich immer als Text da, Farbe ist
+     nie der alleinige Träger der Information (WCAG 1.4.1). */
+  --color-danger: #b3261e;
+
+  /* Radien: eine Skala, überall gleich angewendet.
+     Flächen 22px, Eingaben 14px, Buttons vollrund. */
+  --radius-panel: 22px;
+  --radius-field: 14px;
+
+  --ease-out-soft: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Dark Mode über dieselben Variablen. Die Utilities zeigen auf
+   var(--color-*), deshalb kippt ein Override auf :root die gesamte Seite
+   auf einmal. Genau das erzwingt den Theme Lock: es gibt keine Sektion,
+   die sich einzeln umstellen könnte. */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-canvas: #0b0b0c;
+    --color-surface: #151517;
+    --color-sunken: #1c1c1f;
+    --color-ink: #f2f2f4;
+    --color-muted: #9c9ca4;
+    --color-hairline: rgb(255 255 255 / 0.11);
+
+    --color-accent: #3fbc90;
+    --color-accent-ink: #06231a;
+    --color-accent-soft: #142a23;
+
+    --color-danger: #ff8a80;
+  }
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+
+  body {
+    background-color: var(--color-canvas);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    font-synthesis-weight: none;
+  }
+
+  /* Sichtbarer Fokus für Tastaturbedienung. Nie entfernen: WCAG 2.4.7. */
+  :focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  ::selection {
+    background: var(--color-accent);
+    color: var(--color-accent-ink);
+  }
+}
+
+@layer components {
+  .u-shell {
+    width: 100%;
+    max-width: 1180px;
+    margin-inline: auto;
+    padding-inline: 1.25rem;
+  }
+
+  @media (min-width: 768px) {
+    .u-shell {
+      padding-inline: 2rem;
+    }
+  }
+
+  /* Hairline statt Rahmen. Trennt, ohne eine Box zu bauen. */
+  .u-rule {
+    border-top: 1px solid var(--color-hairline);
+  }
+
+  /* Optische Tiefe ohne harte schwarze Schatten. */
+  .u-panel {
+    background: var(--color-surface);
+    border: 1px solid var(--color-hairline);
+    border-radius: var(--radius-panel);
+    box-shadow: 0 1px 2px rgb(29 29 31 / 0.04), 0 12px 32px -20px rgb(29 29 31 / 0.28);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .u-panel {
+      box-shadow: 0 1px 2px rgb(0 0 0 / 0.4), 0 12px 32px -20px rgb(0 0 0 / 0.8);
+    }
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Scroll-Reveal
+
+   Der sichtbare Zustand ist der Standard. Die Animation wird nur dort
+   aufgesetzt, wo der Browser Scroll-Timelines kennt und wo keine
+   Bewegungsreduzierung eingestellt ist. Ohne Unterstützung, ohne
+   JavaScript und bei reduzierter Bewegung steht der Inhalt einfach da.
+--------------------------------------------------------------------------- */
+@keyframes u-reveal-in {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    /* Der Bereich ist in Pixeln angegeben, nicht in Prozent. Prozent wäre
+       auf die Elementhöhe bezogen, wodurch eine hohe Sektion erst nach
+       sehr langem Scrollen voll sichtbar würde. Feste 240 px verhalten
+       sich bei einer Zeile genauso wie bei einem ganzen Block. */
+    .u-reveal {
+      --u-reveal-delay: 0px;
+      animation: u-reveal-in linear both;
+      animation-timeline: view();
+      animation-range: entry calc(0px + var(--u-reveal-delay)) entry
+        calc(240px + var(--u-reveal-delay));
+      will-change: opacity, transform;
+    }
+  }
+}
