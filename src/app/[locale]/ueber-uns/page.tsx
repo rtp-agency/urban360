@@ -42,13 +42,16 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
 
         <Reveal className="mt-12 md:mt-16">
           <Figure
-            aspect="aspect-[3/2] sm:aspect-[21/9]"
-            sizes="100vw"
-            brief={
+            src="/images/team-fahrzeug.jpg"
+            alt={
               locale === "de"
-                ? "Bildplatz: Team vor dem Servicefahrzeug oder bei der Arbeit an einem Objekt, Panoramaformat 21:9, mindestens 2100 x 900 px. Abgebildete Personen müssen schriftlich eingewilligt haben."
-                : "Image slot: the team by the service vehicle or working on a property, panorama 21:9, at least 2100 x 900 px. Anyone shown must have given written consent."
+                ? "Servicefahrzeug mit geöffneten Hecktüren vor einem Mehrfamilienhaus, daneben Rasenmäher, Besen, Eimer und Leiter."
+                : "A service van with its rear doors open in front of an apartment building, with a mower, brooms, buckets and a ladder beside it."
             }
+            aspect="aspect-[3/2] sm:aspect-[21/9]"
+            imgClassName="object-[50%_60%] sm:object-center"
+            sizes="100vw"
+            brief=""
           />
         </Reveal>
       </section>

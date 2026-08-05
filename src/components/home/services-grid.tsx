@@ -45,13 +45,15 @@ export function ServicesGrid({ locale }: { locale: Locale }) {
             </div>
 
             <Figure
+              src="/images/objektbetreuung-treppenhaus.jpg"
+              alt={
+                locale === "de"
+                  ? "Mitarbeiter mit Klemmbrett beim Kontrollgang in einem frisch gereinigten Treppenhaus."
+                  : "A worker with a clipboard on an inspection round in a freshly cleaned stairwell."
+              }
               aspect="aspect-[4/3]"
               sizes="(min-width: 768px) 52vw, 100vw"
-              brief={
-                locale === "de"
-                  ? "Bildplatz: Kontrollgang im Treppenhaus oder am Müllplatz, Querformat 4:3, mindestens 1600 x 1200 px."
-                  : "Image slot: an inspection round in a stairwell or bin area, landscape 4:3, at least 1600 x 1200 px."
-              }
+              brief=""
             />
           </article>
         </Reveal>

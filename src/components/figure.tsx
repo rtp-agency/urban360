@@ -21,6 +21,7 @@ export function Figure({
   aspect = "aspect-[4/3]",
   priority = false,
   className = "",
+  imgClassName = "object-center",
   sizes = "(min-width: 768px) 50vw, 100vw",
 }: {
   src?: string;
@@ -31,6 +32,12 @@ export function Figure({
   aspect?: string;
   priority?: boolean;
   className?: string;
+  /**
+   * Bildausschnitt je Breakpoint. Nötig, sobald sich das Seitenverhältnis
+   * zwischen Telefon und Desktop unterscheidet: der mittige Standardschnitt
+   * kappt sonst genau den Bildteil, auf den es ankommt.
+   */
+  imgClassName?: string;
   sizes?: string;
 }) {
   return (
@@ -44,7 +51,7 @@ export function Figure({
           fill
           priority={priority}
           sizes={sizes}
-          className="object-cover"
+          className={`object-cover ${imgClassName}`}
         />
       ) : (
         <div

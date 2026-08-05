@@ -30,14 +30,20 @@ export function Hero({ locale }: { locale: Locale }) {
 
         <Reveal>
           <Figure
+            src="/images/hero-gebaeude.jpg"
+            alt={
+              locale === "de"
+                ? "Mitarbeiter in Arbeitskleidung schiebt eine Mülltonne über den gefegten Zugangsweg eines gepflegten Mehrfamilienhauses."
+                : "A worker in workwear wheels a bin along the swept path of a well kept apartment building."
+            }
             aspect="aspect-[3/2] sm:aspect-[16/10] lg:aspect-[4/5]"
+            /* Im Querformat säße der mittige Standardschnitt auf der leeren
+               Fassade. Der Ausschnitt wandert nach unten, damit Weg, Hecke
+               und Person im Bild bleiben. */
+            imgClassName="object-[50%_72%] lg:object-center"
             priority
             sizes="(min-width: 1024px) 46vw, 100vw"
-            brief={
-              locale === "de"
-                ? "Bildplatz Titel: Mitarbeitende in Arbeitskleidung vor einem gepflegten Mehrfamilienhaus, Hochformat 4:5, mindestens 1600 x 2000 px."
-                : "Hero image slot: staff in workwear in front of a well kept apartment building, portrait 4:5, at least 1600 x 2000 px."
-            }
+            brief=""
           />
         </Reveal>
       </div>
