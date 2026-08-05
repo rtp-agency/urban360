@@ -1,36 +1,35 @@
-import type { CSSProperties, ReactNode } from "react";
+import type { ReactNode } from "react";
 
 /**
  * Eintrittsbewegung beim Scrollen.
  *
- * Bewusst ohne JavaScript gelöst, über eine CSS-Scroll-Timeline.
- * Der Grund ist nicht Performance, sondern Robustheit: eine Umsetzung mit
- * initial={{ opacity: 0 }} schreibt den unsichtbaren Zustand ins gerenderte
- * HTML. Lädt das Skript nicht, ist alles unterhalb des ersten Bildschirms
- * dauerhaft leer. Hier ist der Standardzustand sichtbar, die Bewegung kommt
- * nur dort dazu, wo der Browser sie unterstützt.
+ * Ohne JavaScript gelöst, über eine CSS-Scroll-Timeline. Der Grund ist
+ * Robustheit: eine Umsetzung mit initial={{ opacity: 0 }} schreibt den
+ * unsichtbaren Zustand ins gerenderte HTML. Lädt das Skript nicht, bleibt
+ * alles unterhalb des ersten Bildschirms dauerhaft leer. Hier ist der
+ * Standardzustand sichtbar, die Bewegung kommt nur dort dazu, wo der
+ * Browser sie unterstützt.
  *
- * Sie hat genau eine Aufgabe: die Lesereihenfolge einer Sektion zu markieren.
- * Deshalb bewegt sich nur ein kurzes Stück und nur einmal. Keine Dauerschleifen,
- * kein Parallax, kein Scroll-Hijack. Bei prefers-reduced-motion entfällt sie.
+ * BEWUSST OHNE STAFFELUNG.
+ * Jedes Element hat seine eigene Timeline, die an seiner eigenen Position
+ * hängt. Untereinander stehende Blöcke staffeln sich dadurch von selbst,
+ * weil sie nacheinander in den Sichtbereich kommen. Ein zusätzlicher
+ * Versatz je Element wäre bei einer scrollgebundenen Animation fatal:
+ * nebeneinander stehende Spalten teilen dieselbe Position und stünden
+ * dann während des gesamten Scrollens in unterschiedlichen Phasen, also
+ * dauerhaft unterschiedlich hell und vertikal versetzt. Das sieht nicht
+ * nach Staffelung aus, sondern nach kaputtem Layout.
+ *
+ * Wichtig für aufrufende Komponenten: kein Elternelement darf
+ * overflow-hidden tragen. Die Bewegung verschiebt den Inhalt nach unten,
+ * ein beschnittener Container schneidet genau diese Pixel ab.
  */
 export function Reveal({
   children,
-  /** Staffelung. Wird als Scrollversatz in Pixeln umgesetzt. */
-  delay = 0,
   className = "",
 }: {
   children: ReactNode;
-  delay?: number;
   className?: string;
 }) {
-  const style = delay
-    ? ({ "--u-reveal-delay": `${Math.round(delay * 640)}px` } as CSSProperties)
-    : undefined;
-
-  return (
-    <div className={`u-reveal ${className}`} style={style}>
-      {children}
-    </div>
-  );
+  return <div className={`u-reveal ${className}`}>{children}</div>;
 }

@@ -8,13 +8,17 @@ import Image from "next/image";
  * dadurch vollständig und maßhaltig, es entsteht kein Layout Shift, und
  * beim Austausch gegen echte Fotos verschiebt sich nichts.
  *
+ * Das Seitenverhältnis kommt als Utility-Klasse und nicht als Inline-Style,
+ * damit es je Breakpoint unterschiedlich sein kann. Ein Hochformat, das am
+ * Desktop gut sitzt, frisst auf dem Telefon einen halben Bildschirm Scrollweg.
+ *
  * Aufnahmeliste: /docs/03-content-todo.md
  */
 export function Figure({
   src,
   alt,
   brief,
-  ratio = "4 / 3",
+  aspect = "aspect-[4/3]",
   priority = false,
   className = "",
   sizes = "(min-width: 768px) 50vw, 100vw",
@@ -23,15 +27,15 @@ export function Figure({
   alt?: string;
   /** Beschreibung der benötigten Aufnahme, erscheint nur im Platzhalter. */
   brief: string;
-  ratio?: string;
+  /** Tailwind-Klassen für das Seitenverhältnis, gern je Breakpoint. */
+  aspect?: string;
   priority?: boolean;
   className?: string;
   sizes?: string;
 }) {
   return (
     <div
-      className={`relative overflow-hidden rounded-[var(--radius-panel)] bg-sunken ${className}`}
-      style={{ aspectRatio: ratio }}
+      className={`relative overflow-hidden rounded-[var(--radius-panel)] bg-sunken ${aspect} ${className}`}
     >
       {src ? (
         <Image

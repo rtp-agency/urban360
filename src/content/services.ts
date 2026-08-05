@@ -40,7 +40,7 @@ export const servicePackages: ServicePackage[] = [
       { de: "Kleinreparaturen und Möbelmontage", en: "Minor repairs and furniture assembly" },
       { de: "Koordination beauftragter Fachbetriebe", en: "Coordinating the specialist firms you appoint" },
     ],
-    basis: "Freies Gewerbe. Kleinreparaturen im Rahmen von § 1 Abs. 2 Satz 2 Nr. 1 HwO.",
+    basis: "Freies Gewerbe. Kleinreparaturen im Rahmen von § 1 Abs. 2 Satz 2 Nr. 1 HwO.",
   },
   {
     id: "reinigung",
@@ -103,7 +103,7 @@ export const servicePackages: ServicePackage[] = [
       { de: "Entsorgung über zugelassene Partner", en: "Disposal through licensed partners" },
       { de: "Besenreine Übergabe mit Fotoprotokoll", en: "Broom clean handover with photo record" },
     ],
-    basis: "Freies Gewerbe. Eigener Abfalltransport erfordert zusätzlich die Anzeige nach § 53 KrWG.",
+    basis: "Freies Gewerbe. Eigener Abfalltransport erfordert zusätzlich die Anzeige nach § 53 KrWG.",
   },
   {
     id: "technik",
@@ -177,8 +177,8 @@ export const segments: Segment[] = [
     icon: "house",
     label: { de: "Privathaushalte", en: "Private households" },
     detail: {
-      de: "Einzelaufträge und wiederkehrende Termine. Arbeitskosten sind nach § 35a EStG absetzbar.",
-      en: "One off jobs and recurring visits. Labour costs are tax deductible under § 35a EStG.",
+      de: "Einzelaufträge und wiederkehrende Termine. Arbeitskosten sind nach § 35a EStG absetzbar.",
+      en: "One off jobs and recurring visits. Labour costs are tax deductible under § 35a EStG.",
     },
   },
 ];

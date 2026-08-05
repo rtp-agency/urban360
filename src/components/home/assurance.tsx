@@ -23,8 +23,8 @@ export function Assurance({ locale }: { locale: Locale }) {
       </Reveal>
 
       <div className="mt-12 grid gap-x-12 gap-y-10 md:grid-cols-2">
-        {visible.map((entry, index) => (
-          <Reveal key={entry.claim} delay={index * 0.06}>
+        {visible.map((entry) => (
+          <Reveal key={entry.claim}>
             <div className="border-t border-hairline pt-6">
               <h3 className="text-[17px] font-medium text-ink">{t(entry.title, locale)}</h3>
               <p className="mt-2 max-w-[46ch] text-[15px] leading-relaxed text-muted">

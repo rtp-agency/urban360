@@ -4,15 +4,15 @@ import type { Locale } from "@/content/site.config";
 import { t } from "@/lib/i18n";
 
 /**
- * Steuerermäßigung nach § 35a EStG.
+ * Steuerermäßigung nach § 35a EStG.
  * Die Zahlen stammen aus dem Gesetz, nicht aus dem Marketing:
- * 20 % der Arbeitskosten, gedeckelt auf 4.000 € bei haushaltsnahen
- * Dienstleistungen und auf 1.200 € bei Handwerkerleistungen im Jahr.
+ * 20 % der Arbeitskosten, gedeckelt auf 4.000 € bei haushaltsnahen
+ * Dienstleistungen und auf 1.200 € bei Handwerkerleistungen im Jahr.
  */
 export function TaxPanel({ locale }: { locale: Locale }) {
   const tiles = [
-    { value: "4.000 €", label: t(home.taxNoteA, locale) },
-    { value: "1.200 €", label: t(home.taxNoteB, locale) },
+    { value: "4.000 €", label: t(home.taxNoteA, locale) },
+    { value: "1.200 €", label: t(home.taxNoteB, locale) },
   ];
 
   return (

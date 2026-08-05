@@ -40,9 +40,9 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
           </p>
         </Reveal>
 
-        <Reveal delay={0.08} className="mt-12 md:mt-16">
+        <Reveal className="mt-12 md:mt-16">
           <Figure
-            ratio="21 / 9"
+            aspect="aspect-[3/2] sm:aspect-[21/9]"
             sizes="100vw"
             brief={
               locale === "de"
@@ -55,8 +55,8 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
 
       <section className="u-shell pb-16 md:pb-20">
         <div className="grid gap-x-16 gap-y-12 md:grid-cols-2">
-          {blocks.map((block, index) => (
-            <Reveal key={block.title} delay={index * 0.06}>
+          {blocks.map((block) => (
+            <Reveal key={block.title}>
               <div className="border-t border-hairline pt-6">
                 <h2 className="text-xl font-semibold tracking-tight text-ink">{block.title}</h2>
                 <p className="mt-3 max-w-[52ch] text-[16px] leading-relaxed text-muted">
@@ -66,7 +66,7 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
             </Reveal>
           ))}
 
-          <Reveal delay={0.18}>
+          <Reveal>
             <div className="border-t border-hairline pt-6">
               <h2 className="text-xl font-semibold tracking-tight text-ink">
                 {locale === "de" ? "Einsatzgebiet" : "Service area"}

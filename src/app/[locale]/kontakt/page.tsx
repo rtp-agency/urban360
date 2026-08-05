@@ -52,7 +52,7 @@ export default async function ContactPageRoute({
           <ContactForm locale={locale} />
         </Reveal>
 
-        <Reveal delay={0.08}>
+        <Reveal>
           <div className="border-t border-hairline pt-6 lg:border-t-0 lg:pt-0">
             <h2 className="text-xl font-semibold tracking-tight text-ink">
               {t(contactPage.directTitle, locale)}

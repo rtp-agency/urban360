@@ -20,8 +20,8 @@ export function SegmentsList({ locale }: { locale: Locale }) {
         </Reveal>
 
         <ul className="lg:pt-2">
-          {segments.map((segment, index) => (
-            <Reveal key={segment.id} delay={index * 0.05}>
+          {segments.map((segment) => (
+            <Reveal key={segment.id}>
               <li className="flex gap-5 border-b border-hairline py-6 first:pt-0 last:border-0 last:pb-0">
                 <Icon name={segment.icon} size={22} className="mt-0.5 shrink-0 text-accent" />
                 <div>

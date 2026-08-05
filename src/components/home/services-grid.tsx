@@ -45,7 +45,7 @@ export function ServicesGrid({ locale }: { locale: Locale }) {
             </div>
 
             <Figure
-              ratio="4 / 3"
+              aspect="aspect-[4/3]"
               sizes="(min-width: 768px) 52vw, 100vw"
               brief={
                 locale === "de"
@@ -58,7 +58,7 @@ export function ServicesGrid({ locale }: { locale: Locale }) {
 
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {rest.map((pack, index) => (
-            <Reveal key={pack.id} delay={index * 0.05} className="flex">
+            <Reveal key={pack.id} className="flex">
               <article
                 className={`u-panel flex w-full flex-col p-6 ${
                   index === 1 ? "bg-accent-soft" : ""
@@ -84,7 +84,7 @@ export function ServicesGrid({ locale }: { locale: Locale }) {
         </div>
       </div>
 
-      <Reveal delay={0.1} className="mt-10">
+      <Reveal className="mt-10">
         <TextLink href={href(locale, "leistungen")}>{t(home.servicesLink, locale)}</TextLink>
       </Reveal>
     </Section>

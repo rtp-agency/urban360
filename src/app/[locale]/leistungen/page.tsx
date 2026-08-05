@@ -45,7 +45,7 @@ export default async function ServicesPage({
         <section
           key={pack.id}
           id={pack.id}
-          className={`${index % 2 === 1 ? "bg-sunken" : ""} py-16 md:py-20`}
+          className={`${index % 2 === 1 ? "bg-sunken" : ""} scroll-mt-20 py-16 md:py-20`}
         >
           <div className="u-shell">
             <Reveal>

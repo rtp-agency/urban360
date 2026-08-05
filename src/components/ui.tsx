@@ -112,7 +112,10 @@ export function Section({
   return (
     <section
       id={id}
-      className={`${tone === "sunken" ? "bg-sunken" : ""} py-20 md:py-28 ${className}`}
+      /* scroll-mt hält die Überschrift beim Sprung auf einen Anker frei.
+         Ohne das schiebt sich die kopfzeilenhohe Fläche der klebenden
+         Navigation über den Titel, besonders auf dem Telefon. */
+      className={`${tone === "sunken" ? "bg-sunken" : ""} scroll-mt-20 py-16 md:py-28 ${className}`}
     >
       <div className="u-shell">{children}</div>
     </section>

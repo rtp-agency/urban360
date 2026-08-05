@@ -24,8 +24,8 @@ export const privacySections: LegalSection[] = [
         en: "The controller for data processing on this website within the meaning of the GDPR is the entity named in the legal notice, where you will also find the contact details.",
       },
       {
-        de: "Ein Datenschutzbeauftragter ist nicht bestellt, da die gesetzlichen Voraussetzungen nach § 38 BDSG nicht vorliegen. Anfragen zum Datenschutz richten Sie bitte an die im Impressum genannte E-Mail-Adresse.",
-        en: "No data protection officer has been appointed, as the statutory thresholds under § 38 BDSG are not met. Please direct data protection enquiries to the email address in the legal notice.",
+        de: "Ein Datenschutzbeauftragter ist nicht bestellt, da die gesetzlichen Voraussetzungen nach § 38 BDSG nicht vorliegen. Anfragen zum Datenschutz richten Sie bitte an die im Impressum genannte E-Mail-Adresse.",
+        en: "No data protection officer has been appointed, as the statutory thresholds under § 38 BDSG are not met. Please direct data protection enquiries to the email address in the legal notice.",
       },
     ],
   },
@@ -101,8 +101,8 @@ export const privacySections: LegalSection[] = [
     heading: { de: "7. Keine Cookies, kein Tracking", en: "7. No cookies, no tracking" },
     body: [
       {
-        de: "Diese Website speichert keine Cookies und greift nicht auf Informationen in Ihrer Endeinrichtung zu. Eine Einwilligung nach § 25 TDDDG ist deshalb nicht erforderlich, und es wird kein Einwilligungsbanner angezeigt.",
-        en: "This website stores no cookies and does not access information on your device. Consent under § 25 TDDDG is therefore not required, and no consent banner is shown.",
+        de: "Diese Website speichert keine Cookies und greift nicht auf Informationen in Ihrer Endeinrichtung zu. Eine Einwilligung nach § 25 TDDDG ist deshalb nicht erforderlich, und es wird kein Einwilligungsbanner angezeigt.",
+        en: "This website stores no cookies and does not access information on your device. Consent under § 25 TDDDG is therefore not required, and no consent banner is shown.",
       },
       {
         de: "Es kommen keine Analyse-, Reichweitenmess-, Remarketing- oder Social-Media-Dienste zum Einsatz. Es sind keine Zählpixel, keine eingebetteten Videos und keine Kartendienste eingebunden.",
@@ -269,8 +269,8 @@ export const termsSections: LegalSection[] = [
         en: "Prices quoted to consumers are final prices including statutory VAT. Prices quoted to businesses are net and subject to VAT at the statutory rate.",
       },
       {
-        de: "Rechnungen sind innerhalb von vierzehn Tagen nach Zugang ohne Abzug zur Zahlung fällig. Die Zahlung erfolgt ausschließlich durch Überweisung auf das in der Rechnung genannte Konto. Barzahlungen werden nicht angenommen. Arbeitskosten und Materialkosten werden getrennt ausgewiesen, damit Verbraucher die Steuerermäßigung nach § 35a EStG in Anspruch nehmen können.",
-        en: "Invoices fall due for payment without deduction within fourteen days of receipt. Payment is made solely by bank transfer to the account stated on the invoice. Cash is not accepted. Labour and material costs are shown separately so that consumers can claim the tax reduction under § 35a of the German Income Tax Act.",
+        de: "Rechnungen sind innerhalb von vierzehn Tagen nach Zugang ohne Abzug zur Zahlung fällig. Die Zahlung erfolgt ausschließlich durch Überweisung auf das in der Rechnung genannte Konto. Barzahlungen werden nicht angenommen. Arbeitskosten und Materialkosten werden getrennt ausgewiesen, damit Verbraucher die Steuerermäßigung nach § 35a EStG in Anspruch nehmen können.",
+        en: "Invoices fall due for payment without deduction within fourteen days of receipt. Payment is made solely by bank transfer to the account stated on the invoice. Cash is not accepted. Labour and material costs are shown separately so that consumers can claim the tax reduction under § 35a of the German Income Tax Act.",
       },
     ],
   },
@@ -404,7 +404,7 @@ export const withdrawalSections: LegalSection[] = [
 
 export const legalLabels = {
   impressumTitle: { de: "Impressum", en: "Legal notice" },
-  impressumSub: { de: "Angaben gemäß § 5 DDG", en: "Information pursuant to § 5 DDG" },
+  impressumSub: { de: "Angaben gemäß § 5 DDG", en: "Information pursuant to § 5 DDG" },
   privacyTitle: { de: "Datenschutzerklärung", en: "Privacy policy" },
   termsTitle: { de: "Allgemeine Geschäftsbedingungen", en: "General terms and conditions" },
   withdrawalTitle: { de: "Widerrufsbelehrung für Verbraucher", en: "Withdrawal notice for consumers" },
@@ -414,8 +414,8 @@ export const legalLabels = {
   contactLabel: { de: "Kontakt", en: "Contact" },
   vat: { de: "Umsatzsteuer-Identifikationsnummer", en: "VAT identification number" },
   vatNote: {
-    de: "Gemäß § 19 UStG wird keine Umsatzsteuer berechnet und daher auch keine Umsatzsteuer-Identifikationsnummer geführt.",
-    en: "Under § 19 of the German VAT Act no VAT is charged, and accordingly no VAT identification number is held.",
+    de: "Gemäß § 19 UStG wird keine Umsatzsteuer berechnet und daher auch keine Umsatzsteuer-Identifikationsnummer geführt.",
+    en: "Under § 19 of the German VAT Act no VAT is charged, and accordingly no VAT identification number is held.",
   },
   chamberLabel: { de: "Zuständige Kammer", en: "Competent chamber" },
   professionLabel: { de: "Berufsbezeichnung", en: "Professional title" },
@@ -426,8 +426,8 @@ export const legalLabels = {
   },
   disputeLabel: { de: "Verbraucherstreitbeilegung", en: "Consumer dispute resolution" },
   disputeNo: {
-    de: "Wir sind nicht bereit und nicht verpflichtet, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen (§ 36 VSBG).",
-    en: "We are neither willing nor obliged to take part in dispute resolution proceedings before a consumer arbitration body (§ 36 VSBG).",
+    de: "Wir sind nicht bereit und nicht verpflichtet, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen (§ 36 VSBG).",
+    en: "We are neither willing nor obliged to take part in dispute resolution proceedings before a consumer arbitration body (§ 36 VSBG).",
   },
   liabilityContentLabel: { de: "Haftung für Inhalte", en: "Liability for content" },
   liabilityContent: {

@@ -28,9 +28,9 @@ export function Hero({ locale }: { locale: Locale }) {
           </div>
         </Reveal>
 
-        <Reveal delay={0.08}>
+        <Reveal>
           <Figure
-            ratio="4 / 5"
+            aspect="aspect-[3/2] sm:aspect-[16/10] lg:aspect-[4/5]"
             priority
             sizes="(min-width: 1024px) 46vw, 100vw"
             brief={
@@ -43,7 +43,7 @@ export function Hero({ locale }: { locale: Locale }) {
       </div>
 
       <Reveal
-        delay={0.16}
+       
         className="u-rule mt-16 flex flex-col gap-2 pt-6 md:mt-20 md:flex-row md:items-baseline md:justify-between"
       >
         <p className="text-[15px] text-muted">

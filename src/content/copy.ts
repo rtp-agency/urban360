@@ -50,15 +50,15 @@ export const home = {
   },
 
   taxTitle: {
-    de: "20 % der Arbeitskosten holen Privatkunden zurück",
-    en: "Private clients get 20 % of labour costs back",
+    de: "20 % der Arbeitskosten holen Privatkunden zurück",
+    en: "Private clients get 20 % of labour costs back",
   },
   taxText: {
-    de: "Nach § 35a EStG sind haushaltsnahe Dienstleistungen und Handwerkerleistungen anteilig von der Steuerschuld abziehbar. Voraussetzung ist eine Rechnung mit getrennt ausgewiesenen Arbeitskosten und die Zahlung per Überweisung. Barzahlung erkennt das Finanzamt nicht an, deshalb rechnen wir ausschließlich unbar ab.",
-    en: "Under § 35a of the German Income Tax Act, household services and trade work are partly deductible from your tax bill. It requires an invoice that separates labour costs, and payment by bank transfer. Cash is not accepted by the tax office, which is why we never invoice in cash.",
+    de: "Nach § 35a EStG sind haushaltsnahe Dienstleistungen und Handwerkerleistungen anteilig von der Steuerschuld abziehbar. Voraussetzung ist eine Rechnung mit getrennt ausgewiesenen Arbeitskosten und die Zahlung per Überweisung. Barzahlung erkennt das Finanzamt nicht an, deshalb rechnen wir ausschließlich unbar ab.",
+    en: "Under § 35a of the German Income Tax Act, household services and trade work are partly deductible from your tax bill. It requires an invoice that separates labour costs, and payment by bank transfer. Cash is not accepted by the tax office, which is why we never invoice in cash.",
   },
-  taxNoteA: { de: "auf haushaltsnahe Dienstleistungen, bis 4.000 € im Jahr", en: "on household services, up to €4,000 a year" },
-  taxNoteB: { de: "auf Handwerkerleistungen, bis 1.200 € im Jahr", en: "on trade work, up to €1,200 a year" },
+  taxNoteA: { de: "auf haushaltsnahe Dienstleistungen, bis 4.000 € im Jahr", en: "on household services, up to €4,000 a year" },
+  taxNoteB: { de: "auf Handwerkerleistungen, bis 1.200 € im Jahr", en: "on trade work, up to €1,200 a year" },
 
   assuranceTitle: {
     de: "Woran Sie uns messen können",
@@ -162,8 +162,8 @@ export const about = {
   },
   bodyTitleC: { de: "Abrechnung", en: "Billing" },
   bodyC: {
-    de: "Leistungen werden nach Aufwand oder als monatliche Pauschale abgerechnet, je nachdem, was zum Objekt passt. Arbeitskosten und Material stehen getrennt auf der Rechnung, damit Privatkunden den Steuerabzug nach § 35a EStG nutzen können. Gezahlt wird per Überweisung.",
-    en: "Work is billed by the hour or as a monthly flat rate, whichever fits the property. Labour and materials appear separately on the invoice so private clients can claim the § 35a deduction. Payment is by bank transfer.",
+    de: "Leistungen werden nach Aufwand oder als monatliche Pauschale abgerechnet, je nachdem, was zum Objekt passt. Arbeitskosten und Material stehen getrennt auf der Rechnung, damit Privatkunden den Steuerabzug nach § 35a EStG nutzen können. Gezahlt wird per Überweisung.",
+    en: "Work is billed by the hour or as a monthly flat rate, whichever fits the property. Labour and materials appear separately on the invoice so private clients can claim the § 35a deduction. Payment is by bank transfer.",
   },
 } satisfies Record<string, L>;
 
