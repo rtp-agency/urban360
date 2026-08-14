@@ -27,14 +27,14 @@ async function record(
 export async function updateCandidate(formData: FormData): Promise<void> {
   const user = await requireUser();
   const id = Number(formData.get("id"));
-  if (!Number.isInteger(id)) throw new Error("Ungültige Kennung");
+  if (!Number.isInteger(id)) throw new Error("Неверный идентификатор");
 
   const status = String(formData.get("status") ?? "");
   const level = String(formData.get("level") ?? "");
   const rate = String(formData.get("hourlyRate") ?? "").replace(",", ".");
   const note = String(formData.get("adminNote") ?? "");
 
-  if (!STATUSES.includes(status as Status)) throw new Error("Unbekannter Status");
+  if (!STATUSES.includes(status as Status)) throw new Error("Неизвестный статус");
 
   const [before] = await db
     .select({ status: candidates.status })
@@ -60,7 +60,7 @@ export async function updateCandidate(formData: FormData): Promise<void> {
     user.id,
     id,
     "update",
-    before && before.status !== status ? `Status ${before.status} → ${status}` : "Karte bearbeitet",
+    before && before.status !== status ? `Статус ${before.status} → ${status}` : "Карточка изменена",
   );
 
   revalidatePath(`/admin/kandidaten/${id}`);
@@ -113,8 +113,8 @@ export async function anonymizeCandidate(formData: FormData): Promise<void> {
   await db
     .update(candidates)
     .set({
-      firstName: "gelöscht",
-      lastName: "gelöscht",
+      firstName: "удалено",
+      lastName: "удалено",
       phone: "",
       whatsapp: null,
       email: null,
@@ -127,7 +127,7 @@ export async function anonymizeCandidate(formData: FormData): Promise<void> {
     })
     .where(eq(candidates.id, id));
 
-  await record(user.id, id, "anonymize", "Auf Verlangen gelöscht");
+  await record(user.id, id, "anonymize", "Удалено по требованию");
 
   revalidatePath("/admin/kandidaten");
   revalidatePath(`/admin/kandidaten/${id}`);

@@ -1,5 +1,13 @@
-import { SELECTABLE_STATUSES, type Shift, type Skill, type Status } from "@/content/recruiting";
+import {
+  SELECTABLE_STATUSES,
+  type LanguageLevel,
+  type Shift,
+  type Skill,
+  type Status,
+} from "@/content/recruiting";
 import type { OrderInput } from "./validation";
+import { t } from "@/content/admin";
+import { languageLevelLabels, tr } from "@/content/application";
 
 /**
  * Bewertung, wie gut ein Mensch auf einen Auftrag passt.
@@ -60,13 +68,13 @@ export function scoreCandidate(candidate: MatchCandidate, order: OrderInput): Ma
   /* Harte Ausschlüsse. Bewusst kein Punktabzug: wer im Einsatz oder inaktiv
      ist, gehört nicht mit 40 % in die Liste, sondern gar nicht hinein. */
   if (!SELECTABLE_STATUSES.includes(candidate.status)) {
-    blockers.push(candidate.status === "beschaeftigt" ? "im Einsatz" : "nicht verfügbar");
+    blockers.push(candidate.status === "beschaeftigt" ? t.bBusy : t.bInactive);
   }
   if (order.needsCar && !candidate.hasCar) {
-    blockers.push("kein Auto");
+    blockers.push(t.bNoCar);
   }
   if (order.date && candidate.availableFrom && candidate.availableFrom > order.date) {
-    blockers.push(`erst ab ${candidate.availableFrom}`);
+    blockers.push(t.bFrom(candidate.availableFrom));
   }
 
   /* Fertigkeiten: Anteil der geforderten Tätigkeiten, die abgedeckt sind. */
@@ -74,12 +82,12 @@ export function scoreCandidate(candidate: MatchCandidate, order: OrderInput): Ma
     const covered = order.skills.filter((skill) => candidate.skills.includes(skill)).length;
     const share = covered / order.skills.length;
     reasons.push({
-      label: `Tätigkeiten ${covered} von ${order.skills.length}`,
+      label: t.rSkills(covered, order.skills.length),
       earned: Math.round(share * WEIGHTS.skills),
       max: WEIGHTS.skills,
     });
   } else {
-    reasons.push({ label: "Tätigkeiten nicht eingegrenzt", earned: WEIGHTS.skills, max: WEIGHTS.skills });
+    reasons.push({ label: t.rSkillsAny, earned: WEIGHTS.skills, max: WEIGHTS.skills });
   }
 
   /* Entfernung: gemessen am selbst angegebenen Radius. Wer 8 km bis zu einem
@@ -87,20 +95,20 @@ export function scoreCandidate(candidate: MatchCandidate, order: OrderInput): Ma
      seinen Radius überschreitet, bekommt keine. */
   if (candidate.distanceKm === null) {
     reasons.push({
-      label: "Entfernung unbekannt",
+      label: t.rDistanceUnknown,
       earned: Math.round(WEIGHTS.distance / 2),
       max: WEIGHTS.distance,
     });
   } else if (candidate.distanceKm > candidate.radiusKm) {
     reasons.push({
-      label: `${Math.round(candidate.distanceKm)} km, außerhalb des Radius`,
+      label: t.rDistanceOut(Math.round(candidate.distanceKm)),
       earned: 0,
       max: WEIGHTS.distance,
     });
   } else {
     const closeness = 1 - candidate.distanceKm / Math.max(candidate.radiusKm, 1);
     reasons.push({
-      label: `${Math.round(candidate.distanceKm)} km entfernt`,
+      label: t.rDistance(Math.round(candidate.distanceKm)),
       earned: Math.round((0.5 + 0.5 * closeness) * WEIGHTS.distance),
       max: WEIGHTS.distance,
     });
@@ -111,13 +119,13 @@ export function scoreCandidate(candidate: MatchCandidate, order: OrderInput): Ma
     const covered = order.shifts.filter((shift) => candidate.shifts.includes(shift)).length;
     const share = covered / order.shifts.length;
     reasons.push({
-      label: covered > 0 ? `Tageszeit passt (${covered}/${order.shifts.length})` : "Tageszeit passt nicht",
+      label: covered > 0 ? t.rShiftOk(covered, order.shifts.length) : t.rShiftNo,
       earned: Math.round(share * WEIGHTS.availability),
       max: WEIGHTS.availability,
     });
   } else {
     reasons.push({
-      label: "Tageszeit nicht eingegrenzt",
+      label: t.rShiftAny,
       earned: WEIGHTS.availability,
       max: WEIGHTS.availability,
     });
@@ -129,18 +137,22 @@ export function scoreCandidate(candidate: MatchCandidate, order: OrderInput): Ma
     const german = candidate.languages.find((entry) => entry.language === "de");
     const factor = german ? (german.level === "grund" ? 0.5 : 1) : 0;
     reasons.push({
-      label: german ? `Deutsch ${german.level}` : "kein Deutsch angegeben",
+      label: german
+        ? t.rGerman(
+            tr(languageLevelLabels[german.level as LanguageLevel] ?? languageLevelLabels.gut, "ru"),
+          )
+        : t.rGermanNo,
       earned: Math.round(factor * WEIGHTS.language),
       max: WEIGHTS.language,
     });
   } else {
-    reasons.push({ label: "Sprache nicht gefordert", earned: WEIGHTS.language, max: WEIGHTS.language });
+    reasons.push({ label: t.rLangAny, earned: WEIGHTS.language, max: WEIGHTS.language });
   }
 
   /* Auto: als Pluspunkt auch dann, wenn es nicht verlangt wurde. Ein eigenes
      Fahrzeug macht die Disposition in fast jedem Fall einfacher. */
   reasons.push({
-    label: candidate.hasCar ? "eigenes Auto" : "kein Auto",
+    label: candidate.hasCar ? t.rCarYes : t.rCarNo,
     earned: candidate.hasCar ? WEIGHTS.car : 0,
     max: WEIGHTS.car,
   });

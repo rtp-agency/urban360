@@ -2,20 +2,21 @@ import type { ReactNode } from "react";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { currentUser } from "@/lib/auth";
+import { t } from "@/content/admin";
 import { signOutAction } from "./actions";
 
 /**
- * Schutzschild der Verwaltung. Die Prüfung sitzt hier und nicht nur in der
- * Middleware: die Middleware kennt nur das Vorhandensein eines Cookies, ob
- * die Sitzung noch gültig ist, weiß allein die Datenbank.
+ * Защита админки. Проверка стоит здесь, а не только в middleware:
+ * middleware видит лишь наличие cookie, а действительна ли сессия —
+ * знает только база.
  */
 export default async function AppLayout({ children }: { children: ReactNode }) {
   const user = await currentUser();
   if (!user) redirect("/admin/login");
 
   const nav = [
-    { href: "/admin/kandidaten", label: "Kandidaten" },
-    { href: "/admin/auftrag", label: "Auswahl für Auftrag" },
+    { href: "/admin/kandidaten", label: t.navCandidates },
+    { href: "/admin/auftrag", label: t.navOrder },
   ];
 
   return (
@@ -23,8 +24,8 @@ export default async function AppLayout({ children }: { children: ReactNode }) {
       <header className="sticky top-0 z-40 border-b border-hairline bg-canvas/85 backdrop-blur-xl">
         <div className="mx-auto flex max-w-[1180px] flex-wrap items-center gap-x-6 gap-y-2 px-5 py-3">
           <Link href="/admin/kandidaten" className="text-[15px] font-semibold tracking-tight text-ink">
-            Urban360
-            <span className="ml-1.5 font-normal text-muted">Verwaltung</span>
+            {t.brand}
+            <span className="ml-1.5 font-normal text-muted">{t.brandSuffix}</span>
           </Link>
 
           <nav className="flex items-center gap-5">
@@ -46,7 +47,7 @@ export default async function AppLayout({ children }: { children: ReactNode }) {
                 type="submit"
                 className="text-[13px] text-muted underline underline-offset-2 transition-colors hover:text-ink"
               >
-                Abmelden
+                {t.signOut}
               </button>
             </form>
           </div>

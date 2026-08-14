@@ -1,11 +1,11 @@
 import Link from "next/link";
-import { SHIFTS, SKILLS, type Shift, type Skill } from "@/content/recruiting";
+import { SHIFTS, SKILLS, type Shift, type Skill, type Status } from "@/content/recruiting";
 import { shiftLabels, skillLabels, tr } from "@/content/application";
+import { LEVEL_LABEL, t } from "@/content/admin";
 import { candidatesForOrder } from "@/lib/candidates";
 import { rankCandidates, WEIGHTS } from "@/lib/matching";
 import { orderSchema } from "@/lib/validation";
-import { ContactLinks, LEVEL_LABEL, StatusBadge } from "@/components/admin/ui";
-import type { Status } from "@/content/recruiting";
+import { ContactLinks, StatusBadge } from "@/components/admin/ui";
 
 type Search = Promise<Record<string, string | string[] | undefined>>;
 
@@ -42,18 +42,16 @@ export default async function OrderPage({ searchParams }: { searchParams: Search
 
   return (
     <>
-      <h1 className="text-2xl font-semibold tracking-tight text-ink">Auswahl für einen Auftrag</h1>
-      <p className="mt-2 max-w-[62ch] text-[15px] leading-relaxed text-muted">
-        Auftragsdaten eintragen, die Liste ordnet sich nach Passung. Der Wert setzt sich zusammen
-        aus Tätigkeiten ({WEIGHTS.skills}), Entfernung ({WEIGHTS.distance}), Tageszeit (
-        {WEIGHTS.availability}), Sprache ({WEIGHTS.language}) und Auto ({WEIGHTS.car}).
+      <h1 className="text-2xl font-semibold tracking-tight text-ink">{t.orderTitle}</h1>
+      <p className="mt-2 max-w-[68ch] text-[15px] leading-relaxed text-muted">
+        {t.orderLead(WEIGHTS)}
       </p>
 
       <form method="get" className="u-panel mt-8 flex flex-col gap-6 p-5 md:p-6">
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           <div className="flex flex-col gap-2">
             <label htmlFor="plz" className="text-[13px] font-medium text-ink">
-              Postleitzahl des Einsatzorts
+              {t.orderPlz}
             </label>
             <input
               id="plz"
@@ -66,13 +64,13 @@ export default async function OrderPage({ searchParams }: { searchParams: Search
           </div>
           <div className="flex flex-col gap-2">
             <label htmlFor="city" className="text-[13px] font-medium text-ink">
-              Ort
+              {t.orderCity}
             </label>
             <input id="city" name="city" defaultValue={order?.city ?? ""} className={field} />
           </div>
           <div className="flex flex-col gap-2">
             <label htmlFor="date" className="text-[13px] font-medium text-ink">
-              Datum
+              {t.orderDate}
             </label>
             <input
               id="date"
@@ -84,7 +82,7 @@ export default async function OrderPage({ searchParams }: { searchParams: Search
           </div>
           <div className="flex flex-col gap-2">
             <label htmlFor="count" className="text-[13px] font-medium text-ink">
-              Anzahl Personen
+              {t.orderCount}
             </label>
             <input
               id="count"
@@ -99,7 +97,7 @@ export default async function OrderPage({ searchParams }: { searchParams: Search
         </div>
 
         <fieldset>
-          <legend className="mb-2.5 text-[13px] font-medium text-ink">Tätigkeiten</legend>
+          <legend className="mb-2.5 text-[13px] font-medium text-ink">{t.orderSkills}</legend>
           <div className="flex flex-wrap gap-2">
             {SKILLS.map((skill) => (
               <label
@@ -117,14 +115,14 @@ export default async function OrderPage({ searchParams }: { searchParams: Search
                   defaultChecked={selectedSkills.has(skill)}
                   className="sr-only"
                 />
-                {tr(skillLabels[skill], "de")}
+                {tr(skillLabels[skill], "ru")}
               </label>
             ))}
           </div>
         </fieldset>
 
         <fieldset>
-          <legend className="mb-2.5 text-[13px] font-medium text-ink">Tageszeit</legend>
+          <legend className="mb-2.5 text-[13px] font-medium text-ink">{t.orderShifts}</legend>
           <div className="flex flex-wrap gap-2">
             {SHIFTS.map((shift) => (
               <label
@@ -142,7 +140,7 @@ export default async function OrderPage({ searchParams }: { searchParams: Search
                   defaultChecked={selectedShifts.has(shift)}
                   className="sr-only"
                 />
-                {tr(shiftLabels[shift], "de")}
+                {tr(shiftLabels[shift], "ru")}
               </label>
             ))}
           </div>
@@ -155,9 +153,9 @@ export default async function OrderPage({ searchParams }: { searchParams: Search
               name="auto"
               value="1"
               defaultChecked={order?.needsCar}
-              className="h-4.5 w-4.5 accent-[var(--color-accent)]"
+              className="h-4 w-4 accent-[var(--color-accent)]"
             />
-            Auto erforderlich
+            {t.orderNeedsCar}
           </label>
           <label className="flex items-center gap-2.5 text-[14px] text-ink">
             <input
@@ -165,16 +163,16 @@ export default async function OrderPage({ searchParams }: { searchParams: Search
               name="de"
               value="1"
               defaultChecked={order?.needsGerman}
-              className="h-4.5 w-4.5 accent-[var(--color-accent)]"
+              className="h-4 w-4 accent-[var(--color-accent)]"
             />
-            Deutsch erforderlich
+            {t.orderNeedsGerman}
           </label>
 
           <button
             type="submit"
             className="ml-auto inline-flex h-11 items-center rounded-full bg-accent px-6 text-[15px] font-medium text-accent-ink hover:opacity-90"
           >
-            Passende suchen
+            {t.orderSubmit}
           </button>
         </div>
       </form>
@@ -183,18 +181,18 @@ export default async function OrderPage({ searchParams }: { searchParams: Search
         <section className="mt-10">
           <div className="flex flex-wrap items-baseline justify-between gap-3">
             <h2 className="text-[17px] font-semibold tracking-tight text-ink">
-              {ranked.length} passende {ranked.length === 1 ? "Person" : "Personen"}
+              {t.orderFound(ranked.length)}
             </h2>
             {order && ranked.length < order.headcount ? (
               <p className="text-[14px] text-danger">
-                Gesucht sind {order.headcount}, gefunden {ranked.length}.
+                {t.orderShort(order.headcount, ranked.length)}
               </p>
             ) : null}
           </div>
 
           {ranked.length === 0 ? (
             <p className="mt-6 rounded-[var(--radius-panel)] border border-hairline px-6 py-12 text-center text-[15px] text-muted">
-              Niemand erfüllt die harten Bedingungen. Radius, Datum oder Autopflicht lockern.
+              {t.orderEmpty}
             </p>
           ) : (
             <ul className="mt-6 flex flex-col gap-3">
@@ -203,7 +201,7 @@ export default async function OrderPage({ searchParams }: { searchParams: Search
                   <div className="flex flex-col gap-4 md:flex-row md:items-start md:gap-6">
                     <div
                       className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-accent-soft text-[15px] font-semibold text-accent"
-                      title="Passung"
+                      title={t.matchTitle}
                     >
                       {result.score}%
                     </div>
@@ -219,7 +217,7 @@ export default async function OrderPage({ searchParams }: { searchParams: Search
                         <StatusBadge status={result.candidate.status as Status} />
                         {result.candidate.level ? (
                           <span className="text-[13px] text-muted">
-                            {LEVEL_LABEL[result.candidate.level]}
+                            {LEVEL_LABEL[result.candidate.level as keyof typeof LEVEL_LABEL]}
                           </span>
                         ) : null}
                       </div>
@@ -228,8 +226,8 @@ export default async function OrderPage({ searchParams }: { searchParams: Search
                         {result.candidate.postalCode} {result.candidate.city}
                       </p>
 
-                      {/* Begründung sichtbar machen: ein Prozentwert ohne
-                          Erklärung wird von der Disposition ignoriert. */}
+                      {/* Разбор показываем всегда: голый процент без объяснения
+                          диспетчер просто не станет использовать. */}
                       <ul className="mt-3 flex flex-wrap gap-x-4 gap-y-1 text-[13px] text-muted">
                         {result.reasons.map((reason) => (
                           <li key={reason.label}>

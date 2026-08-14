@@ -2,18 +2,20 @@ import { site } from "@/content/site.config";
 import { SKILL_TAGS, type Skill } from "@/content/recruiting";
 
 /**
- * Benachrichtigung über eine neue Bewerbung.
+ * Уведомление о новой анкете.
  *
- * WICHTIG, NICHT AUFWEICHEN: die Nachricht enthält keine personenbezogenen
- * Daten. Kein Name, keine Telefonnummer, keine E-Mail, kein Aufenthaltsstatus.
- * Nur Kennung, Ort, Tätigkeitsbereiche und ein Link in die Verwaltung.
+ * ВАЖНО, НЕ ОСЛАБЛЯТЬ: в сообщении нет персональных данных. Ни имени, ни
+ * телефона, ни e-mail, ни статуса пребывания. Только номер анкеты, город,
+ * области работ и ссылка в админку.
  *
- * Grund: Telegram ist ein Anbieter außerhalb der EU. Ein Chatverlauf hat
- * keine Zugriffskontrolle, keine Löschfrist und keinen Auftragsverarbeitungs-
- * vertrag. Namen, Telefonnummern und erst recht der Aufenthaltsstatus dort
- * hineinzuschreiben wäre eine Drittlandübermittlung ohne Rechtsgrundlage.
- * Der Link führt in die passwortgeschützte Verwaltung, wo die Daten liegen
- * und der Zugriff protokolliert wird.
+ * Причина: Telegram — сервис за пределами ЕС. У чата нет разграничения
+ * доступа, нет срока хранения и нет договора об обработке. Писать туда имена
+ * и телефоны, тем более статус пребывания, означало бы передачу персональных
+ * данных в третью страну без правового основания. Ссылка ведёт в закрытую
+ * паролем админку, где данные лежат и где доступ протоколируется.
+ *
+ * Тип Payload ниже намеренно не содержит полей с персональными данными:
+ * утечка здесь не «маловероятна», а невозможна без правки кода.
  */
 
 type Payload = {
@@ -32,26 +34,26 @@ export async function notifyNewApplication(payload: Payload): Promise<void> {
 
   if (!token || !chatId) {
     console.warn(
-      "[notify] TELEGRAM_BOT_TOKEN oder TELEGRAM_CHAT_ID fehlt, Meldung wird übersprungen.",
+      "[notify] Не задан TELEGRAM_BOT_TOKEN или TELEGRAM_CHAT_ID, уведомление пропущено.",
       { ref: payload.ref },
     );
     return;
   }
 
-  // Nur der grobe Bereich, keine vollständige Postleitzahl: auch die ist
-  // in dünn besiedelten Gegenden ein Personenbezug.
+  // Только первые две цифры индекса: полный индекс в малонаселённой
+  // местности сам по себе указывает на человека.
   const area = `${payload.postalCode.slice(0, 2)}xxx`;
   const areas = [...new Set(payload.skills.map((skill) => SKILL_TAGS[skill]))].join(", ");
   const url = `${site.url}/admin/kandidaten/${payload.candidateId}`;
 
   const text = [
-    "Neue Bewerbung",
+    "Новая анкета",
     "",
-    `Kennung: ${payload.ref}`,
-    `Ort: ${payload.city} (${area})`,
-    `Bereiche: ${areas || "keine Angabe"}`,
-    `Radius: ${payload.radiusKm} km`,
-    `Auto: ${payload.hasCar ? "ja" : "nein"}`,
+    `Номер: ${payload.ref}`,
+    `Город: ${payload.city} (${area})`,
+    `Направления: ${areas || "не указаны"}`,
+    `Радиус выезда: ${payload.radiusKm} км`,
+    `Машина: ${payload.hasCar ? "есть" : "нет"}`,
   ].join("\n");
 
   try {
@@ -63,17 +65,17 @@ export async function notifyNewApplication(payload: Payload): Promise<void> {
         text,
         disable_web_page_preview: true,
         reply_markup: {
-          inline_keyboard: [[{ text: "In der Verwaltung öffnen", url }]],
+          inline_keyboard: [[{ text: "Открыть в админке", url }]],
         },
       }),
     });
 
     if (!response.ok) {
-      console.error("[notify] Telegram antwortete mit", response.status);
+      console.error("[notify] Telegram ответил кодом", response.status);
     }
   } catch (error) {
-    // Eine fehlgeschlagene Meldung darf die Bewerbung nicht scheitern lassen:
-    // der Datensatz liegt zu diesem Zeitpunkt bereits sicher in der Datenbank.
-    console.error("[notify] Meldung fehlgeschlagen", error);
+    // Неудачное уведомление не должно ронять приём анкеты: к этому моменту
+    // запись уже надёжно лежит в базе.
+    console.error("[notify] Не удалось отправить уведомление", error);
   }
 }

@@ -1,20 +1,9 @@
 import Link from "next/link";
 import { STATUS_TONE, type Status } from "@/content/recruiting";
+import { LEVEL_LABEL, STATUS_LABEL, t } from "@/content/admin";
 import { toWhatsAppNumber } from "@/lib/validation";
 
-export const STATUS_LABEL: Record<Status, string> = {
-  neu: "Neu",
-  geprueft: "Geprüft",
-  verfuegbar: "Verfügbar",
-  beschaeftigt: "Im Einsatz",
-  inaktiv: "Inaktiv",
-};
-
-export const LEVEL_LABEL: Record<string, string> = {
-  einsteiger: "Einsteiger",
-  erfahren: "Erfahren",
-  profi: "Profi",
-};
+export { LEVEL_LABEL, STATUS_LABEL };
 
 const TONE_CLASS = {
   accent: "bg-accent-soft text-accent",
@@ -33,6 +22,10 @@ export function StatusBadge({ status }: { status: Status }) {
   );
 }
 
+/**
+ * Тег остаётся латиницей: это ключ, по которому работает фильтр и подбор.
+ * Переводить его отображение нельзя, иначе фильтр и надпись разойдутся.
+ */
 export function TagChip({ tag, muted = false }: { tag: string; muted?: boolean }) {
   return (
     <span
@@ -46,9 +39,9 @@ export function TagChip({ tag, muted = false }: { tag: string; muted?: boolean }
 }
 
 /**
- * Kontaktwege. Bewusst als echte Links und nicht als Kopierknöpfe:
- * auf dem Telefon führt ein Antippen direkt in Anruf oder WhatsApp,
- * und genau so wird disponiert.
+ * Способы связи. Намеренно настоящими ссылками, а не кнопками «скопировать»:
+ * с телефона нажатие сразу открывает звонок или WhatsApp, а именно так и
+ * происходит распределение людей по заказам.
  */
 export function ContactLinks({
   phone,
@@ -69,21 +62,20 @@ export function ContactLinks({
   return (
     <div className="flex flex-wrap gap-2">
       <a href={`tel:${phone.replace(/[^\d+]/g, "")}`} className={cls}>
-        Anrufen
+        Позвонить
       </a>
       <a href={`https://wa.me/${waNumber}`} target="_blank" rel="noreferrer" className={cls}>
         WhatsApp
       </a>
       {email ? (
         <a href={`mailto:${email}`} className={cls}>
-          E-Mail
+          E-mail
         </a>
       ) : null}
     </div>
   );
 }
 
-/** Filterknopf für die Leiste über der Liste. */
 export function FilterLink({
   href,
   active,
@@ -106,3 +98,5 @@ export function FilterLink({
     </Link>
   );
 }
+
+export { t };

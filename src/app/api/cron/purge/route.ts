@@ -21,13 +21,13 @@ export const dynamic = "force-dynamic";
 export async function GET(request: Request) {
   const secret = process.env.CRON_SECRET;
   if (!secret) {
-    return NextResponse.json({ error: "CRON_SECRET nicht gesetzt" }, { status: 500 });
+    return NextResponse.json({ error: "CRON_SECRET не задан" }, { status: 500 });
   }
 
   const auth = request.headers.get("authorization") ?? "";
   const provided = auth.replace(/^Bearer\s+/i, "");
   if (!provided || !safeEqual(provided, secret)) {
-    return NextResponse.json({ error: "nicht berechtigt" }, { status: 401 });
+    return NextResponse.json({ error: "нет доступа" }, { status: 401 });
   }
 
   const today = new Date().toISOString().slice(0, 10);
@@ -35,8 +35,8 @@ export async function GET(request: Request) {
   const purged = await db
     .update(candidates)
     .set({
-      firstName: "gelöscht",
-      lastName: "gelöscht",
+      firstName: "удалено",
+      lastName: "удалено",
       phone: "",
       whatsapp: null,
       email: null,

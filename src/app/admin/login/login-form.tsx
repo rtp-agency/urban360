@@ -2,6 +2,7 @@
 
 import { useActionState } from "react";
 import { useFormStatus } from "react-dom";
+import { t } from "@/content/admin";
 import { login, type LoginState } from "./actions";
 
 const field =
@@ -16,7 +17,7 @@ function Submit() {
       disabled={pending}
       className="inline-flex h-12 w-full items-center justify-center rounded-full bg-accent text-[16px] font-medium text-accent-ink transition-opacity hover:opacity-90 disabled:opacity-60"
     >
-      {pending ? "Anmeldung läuft" : "Anmelden"}
+      {pending ? t.loginPending : t.loginSubmit}
     </button>
   );
 }
@@ -28,7 +29,7 @@ export function LoginForm() {
     <form action={action} className="flex flex-col gap-5">
       <div className="flex flex-col gap-2">
         <label htmlFor="email" className="text-[14px] font-medium text-ink">
-          E-Mail
+          {t.loginEmail}
         </label>
         <input
           id="email"
@@ -42,7 +43,7 @@ export function LoginForm() {
 
       <div className="flex flex-col gap-2">
         <label htmlFor="password" className="text-[14px] font-medium text-ink">
-          Passwort
+          {t.loginPassword}
         </label>
         <input
           id="password"

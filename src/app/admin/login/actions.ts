@@ -2,6 +2,7 @@
 
 import { redirect } from "next/navigation";
 import { signIn } from "@/lib/auth";
+import { t } from "@/content/admin";
 
 export type LoginState = { error?: string };
 
@@ -10,15 +11,15 @@ export async function login(_prev: LoginState, formData: FormData): Promise<Logi
   const password = String(formData.get("password") ?? "");
 
   if (!email || !password) {
-    return { error: "Bitte E-Mail und Passwort eingeben." };
+    return { error: t.loginEmpty };
   }
 
   const user = await signIn(email, password);
 
-  /* Bewusst eine einzige, unspezifische Meldung. Ein "Passwort falsch"
-     würde bestätigen, dass die Adresse existiert. */
+  /* Одна и та же неконкретная ошибка в обоих случаях. Сообщение
+     «неверный пароль» подтвердило бы, что такой e-mail существует. */
   if (!user) {
-    return { error: "Anmeldung fehlgeschlagen." };
+    return { error: t.loginFailed };
   }
 
   redirect("/admin/kandidaten");

@@ -1,4 +1,5 @@
 import type { Status } from "@/content/recruiting";
+import { t } from "@/content/admin";
 
 /**
  * Aufbewahrungsfristen für Bewerberdaten.
@@ -31,12 +32,12 @@ export function purgeDateFor(status: Status, from: Date = new Date()): string {
 }
 
 /**
- * Text für die Verwaltung: wie lange dieser Datensatz noch aufbewahrt wird.
+ * Подпись для админки: сколько ещё хранится эта запись.
  */
 export function retentionNote(purgeAfter: string, today: Date = new Date()): string {
   const target = new Date(`${purgeAfter}T00:00:00Z`);
   const days = Math.ceil((target.getTime() - today.getTime()) / 86_400_000);
-  if (days <= 0) return "zur Löschung fällig";
-  if (days <= 31) return `Löschung in ${days} Tagen`;
-  return `Löschung am ${target.toLocaleDateString("de-DE")}`;
+  if (days <= 0) return t.retentionDue;
+  if (days <= 31) return t.retentionDays(days);
+  return t.retentionDate(target.toLocaleDateString("ru-RU"));
 }
