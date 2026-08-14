@@ -50,20 +50,27 @@ export function LegalLayout({
   );
 }
 
+/**
+ * Die Nummerierung vergibt die Ausgabe, nicht der Text. Sonst verschiebt ein
+ * neuer Abschnitt in der Mitte alle folgenden Ziffern von Hand.
+ */
 export function LegalSections({
   locale,
   sections,
   values = {},
+  numbered = true,
 }: {
   locale: Locale;
   sections: LegalSection[];
   values?: Record<string, string>;
+  numbered?: boolean;
 }) {
   return (
     <div className="space-y-10">
-      {sections.map((section) => (
+      {sections.map((section, index) => (
         <section key={section.heading.de}>
           <h2 className="text-[19px] font-semibold tracking-tight text-ink">
+            {numbered ? `${index + 1}. ` : ""}
             {t(section.heading, locale)}
           </h2>
 

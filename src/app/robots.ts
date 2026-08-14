@@ -22,13 +22,20 @@ const placeholders = [
 
 export const isDraft = placeholders.some((value) => value.includes("TODO"));
 
+/**
+ * Verwaltung und Bewerbungsbogen gehören nie in den Index. Der Bogen wird
+ * gezielt per WhatsApp verteilt und nimmt personenbezogene Daten entgegen,
+ * die Verwaltung zeigt sie an.
+ */
+const PRIVATE_PATHS = ["/admin", "/job", "/bewerbung", "/api"];
+
 export default function robots(): MetadataRoute.Robots {
   if (isDraft) {
     return { rules: { userAgent: "*", disallow: "/" } };
   }
 
   return {
-    rules: { userAgent: "*", allow: "/" },
+    rules: { userAgent: "*", allow: "/", disallow: PRIVATE_PATHS },
     sitemap: `${site.url}/sitemap.xml`,
   };
 }

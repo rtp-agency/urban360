@@ -1,15 +1,45 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { DEFAULT_LOCALE, LOCALES } from "@/content/site.config";
+import { DEFAULT_APP_LOCALE } from "@/content/recruiting";
 
 /**
- * Leitet jede Adresse ohne Sprachpräfix auf die deutsche Fassung um.
- * Es findet keine Auswertung des Accept-Language-Headers statt: eine
- * automatische Weiterleitung anhand von Browserdaten wäre eine
- * Verarbeitung, die hier keinen Mehrwert hätte. Die Sprache wählt der
- * Besucher über den Umschalter in der Navigation.
+ * Umleitungen und Grobschutz.
+ *
+ * Der Marketingteil lebt unter einem Sprachpräfix, Bewerbungsbogen und
+ * Verwaltung nicht. Ohne die Ausnahmen unten würde /admin auf /de/admin
+ * umgeleitet und wäre unerreichbar.
+ *
+ * Die Prüfung für /admin ist bewusst nur eine Vorprüfung auf das Vorhandensein
+ * des Sitzungscookies. Ob die Sitzung gültig ist, weiß allein die Datenbank,
+ * und die ist aus der Middleware nicht erreichbar. Die eigentliche Kontrolle
+ * sitzt in app/admin/(app)/layout.tsx.
  */
+
+const SESSION_COOKIE = "u360_session";
+
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
+
+  if (pathname.startsWith("/admin")) {
+    if (pathname === "/admin/login") return NextResponse.next();
+    if (!request.cookies.has(SESSION_COOKIE)) {
+      const url = request.nextUrl.clone();
+      url.pathname = "/admin/login";
+      url.search = "";
+      return NextResponse.redirect(url);
+    }
+    return NextResponse.next();
+  }
+
+  // Kurzlinks für WhatsApp: /job und /bewerbung landen auf der deutschen
+  // Fassung des Bogens, umschalten kann man dort oben rechts.
+  if (pathname === "/job" || pathname === "/bewerbung" || pathname === "/bewerbung/") {
+    const url = request.nextUrl.clone();
+    url.pathname = `/job/${DEFAULT_APP_LOCALE}`;
+    return NextResponse.redirect(url);
+  }
+
+  if (pathname.startsWith("/job")) return NextResponse.next();
 
   const hasLocale = LOCALES.some(
     (locale) => pathname === `/${locale}` || pathname.startsWith(`/${locale}/`),
@@ -22,5 +52,5 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/((?!_next|images|favicon.ico|robots.txt|sitemap.xml).*)"],
+  matcher: ["/((?!_next|api|images|favicon.ico|robots.txt|sitemap.xml).*)"],
 };

@@ -17,7 +17,7 @@ export const privacyIntro: L = {
 
 export const privacySections: LegalSection[] = [
   {
-    heading: { de: "1. Verantwortlicher", en: "1. Controller" },
+    heading: { de: "Verantwortlicher", en: "Controller" },
     body: [
       {
         de: "Verantwortlich für die Datenverarbeitung auf dieser Website im Sinne der Datenschutz-Grundverordnung (DSGVO) ist die im Impressum genannte Stelle. Die Kontaktdaten finden Sie dort.",
@@ -30,7 +30,7 @@ export const privacySections: LegalSection[] = [
     ],
   },
   {
-    heading: { de: "2. Grundsätze der Verarbeitung", en: "2. Principles of processing" },
+    heading: { de: "Grundsätze der Verarbeitung", en: "Principles of processing" },
     body: [
       {
         de: "Personenbezogene Daten werden nur verarbeitet, soweit dies für eine funktionsfähige Website sowie für die Bearbeitung Ihrer Anfrage erforderlich ist. Eine Verarbeitung erfolgt ausschließlich auf Grundlage von Artikel 6 DSGVO.",
@@ -43,7 +43,7 @@ export const privacySections: LegalSection[] = [
     ],
   },
   {
-    heading: { de: "3. Aufruf der Website und Server-Logfiles", en: "3. Site access and server log files" },
+    heading: { de: "Aufruf der Website und Server-Logfiles", en: "Site access and server log files" },
     body: [
       {
         de: "Bei jedem Aufruf übermittelt Ihr Browser technisch notwendige Daten an den Server. Diese werden in Logfiles gespeichert:",
@@ -59,7 +59,7 @@ export const privacySections: LegalSection[] = [
     ],
   },
   {
-    heading: { de: "4. Rechtsgrundlage der Logfiles", en: "4. Legal basis for log files" },
+    heading: { de: "Rechtsgrundlage der Logfiles", en: "Legal basis for log files" },
     body: [
       {
         de: "Rechtsgrundlage ist Artikel 6 Absatz 1 Buchstabe f DSGVO. Das berechtigte Interesse liegt in der technischen Auslieferung der Seite, der Systemsicherheit und der Aufklärung missbräuchlicher Zugriffe. Eine Zusammenführung dieser Daten mit anderen Datenquellen oder eine Auswertung zu Werbezwecken findet nicht statt.",
@@ -72,7 +72,7 @@ export const privacySections: LegalSection[] = [
     ],
   },
   {
-    heading: { de: "5. Hosting", en: "5. Hosting" },
+    heading: { de: "Hosting", en: "Hosting" },
     body: [
       {
         de: "Die Website wird bei einem Dienstleister innerhalb der Europäischen Union gehostet. Der Anbieter verarbeitet die oben genannten Daten ausschließlich in unserem Auftrag und ist vertraglich nach Artikel 28 DSGVO gebunden. Der Name des Anbieters ist im Impressum genannt.",
@@ -81,7 +81,7 @@ export const privacySections: LegalSection[] = [
     ],
   },
   {
-    heading: { de: "6. Kontaktformular, E-Mail und Telefon", en: "6. Contact form, email and phone" },
+    heading: { de: "Kontaktformular, E-Mail und Telefon", en: "Contact form, email and phone" },
     body: [
       {
         de: "Wenn Sie uns über das Formular, per E-Mail oder telefonisch kontaktieren, verarbeiten wir die von Ihnen übermittelten Angaben, um Ihre Anfrage zu beantworten. Pflichtfelder sind als solche gekennzeichnet, alle weiteren Angaben sind freiwillig.",
@@ -98,11 +98,51 @@ export const privacySections: LegalSection[] = [
     ],
   },
   {
-    heading: { de: "7. Keine Cookies, kein Tracking", en: "7. No cookies, no tracking" },
+    heading: {
+      de: "Bewerbungen und Personaldatenbank",
+      en: "Applications and the staff database",
+    },
     body: [
       {
-        de: "Diese Website speichert keine Cookies und greift nicht auf Informationen in Ihrer Endeinrichtung zu. Eine Einwilligung nach § 25 TDDDG ist deshalb nicht erforderlich, und es wird kein Einwilligungsbanner angezeigt.",
-        en: "This website stores no cookies and does not access information on your device. Consent under § 25 TDDDG is therefore not required, and no consent banner is shown.",
+        de: "Wer den Bewerbungsbogen ausfüllt, übermittelt uns Kontaktdaten, Wohnort und Postleitzahl, Angaben zu Einsatzradius und Fahrzeug, Sprachkenntnisse, Fertigkeiten, Verfügbarkeit sowie freiwillig eine Angabe zum Aufenthalts- und Erwerbsstatus. Diese Daten werden gespeichert, um zu prüfen, für welche Einsätze eine Zusammenarbeit in Betracht kommt, und um im Bedarfsfall Kontakt aufzunehmen.",
+        en: "Anyone completing the application form provides contact details, place of residence and postcode, travel radius and vehicle, language skills, skills, availability and, voluntarily, an indication of residence and employment status. This data is stored in order to assess which assignments could be suitable and to make contact when the need arises.",
+      },
+      {
+        de: "Rechtsgrundlage ist § 26 Absatz 1 Bundesdatenschutzgesetz in Verbindung mit Artikel 6 Absatz 1 Buchstabe b DSGVO, da die Verarbeitung der Anbahnung eines Beschäftigungsverhältnisses dient. Freiwillige Angaben, insbesondere zum Aufenthaltsstatus, beruhen zusätzlich auf Ihrer Einwilligung nach Artikel 6 Absatz 1 Buchstabe a DSGVO. Sie sind zu keiner dieser Angaben verpflichtet, und ein Verzicht wirkt sich nicht auf die Bearbeitung aus.",
+        en: "The legal basis is § 26(1) of the German Federal Data Protection Act together with Article 6(1)(b) GDPR, as the processing serves the initiation of an employment relationship. Voluntary details, in particular on residence status, additionally rest on your consent under Article 6(1)(a) GDPR. None of these details are obligatory, and leaving them out has no effect on how your application is handled.",
+      },
+      {
+        de: "Kommt keine Zusammenarbeit zustande, werden die Daten spätestens sechs Monate nach Abschluss des Verfahrens automatisch anonymisiert. Werden Sie in den Bestand aufgenommen, bleiben die Daten für die Dauer der Zusammenarbeit gespeichert und werden anschließend nach denselben Regeln gelöscht. Der Löschlauf erfolgt täglich und automatisch, nicht auf Zuruf.",
+        en: "If no working relationship comes about, the data is automatically anonymised at the latest six months after the process ends. If you are taken into the pool, the data is kept for the duration of the cooperation and is then deleted under the same rules. The deletion run is automatic and daily, not on request.",
+      },
+      {
+        de: "Zugriff haben ausschließlich namentlich eingerichtete Personen der Disposition. Jeder Zugriff und jede Änderung werden protokolliert. Eine Weitergabe an Auftraggeber erfolgt erst, wenn ein konkreter Einsatz ansteht, und nur im dafür erforderlichen Umfang.",
+        en: "Access is limited to named individuals in scheduling. Every access and change is logged. Details are passed to a client only when a specific assignment is pending, and only to the extent required.",
+      },
+      {
+        de: "Über den Eingang einer Bewerbung werden wir per Kurznachricht informiert. Diese Meldung enthält ausschließlich eine Kennung, den Ort, die Tätigkeitsbereiche und einen Link in die geschützte Verwaltung. Namen, Telefonnummern, E-Mail-Adressen und Angaben zum Aufenthaltsstatus werden auf diesem Weg nicht übermittelt.",
+        en: "We are notified of an incoming application by short message. That notification contains only a reference, the town, the areas of work and a link to the protected administration area. Names, phone numbers, email addresses and residence status are never sent this way.",
+      },
+      {
+        de: "Die Software zeigt der Disposition zu einem Auftrag eine Rangfolge mit einem Passungswert an. Dabei handelt es sich um eine Sortierhilfe, nicht um eine Entscheidung. Eine automatisierte Entscheidung im Sinne des Artikels 22 DSGVO findet nicht statt: wer angesprochen und wer beauftragt wird, entscheidet ausschließlich ein Mensch.",
+        en: "For a given assignment the software shows scheduling a ranked list with a match value. That is a sorting aid, not a decision. No automated decision within the meaning of Article 22 GDPR takes place: who is approached and who is engaged is decided by a person alone.",
+      },
+      {
+        de: "Sie können Ihre Einwilligung jederzeit formlos widerrufen und die Löschung Ihrer Daten verlangen. Eine Nachricht an die im Impressum genannte Adresse genügt. Die Daten werden dann unverzüglich anonymisiert.",
+        en: "You may withdraw your consent at any time without formality and request deletion of your data. A message to the address in the legal notice is enough. The data is then anonymised without delay.",
+      },
+    ],
+  },
+  {
+    heading: { de: "Keine Cookies, kein Tracking", en: "No cookies, no tracking" },
+    body: [
+      {
+        de: "Im öffentlichen Teil dieser Website werden keine Cookies gespeichert und es wird nicht auf Informationen in Ihrer Endeinrichtung zugegriffen. Eine Einwilligung nach § 25 TDDDG ist deshalb nicht erforderlich, und es wird kein Einwilligungsbanner angezeigt.",
+        en: "The public part of this website stores no cookies and does not access information on your device. Consent under § 25 TDDDG is therefore not required, and no consent banner is shown.",
+      },
+      {
+        de: "Eine Ausnahme bildet der passwortgeschützte Verwaltungsbereich: dort wird nach der Anmeldung ein Sitzungscookie gesetzt. Es ist für den Betrieb dieses Bereichs unbedingt erforderlich, enthält keine Auswertungsdaten und verfällt nach zwölf Stunden. Für unbedingt erforderliche Cookies verlangt § 25 Absatz 2 TDDDG keine Einwilligung. Besucher der öffentlichen Seiten erhalten dieses Cookie nie.",
+        en: "One exception is the password protected administration area: a session cookie is set there after signing in. It is strictly necessary to operate that area, holds no analytics data and expires after twelve hours. § 25(2) TDDDG requires no consent for strictly necessary cookies. Visitors to the public pages never receive this cookie.",
       },
       {
         de: "Es kommen keine Analyse-, Reichweitenmess-, Remarketing- oder Social-Media-Dienste zum Einsatz. Es sind keine Zählpixel, keine eingebetteten Videos und keine Kartendienste eingebunden.",
@@ -111,7 +151,7 @@ export const privacySections: LegalSection[] = [
     ],
   },
   {
-    heading: { de: "8. Schriftarten und externe Inhalte", en: "8. Fonts and external content" },
+    heading: { de: "Schriftarten und externe Inhalte", en: "Fonts and external content" },
     body: [
       {
         de: "Es werden keine Schriftarten von externen Anbietern nachgeladen. Die Seite verwendet ausschließlich die auf Ihrem Gerät installierten Systemschriften. Sämtliche Bilder, Skripte und Stylesheets werden vom eigenen Server ausgeliefert. Beim Aufruf dieser Website entsteht damit keine Verbindung zu Servern Dritter.",
@@ -120,7 +160,7 @@ export const privacySections: LegalSection[] = [
     ],
   },
   {
-    heading: { de: "9. Empfänger der Daten", en: "9. Recipients of the data" },
+    heading: { de: "Empfänger der Daten", en: "Recipients of the data" },
     body: [
       {
         de: "Eine Weitergabe Ihrer Daten erfolgt nur an den Hostinganbieter als Auftragsverarbeiter sowie an Steuerberatung und Behörden, soweit dies gesetzlich vorgeschrieben ist. Eine Übermittlung in ein Land außerhalb der Europäischen Union findet nicht statt. Ihre Daten werden nicht verkauft und nicht zu Werbezwecken an Dritte gegeben.",
@@ -129,7 +169,7 @@ export const privacySections: LegalSection[] = [
     ],
   },
   {
-    heading: { de: "10. Ihre Rechte", en: "10. Your rights" },
+    heading: { de: "Ihre Rechte", en: "Your rights" },
     body: [
       { de: "Ihnen stehen gegenüber uns folgende Rechte zu:", en: "You have the following rights in relation to us:" },
     ],
@@ -143,7 +183,7 @@ export const privacySections: LegalSection[] = [
     ],
   },
   {
-    heading: { de: "11. Widerspruchsrecht", en: "11. Right to object" },
+    heading: { de: "Widerspruchsrecht", en: "Right to object" },
     body: [
       {
         de: "Sie haben nach Artikel 21 DSGVO das Recht, aus Gründen, die sich aus Ihrer besonderen Situation ergeben, jederzeit gegen die Verarbeitung Sie betreffender Daten Widerspruch einzulegen, soweit die Verarbeitung auf Artikel 6 Absatz 1 Buchstabe f DSGVO beruht. Wir verarbeiten die Daten dann nicht mehr, es sei denn, wir können zwingende schutzwürdige Gründe nachweisen.",
@@ -152,7 +192,7 @@ export const privacySections: LegalSection[] = [
     ],
   },
   {
-    heading: { de: "12. Beschwerde bei der Aufsichtsbehörde", en: "12. Complaint to the supervisory authority" },
+    heading: { de: "Beschwerde bei der Aufsichtsbehörde", en: "Complaint to the supervisory authority" },
     body: [
       {
         de: "Unbeschadet anderer Rechtsbehelfe steht Ihnen ein Beschwerderecht bei einer Datenschutz-Aufsichtsbehörde zu, insbesondere in dem Mitgliedstaat Ihres Aufenthaltsorts oder des Orts des mutmaßlichen Verstoßes. Für uns zuständig ist:",
@@ -162,7 +202,7 @@ export const privacySections: LegalSection[] = [
     ],
   },
   {
-    heading: { de: "13. Datensicherheit", en: "13. Data security" },
+    heading: { de: "Datensicherheit", en: "Data security" },
     body: [
       {
         de: "Die Website wird ausschließlich über eine TLS-verschlüsselte Verbindung ausgeliefert. Damit sind die zwischen Ihrem Browser und dem Server übertragenen Inhalte gegen Mitlesen durch Dritte geschützt. Ergänzend setzen wir technische und organisatorische Maßnahmen nach Artikel 32 DSGVO ein.",
@@ -171,7 +211,7 @@ export const privacySections: LegalSection[] = [
     ],
   },
   {
-    heading: { de: "14. Stand dieser Erklärung", en: "14. Status of this notice" },
+    heading: { de: "Stand dieser Erklärung", en: "Status of this notice" },
     body: [
       {
         de: "Diese Datenschutzerklärung wird angepasst, sobald sich die Rechtslage oder die Verarbeitung auf dieser Website ändert. Letzte Prüfung: {{reviewed}}.",
@@ -188,7 +228,7 @@ export const termsIntro: L = {
 
 export const termsSections: LegalSection[] = [
   {
-    heading: { de: "1. Geltungsbereich", en: "1. Scope" },
+    heading: { de: "Geltungsbereich", en: "Scope" },
     body: [
       {
         de: "Diese Bedingungen gelten in der bei Vertragsschluss gültigen Fassung. Abweichende Bedingungen des Auftraggebers werden nur Vertragsbestandteil, wenn ihnen ausdrücklich in Textform zugestimmt wurde.",
@@ -201,7 +241,7 @@ export const termsSections: LegalSection[] = [
     ],
   },
   {
-    heading: { de: "2. Angebot und Vertragsschluss", en: "2. Quotation and conclusion of contract" },
+    heading: { de: "Angebot und Vertragsschluss", en: "Quotation and conclusion of contract" },
     body: [
       {
         de: "Darstellungen auf dieser Website sind unverbindlich und stellen kein Angebot im Rechtssinne dar. Ein Vertrag kommt erst durch ein schriftliches Angebot und dessen Annahme in Textform zustande.",
@@ -214,7 +254,7 @@ export const termsSections: LegalSection[] = [
     ],
   },
   {
-    heading: { de: "3. Leistungsumfang und Abgrenzung", en: "3. Scope of services and limits" },
+    heading: { de: "Leistungsumfang und Abgrenzung", en: "Scope of services and limits" },
     body: [
       {
         de: "Der Umfang der Leistung ergibt sich aus dem Angebot und dem darin vereinbarten Leistungsverzeichnis. Nicht beauftragte Arbeiten werden nicht ausgeführt.",
@@ -227,7 +267,7 @@ export const termsSections: LegalSection[] = [
     ],
   },
   {
-    heading: { de: "4. Mitwirkung des Auftraggebers", en: "4. Client cooperation" },
+    heading: { de: "Mitwirkung des Auftraggebers", en: "Client cooperation" },
     body: [
       {
         de: "Der Auftraggeber stellt zum vereinbarten Termin den Zugang zum Objekt sicher und ermöglicht die Nutzung von Wasser und Strom, soweit dies zur Leistungserbringung erforderlich ist.",
@@ -240,7 +280,7 @@ export const termsSections: LegalSection[] = [
     ],
   },
   {
-    heading: { de: "5. Schlüssel und Zugangsmittel", en: "5. Keys and access" },
+    heading: { de: "Schlüssel und Zugangsmittel", en: "Keys and access" },
     body: [
       {
         de: "Übergebene Schlüssel und Zugangsmittel werden gegen Quittung entgegengenommen, gesichert aufbewahrt und ausschließlich zur Erfüllung des Vertrags verwendet. Bei Vertragsende werden sie unverzüglich zurückgegeben.",
@@ -249,7 +289,7 @@ export const termsSections: LegalSection[] = [
     ],
   },
   {
-    heading: { de: "6. Termine und Ausführung", en: "6. Appointments and performance" },
+    heading: { de: "Termine und Ausführung", en: "Appointments and performance" },
     body: [
       {
         de: "Termine werden verbindlich vereinbart. Bei höherer Gewalt, extremen Witterungsereignissen oder unvorhersehbarem Personalausfall verschiebt sich die Leistungszeit angemessen. Der Auftraggeber wird unverzüglich informiert.",
@@ -262,7 +302,7 @@ export const termsSections: LegalSection[] = [
     ],
   },
   {
-    heading: { de: "7. Preise und Zahlung", en: "7. Prices and payment" },
+    heading: { de: "Preise und Zahlung", en: "Prices and payment" },
     body: [
       {
         de: "Preise gegenüber Verbrauchern verstehen sich als Endpreise einschließlich der gesetzlichen Umsatzsteuer. Preise gegenüber Unternehmern verstehen sich netto zuzüglich Umsatzsteuer in gesetzlicher Höhe.",
@@ -275,7 +315,7 @@ export const termsSections: LegalSection[] = [
     ],
   },
   {
-    heading: { de: "8. Mängel", en: "8. Defects" },
+    heading: { de: "Mängel", en: "Defects" },
     body: [
       {
         de: "Der Auftraggeber zeigt erkennbare Mängel innerhalb von sieben Tagen nach Ausführung in Textform an. Innerhalb der gesetzlichen Verjährungsfristen besteht Anspruch auf Nacherfüllung. Schlägt die Nacherfüllung zweimal fehl, bestehen die gesetzlichen Rechte auf Minderung oder Rücktritt.",
@@ -288,7 +328,7 @@ export const termsSections: LegalSection[] = [
     ],
   },
   {
-    heading: { de: "9. Haftung", en: "9. Liability" },
+    heading: { de: "Haftung", en: "Liability" },
     body: [
       {
         de: "Die Haftung ist unbeschränkt bei Vorsatz und grober Fahrlässigkeit, bei der Verletzung von Leben, Körper oder Gesundheit sowie in den Fällen des Produkthaftungsgesetzes und einer übernommenen Garantie.",
@@ -305,7 +345,7 @@ export const termsSections: LegalSection[] = [
     ],
   },
   {
-    heading: { de: "10. Winterdienst", en: "10. Winter service" },
+    heading: { de: "Winterdienst", en: "Winter service" },
     body: [
       {
         de: "Bei beauftragtem Winterdienst geht die Räum- und Streupflicht im vereinbarten Umfang und innerhalb der vereinbarten Zeiten auf uns über. Umfang, Flächen und Zeitfenster werden im Angebot festgelegt. Außerhalb dieser Zeiten und außerhalb der bezeichneten Flächen verbleibt die Verkehrssicherungspflicht beim Auftraggeber.",
@@ -318,7 +358,7 @@ export const termsSections: LegalSection[] = [
     ],
   },
   {
-    heading: { de: "11. Laufzeit und Kündigung", en: "11. Term and termination" },
+    heading: { de: "Laufzeit und Kündigung", en: "Term and termination" },
     body: [
       {
         de: "Dauerschuldverhältnisse werden auf unbestimmte Zeit geschlossen und können von beiden Seiten mit einer Frist von vier Wochen zum Monatsende in Textform gekündigt werden, sofern im Vertrag nichts anderes vereinbart ist. Das Recht zur außerordentlichen Kündigung aus wichtigem Grund bleibt unberührt.",
@@ -327,7 +367,7 @@ export const termsSections: LegalSection[] = [
     ],
   },
   {
-    heading: { de: "12. Datenschutz", en: "12. Data protection" },
+    heading: { de: "Datenschutz", en: "Data protection" },
     body: [
       {
         de: "Personenbezogene Daten werden ausschließlich zur Durchführung des Vertrags verarbeitet. Einzelheiten regelt die Datenschutzerklärung.",
@@ -336,7 +376,7 @@ export const termsSections: LegalSection[] = [
     ],
   },
   {
-    heading: { de: "13. Schlussbestimmungen", en: "13. Final provisions" },
+    heading: { de: "Schlussbestimmungen", en: "Final provisions" },
     body: [
       {
         de: "Es gilt das Recht der Bundesrepublik Deutschland. Bei Verbrauchern gilt diese Rechtswahl nur, soweit dadurch der Schutz zwingender Vorschriften des Staates des gewöhnlichen Aufenthalts nicht entzogen wird.",

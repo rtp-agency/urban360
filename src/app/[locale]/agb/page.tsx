@@ -48,7 +48,12 @@ export default async function TermsPage({ params }: { params: Promise<{ locale: 
         </p>
 
         <div className="mt-8">
-          <LegalSections locale={locale} sections={withdrawalSections} values={values} />
+          <LegalSections
+            locale={locale}
+            sections={withdrawalSections}
+            values={values}
+            numbered={false}
+          />
         </div>
       </div>
     </LegalLayout>
