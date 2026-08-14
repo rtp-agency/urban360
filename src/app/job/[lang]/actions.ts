@@ -9,6 +9,7 @@ import {
   candidateTags,
   candidates,
   db,
+  postalCodes,
 } from "@/db";
 import { eq } from "drizzle-orm";
 import { applicationSchema } from "@/lib/validation";
@@ -104,7 +105,15 @@ export async function submitApplication(raw: unknown, trap: string): Promise<Sub
           .values(input.permits.map((permit) => ({ candidateId: row.id, permit })));
       }
 
-      const tags = deriveTags(input, now);
+      // Ortsname aus dem Verzeichnis, damit auch Orte außerhalb des
+      // Kerngebiets ein brauchbares Schlagwort bekommen.
+      const [place] = await tx
+        .select({ city: postalCodes.city })
+        .from(postalCodes)
+        .where(eq(postalCodes.plz, input.postalCode))
+        .limit(1);
+
+      const tags = deriveTags(input, now, place?.city);
       if (tags.length) {
         await tx
           .insert(candidateTags)

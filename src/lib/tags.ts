@@ -18,7 +18,13 @@ import type { ApplicationInput } from "./validation";
 /** Ab wie vielen Tagen Vorlauf gilt jemand noch als "sofort verfügbar". */
 const SOFORT_WITHIN_DAYS = 3;
 
-export function deriveTags(input: ApplicationInput, today: Date): string[] {
+/**
+ * @param plzCity Ortsname aus dem Postleitzahlenverzeichnis. Dient als
+ *   Rückfalllösung für Orte außerhalb des Kerngebiets: dort gibt es keine
+ *   festgelegte Kurzform, der amtliche Ortsname ist die bessere Auskunft als
+ *   gar kein Schlagwort.
+ */
+export function deriveTags(input: ApplicationInput, today: Date, plzCity?: string): string[] {
   const tags = new Set<string>();
 
   tags.add("NEU");
@@ -27,7 +33,7 @@ export function deriveTags(input: ApplicationInput, today: Date): string[] {
     tags.add(SKILL_TAGS[skill as Skill]);
   }
 
-  const location = locationTagFor(input.postalCode);
+  const location = locationTagFor(input.postalCode) ?? normalizeCityTag(plzCity);
   if (location) tags.add(location);
 
   if (input.availability.includes("vollzeit")) tags.add("VOLLZEIT");
@@ -59,6 +65,16 @@ export function locationTagFor(postalCode: string): string | null {
     const len = Math.max(...entry.plzPrefixes.map((p) => p.length));
     return len > bestLen ? entry : best;
   }).tag;
+}
+
+/**
+ * Ortsname zu einem Schlagwort machen. Großbuchstaben, ohne Zusätze in
+ * Klammern, gekappt: "Frankfurt am Main (Innenstadt)" wird FRANKFURT AM MAIN.
+ */
+function normalizeCityTag(city: string | undefined): string | null {
+  if (!city) return null;
+  const cleaned = city.replace(/\(.*\)/g, "").trim().toUpperCase();
+  return cleaned.length >= 2 ? cleaned.slice(0, 32) : null;
 }
 
 function isAvailableSoon(availableFrom: string | undefined, today: Date): boolean {
