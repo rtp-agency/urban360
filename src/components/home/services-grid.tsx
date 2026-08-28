@@ -22,7 +22,11 @@ export function ServicesGrid({ locale }: { locale: Locale }) {
   return (
     <Section id="leistungen" tone="sunken">
       <Reveal>
-        <SectionHead title={t(home.servicesTitle, locale)} text={t(home.servicesText, locale)} />
+        <SectionHead
+          label={t(home.servicesEyebrow, locale)}
+          title={t(home.servicesTitle, locale)}
+          text={t(home.servicesText, locale)}
+        />
       </Reveal>
 
       <div className="mt-12 grid gap-4">

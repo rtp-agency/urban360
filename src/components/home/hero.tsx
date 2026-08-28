@@ -2,10 +2,29 @@ import { ButtonLink, TextLink } from "@/components/ui";
 import { Figure } from "@/components/figure";
 import { Reveal } from "@/components/reveal";
 import { home, nav } from "@/content/copy";
-import { contact, type Locale } from "@/content/site.config";
+import { servicePackages } from "@/content/services";
+import { claims, contact, type Locale } from "@/content/site.config";
 import { href, t } from "@/lib/i18n";
 
 export function Hero({ locale }: { locale: Locale }) {
+  const specs = [
+    {
+      label: t(home.heroSpecScope, locale),
+      /* Gezählt, nicht gepflegt: wer eine Leistungsgruppe ergänzt, ändert
+         services.ts, und die Zahl hier zieht von selbst nach. */
+      value: String(servicePackages.length).padStart(2, "0"),
+    },
+    { label: t(home.heroSpecArea, locale), value: t(contact.serviceArea, locale) },
+    ...(claims.fixedContact
+      ? [
+          {
+            label: t(home.heroSpecContact, locale),
+            value: t(home.heroSpecContactValue, locale),
+          },
+        ]
+      : []),
+  ];
+
   return (
     <section className="u-shell pt-14 pb-20 md:pt-24 md:pb-28">
       <div className="grid items-center gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16">
@@ -48,16 +67,32 @@ export function Hero({ locale }: { locale: Locale }) {
         </Reveal>
       </div>
 
-      <Reveal
-       
-        className="u-rule mt-16 flex flex-col gap-2 pt-6 md:mt-20 md:flex-row md:items-baseline md:justify-between"
-      >
-        <p className="text-[15px] text-muted">
-          {locale === "de" ? "Einsatzgebiet" : "Service area"}: {t(contact.serviceArea, locale)}
-        </p>
-        <TextLink href={href(locale, "kontakt")}>
-          {locale === "de" ? "Objekt anfragen" : "Ask about your property"}
-        </TextLink>
+      {/* Kennwerte statt eines einzelnen Satzes über das Einsatzgebiet.
+          Drei nüchterne Angaben unter dem Hero geben der Seite den Ton eines
+          Betriebs und nicht den einer Broschüre.
+
+          Jeder Wert ist belegbar: die Anzahl ist aus dem Leistungskatalog
+          gezählt, das Gebiet steht in der Konfiguration, und der feste
+          Ansprechpartner erscheint nur, solange claims.fixedContact gesetzt
+          ist. Damit kann hier keine Zusage stehen, die nicht auch in
+          site.config als zutreffend markiert wurde. */}
+      <Reveal className="u-rule mt-16 pt-7 md:mt-20 md:pt-8">
+        <dl className="grid gap-7 sm:grid-cols-3 sm:gap-6">
+          {specs.map((spec) => (
+            <div key={spec.label}>
+              <dt className="u-label">{spec.label}</dt>
+              <dd className="u-nums mt-2.5 text-[17px] leading-snug font-medium text-ink">
+                {spec.value}
+              </dd>
+            </div>
+          ))}
+        </dl>
+
+        <div className="mt-8">
+          <TextLink href={href(locale, "kontakt")}>
+            {locale === "de" ? "Objekt anfragen" : "Ask about your property"}
+          </TextLink>
+        </div>
       </Reveal>
     </section>
   );

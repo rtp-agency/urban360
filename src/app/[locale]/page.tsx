@@ -1,6 +1,7 @@
 import { Hero } from "@/components/home/hero";
 import { SegmentsList } from "@/components/home/segments-list";
 import { ServicesGrid } from "@/components/home/services-grid";
+import { SeasonSection } from "@/components/home/season-section";
 import { ProcessRail } from "@/components/home/process-rail";
 import { TaxPanel } from "@/components/home/tax-panel";
 import { Assurance } from "@/components/home/assurance";
@@ -16,6 +17,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
       <Hero locale={locale} />
       <SegmentsList locale={locale} />
       <ServicesGrid locale={locale} />
+      <SeasonSection locale={locale} />
       <ProcessRail locale={locale} />
       <TaxPanel locale={locale} />
       <Assurance locale={locale} />

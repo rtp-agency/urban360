@@ -35,6 +35,22 @@
   --color-accent-ink: #ffffff;
   --color-accent-soft: #e8f2ee;
 
+  /* Sequentielle Rampe für Diagramme. EIN Ton in drei Stufen, aus dem
+     Akzent abgeleitet, kein zweiter Farbkreis. Stufe 3 trägt immer den
+     stärksten Kontrast zur Fläche, Stufe 1 den schwächsten.
+
+     Die Stufen sind gerechnet, nicht geschätzt: monotone Helligkeit,
+     Abstand je Stufe >= 0.06 L, und die hellste Stufe erreicht 2,13:1
+     gegen Weiß. Eine hellere Stufe verschwindet auf der Fläche und wäre
+     als Datenwert nicht mehr ablesbar. */
+  --color-chart-1: #7cbfa5;
+  --color-chart-2: #3d9174;
+  --color-chart-3: #0f6b4f;
+
+  /* Achsen und Netz liegen unter den Daten und dürfen nie mit ihnen
+     konkurrieren. Deshalb Hairline-Stärke, nicht Akzent. */
+  --color-grid: rgb(0 0 0 / 0.07);
+
   /* Zustandsfarbe für Formularfehler. Kein zweiter Markenakzent, sondern
      Semantik: ein Fehler in Akzentgrün wäre für Nutzende nicht als Fehler
      erkennbar. Die Meldung steht zusätzlich immer als Text da, Farbe ist
@@ -65,6 +81,16 @@
     --color-accent: #3fbc90;
     --color-accent-ink: #06231a;
     --color-accent-soft: #142a23;
+
+    /* Im Dunkeln kehrt sich die Rampe um: die kräftigste Stufe ist die
+       hellste. Kein automatisches Umdrehen der hellen Werte, sondern
+       eigene Stufen, gegen die dunkle Fläche geprüft (2,66:1 am
+       schwächsten Ende). */
+    --color-chart-1: #2f6450;
+    --color-chart-2: #3fbc90;
+    --color-chart-3: #8fe0c0;
+
+    --color-grid: rgb(255 255 255 / 0.09);
 
     --color-danger: #ff8a80;
   }
@@ -142,6 +168,63 @@
     .u-panel {
       box-shadow: 0 1px 2px rgb(0 0 0 / 0.4), 0 12px 32px -20px rgb(0 0 0 / 0.8);
     }
+  }
+
+  /* -------------------------------------------------------------------------
+     Kleines Etikett über einer Sektion oder einem Diagramm.
+
+     Versalien sind hier kein Stilmittel, sondern eine Rangzuweisung: das
+     Etikett soll als Beschriftung gelesen werden und nie mit der Überschrift
+     darunter konkurrieren. Deshalb klein, gesperrt und in der gedämpften
+     Schriftfarbe. Für echte Überschriften wird diese Klasse nicht benutzt.
+  ------------------------------------------------------------------------- */
+  .u-label {
+    font-size: 11px;
+    line-height: 1;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-muted);
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Ziffern mit fester Laufweite. In Diagrammen und Preisangaben springen
+     proportionale Ziffern beim Wechsel der Zahl seitlich weg; tabellarische
+     stehen still und lassen sich spaltenweise vergleichen. */
+  .u-nums {
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.01em;
+  }
+
+  /* Feines Korn gegen die Sterilität reiner Flächen.
+
+     Als data:-URI eingebettet und nicht als Datei: die CSP erlaubt
+     img-src 'self' data:, ein externes Bild wäre ein Drittanbieter-Request.
+     Sehr niedrige Deckkraft, rein dekorativ, nie über Text.
+  ------------------------------------------------------------------------- */
+  .u-grain::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    border-radius: inherit;
+    opacity: 0.038;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .u-grain::after {
+      opacity: 0.055;
+    }
+  }
+
+  /* Diagrammfläche. Etwas straffere Radien als u-panel: eine Grafik wirkt
+     sonst wie ein Aufkleber statt wie ein Datenblatt. */
+  .u-chart {
+    position: relative;
+    background: var(--color-surface);
+    border: 1px solid var(--color-hairline);
+    border-radius: 18px;
   }
 }
 

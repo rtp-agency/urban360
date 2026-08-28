@@ -78,17 +78,22 @@ export function TextLink({
  * Headline schwebt, ist eine Layoutmarotte ohne Funktion.
  */
 export function SectionHead({
+  label,
   title,
   text,
   className = "",
 }: {
+  /** Kurzes Etikett über der Überschrift. Ordnet die Sektion ein, ohne eine
+      zweite Überschriftenebene aufzumachen. */
+  label?: string;
   title: string;
   text?: string;
   className?: string;
 }) {
   return (
     <div className={`max-w-[42ch] ${className}`}>
-      <h2 className="text-3xl font-semibold tracking-tight text-ink md:text-[42px] md:leading-[1.08]">
+      {label ? <p className="u-label mb-4">{label}</p> : null}
+      <h2 className="text-3xl font-semibold tracking-tight text-balance text-ink md:text-[42px] md:leading-[1.08]">
         {title}
       </h2>
       {text ? (

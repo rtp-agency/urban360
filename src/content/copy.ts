@@ -25,6 +25,21 @@ export const home = {
   },
   heroSecondary: { de: "Leistungen ansehen", en: "See the services" },
 
+  /* Kennwerte unter dem Hero. Jeder Wert ist entweder abgezählt (Anzahl der
+     Leistungsgruppen aus services.ts), steht in der Konfiguration
+     (Einsatzgebiet) oder hängt an einem claims-Schalter. Es steht hier
+     bewusst keine Zahl zu Objekten, Kunden oder Reaktionszeiten: die wäre
+     ohne Beleg nach § 5 UWG angreifbar. */
+  heroSpecScope: { de: "Leistungsgruppen", en: "Service groups" },
+  heroSpecArea: { de: "Einsatzgebiet", en: "Service area" },
+  heroSpecContact: { de: "Ansprechpartner", en: "Named contact" },
+  heroSpecContactValue: { de: "Einer je Objekt", en: "One per property" },
+
+  segmentsEyebrow: { de: "Auftraggeber", en: "Clients" },
+  servicesEyebrow: { de: "Leistungen", en: "Services" },
+  processEyebrow: { de: "Ablauf", en: "How it works" },
+  assuranceEyebrow: { de: "Zusagen", en: "Commitments" },
+
   segmentsTitle: {
     de: "Für wen wir arbeiten",
     en: "Who we work for",
@@ -57,8 +72,11 @@ export const home = {
     de: "Nach § 35a EStG sind haushaltsnahe Dienstleistungen und Handwerkerleistungen anteilig von der Steuerschuld abziehbar. Voraussetzung ist eine Rechnung mit getrennt ausgewiesenen Arbeitskosten und die Zahlung per Überweisung. Barzahlung erkennt das Finanzamt nicht an, deshalb rechnen wir ausschließlich unbar ab.",
     en: "Under § 35a of the German Income Tax Act, household services and trade work are partly deductible from your tax bill. It requires an invoice that separates labour costs, and payment by bank transfer. Cash is not accepted by the tax office, which is why we never invoice in cash.",
   },
-  taxNoteA: { de: "auf haushaltsnahe Dienstleistungen, bis 4.000 € im Jahr", en: "on household services, up to €4,000 a year" },
-  taxNoteB: { de: "auf Handwerkerleistungen, bis 1.200 € im Jahr", en: "on trade work, up to €1,200 a year" },
+  /* Die früheren Kacheltexte taxNoteA/taxNoteB sind entfallen: die
+     Höchstbeträge stehen jetzt in der Grafik, zusammen mit ihrer Quelle.
+     Zweimal dieselbe Zahl an zwei Stellen läuft beim nächsten
+     Gesetzesstand auseinander. */
+  taxEyebrow: { de: "§ 35a EStG", en: "§ 35a German Income Tax Act" },
 
   assuranceTitle: {
     de: "Woran Sie uns messen können",
@@ -255,3 +273,75 @@ export const notFound = {
   },
   back: { de: "Zur Startseite", en: "Back to the home page" },
 } satisfies Record<string, L>;
+
+/**
+ * TEXTE DER GRAFIKEN
+ *
+ * Getrennt vom übrigen Marketingtext, weil hier eine andere Regel gilt: jede
+ * Zahl in einer Grafik braucht eine Quelle, und die Quelle steht in der
+ * Fußnote unter der Grafik. Es gibt in diesem Block bewusst keine Angabe zu
+ * Zufriedenheit, Reaktionszeit oder Objektzahl. Solche Werte sind nach § 5
+ * UWG angreifbar, sobald sie nicht belegt sind, und sie lassen sich für einen
+ * Betrieb im Aufbau nicht belegen.
+ */
+export const charts = {
+  months: {
+    de: ["Jan", "Feb", "Mär", "Apr", "Mai", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Dez"],
+    en: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+  } satisfies Record<Locale, string[]>,
+
+  seasonLabel: { de: "Jahresverlauf", en: "Across the year" },
+  seasonTitle: {
+    de: "Betreuung läuft durch, die Saisonarbeiten greifen ineinander",
+    en: "Care runs all year, the seasonal work interlocks",
+  },
+  seasonNote: {
+    de: "Zeitfenster nach unserer Einsatzplanung. Der Winterdienstzeitraum richtet sich nach der Satzung der jeweiligen Kommune, üblich ist November bis April. Ein radikaler Gehölz- und Heckenschnitt ist nach § 39 Abs. 5 BNatSchG nur vom 1. Oktober bis 28. Februar zulässig; Form- und Pflegeschnitte bleiben das ganze Jahr über möglich.",
+    en: "Time windows follow our own scheduling. The winter service period is set by each municipality's by-laws, commonly November to April. Radical cutting of hedges and woody plants is permitted only from 1 October to 28 February under § 39 (5) of the Federal Nature Conservation Act; shaping and maintenance cuts remain possible all year.",
+  },
+  seasonRows: {
+    objekt: {
+      label: { de: "Objektbetreuung", en: "Property care" },
+      spoken: { de: "Ganzjährig, Januar bis Dezember.", en: "All year, January to December." },
+    },
+    reinigung: {
+      label: { de: "Reinigung", en: "Cleaning" },
+      spoken: { de: "Ganzjährig, Januar bis Dezember.", en: "All year, January to December." },
+    },
+    gruen: {
+      label: { de: "Grünpflege", en: "Grounds care" },
+      spoken: { de: "März bis November.", en: "March to November." },
+    },
+    winter: {
+      label: { de: "Winterdienst", en: "Winter service" },
+      spoken: { de: "November bis April.", en: "November to April." },
+    },
+    hecke: {
+      label: { de: "Heckenschnitt, radikal", en: "Hedge cutting, radical" },
+      spoken: { de: "Oktober bis Februar.", en: "October to February." },
+    },
+  },
+
+  taxLabel: { de: "Beispielrechnung", en: "Worked example" },
+  taxChartTitle: {
+    de: "Die Ermäßigung greift auf den Arbeitsanteil, nicht auf die Rechnung",
+    en: "The relief applies to the labour share, not to the invoice",
+  },
+  taxChartNote: {
+    de: "Beispielrechnung zur Veranschaulichung, keine Steuerberatung und keine Preisangabe. Maßgeblich ist § 35a EStG: 20 % der Arbeitskosten, im Jahr höchstens 4.000 € bei haushaltsnahen Dienstleistungen und 1.200 € bei Handwerkerleistungen. Vorausgesetzt sind eine Rechnung mit getrennt ausgewiesenem Arbeitsanteil und die Zahlung per Überweisung.",
+    en: "An illustrative example, not tax advice and not a price quote. The governing rule is § 35a of the German Income Tax Act: 20 % of labour costs, capped per year at €4,000 for household services and €1,200 for trade work. It requires an invoice stating the labour share separately, and payment by bank transfer.",
+  },
+  taxInvoice: { de: "Rechnungsbetrag", en: "Invoice total" },
+  taxMaterial: { de: "Material", en: "Materials" },
+  taxLabour: { de: "Arbeitskosten", en: "Labour" },
+  taxRefundLabel: { de: "Abzug von der Steuerschuld", en: "Deducted from your tax bill" },
+  taxRefundHint: { de: "20 % der Arbeitskosten", en: "20 % of labour costs" },
+  taxCapA: {
+    de: "Höchstbetrag im Jahr für haushaltsnahe Dienstleistungen",
+    en: "Annual cap for household services",
+  },
+  taxCapB: {
+    de: "Höchstbetrag im Jahr für Handwerkerleistungen",
+    en: "Annual cap for trade work",
+  },
+};

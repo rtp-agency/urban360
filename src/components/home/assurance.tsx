@@ -19,7 +19,10 @@ export function Assurance({ locale }: { locale: Locale }) {
   return (
     <Section id="zusagen" tone="sunken">
       <Reveal>
-        <SectionHead title={t(home.assuranceTitle, locale)} />
+        <SectionHead
+          label={t(home.assuranceEyebrow, locale)}
+          title={t(home.assuranceTitle, locale)}
+        />
       </Reveal>
 
       <div className="mt-12 grid gap-x-12 gap-y-10 md:grid-cols-2">

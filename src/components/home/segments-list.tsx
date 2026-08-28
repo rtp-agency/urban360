@@ -16,7 +16,11 @@ export function SegmentsList({ locale }: { locale: Locale }) {
     <Section id="zielgruppen">
       <div className="grid gap-12 lg:grid-cols-[0.85fr_1.15fr] lg:gap-20">
         <Reveal>
-          <SectionHead title={t(home.segmentsTitle, locale)} text={t(home.segmentsText, locale)} />
+          <SectionHead
+            label={t(home.segmentsEyebrow, locale)}
+            title={t(home.segmentsTitle, locale)}
+            text={t(home.segmentsText, locale)}
+          />
         </Reveal>
 
         <ul className="lg:pt-2">
