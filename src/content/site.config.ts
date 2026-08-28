@@ -25,7 +25,7 @@ export const site = {
     en: "Facility care and building services",
   },
   /** Produktions-URL. Wird für canonical, hreflang und OG benötigt. */
-  url: "https://TODO-domain.de",
+  url: "https://urban360.space",
 } as const;
 
 export const contact = {
@@ -40,8 +40,8 @@ export const contact = {
   /** In tel:-Links verwendet, nur Ziffern und führendes Plus. */
   phoneHref: "tel:+490000000000",
 
-  /** TODO: E-Mail auf der eigenen Domain, nicht bei einem Freemail-Anbieter. */
-  email: "TODO info@domain.de",
+  /** Geschäftliche Adresse auf der eigenen Domain. */
+  email: "info@urban360.space",
 
   /** Erreichbarkeit. Nur angeben, was auch eingehalten wird. */
   hours: {
