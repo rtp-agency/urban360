@@ -674,7 +674,7 @@ export function ApplicationForm({ locale }: { locale: AppLocale }) {
       {/* Steuerung klebt unten: auf dem Telefon ist das die Zone, die der
           Daumen ohne Umgreifen erreicht. */}
       <div className="fixed inset-x-0 bottom-0 border-t border-hairline bg-canvas/95 backdrop-blur-xl">
-        <div className="mx-auto flex max-w-[640px] items-center gap-3 px-5 py-3">
+        <div className="mx-auto flex max-w-[640px] items-center gap-3 px-5 pt-3 pb-[calc(0.75rem+env(safe-area-inset-bottom))]">
           {step > 0 ? (
             <button
               type="button"
