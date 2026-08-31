@@ -3,24 +3,35 @@
 /* ---------------------------------------------------------------------------
    TYPOGRAFIE
 
-   Es wird bewusst KEIN Webfont geladen.
+   Geist, selbst ausgeliefert über next/font. KEIN fremdes CDN.
 
-   1. Rechtlich: jeder Font von einem fremden CDN (Google Fonts) überträgt die
-      IP-Adresse des Besuchers an einen Dritten. Ohne Einwilligung ist das ein
-      DSGVO-Verstoß, für den es bereits Urteile und Abmahnwellen gibt.
-   2. Lizenzrechtlich: SF Pro darf nach Apples Font-Lizenz nicht als Webfont
-      ausgeliefert werden. Der System-Stack unten nutzt SF Pro nur dort, wo es
-      auf dem Gerät bereits installiert ist, also auf iPhone, iPad und Mac.
-      Auf Windows greift Segoe UI, auf Android Roboto. Alle drei sind die
-      native UI-Schrift der jeweiligen Plattform.
-   3. Performance: null zusätzliche Requests, kein FOUT, kein Layout Shift.
+   1. Rechtlich: eine Schrift von Google Fonts überträgt die IP-Adresse des
+      Besuchers an einen Dritten. Genau dafür gab es die Abmahnwelle. Hier
+      liegen die Dateien auf der eigenen Domain, es entsteht kein
+      Drittanbieter-Request und die CSP bleibt mit font-src 'self' zu.
+   2. Lizenz: Geist steht unter der SIL Open Font License, die Auslieferung
+      als Webfont ist ausdrücklich erlaubt. SF Pro wäre es nicht, deshalb
+      stand hier vorher der Systemstack.
+   3. Performance: next/font bindet die Dateien mit font-display: swap ein
+      und lädt nur die benutzten Schnitte. Der Systemstack bleibt als
+      Fallback stehen, damit vor dem Laden nichts springt.
+
+   Zwei Familien mit klarer Aufgabenteilung: die Grotesk trägt Fließtext und
+   Überschriften, die Monospace trägt Etiketten, Zahlen und Diagrammachsen.
+   Das ist keine Dekoration, sondern die Trennung von Prosa und Daten, und
+   sie ist der Grund, warum die Seite nicht mehr wie ein einziger Textblock
+   wirkt.
 --------------------------------------------------------------------------- */
 
 @theme {
   --font-sans:
-    -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text",
-    "Helvetica Neue", "Segoe UI Variable Display", "Segoe UI", Roboto,
-    system-ui, sans-serif;
+    var(--font-geist-sans), -apple-system, BlinkMacSystemFont, "SF Pro Display",
+    "SF Pro Text", "Helvetica Neue", "Segoe UI Variable Display", "Segoe UI",
+    Roboto, system-ui, sans-serif;
+
+  --font-mono:
+    var(--font-geist-mono), ui-monospace, SFMono-Regular, "SF Mono", Menlo,
+    Consolas, monospace;
 
   /* Neutrale Basis. Kühl, nicht warm. Eine Palette für die ganze Seite. */
   --color-canvas: #fbfbfd;
@@ -50,6 +61,12 @@
   /* Achsen und Netz liegen unter den Daten und dürfen nie mit ihnen
      konkurrieren. Deshalb Hairline-Stärke, nicht Akzent. */
   --color-grid: rgb(0 0 0 / 0.07);
+
+  /* Fläche für den Schlussblock. Sie ist IMMER dunkel, in beiden Modi.
+     Ein Band, das im Dunkelmodus nach Weiß kippt, blendet mitten in einer
+     sonst ruhigen Seite; hier bleibt es ein Kontrast, kein Blitz. */
+  --color-statement: #141416;
+  --color-statement-ink: #f4f4f6;
 
   /* Zustandsfarbe für Formularfehler. Kein zweiter Markenakzent, sondern
      Semantik: ein Fehler in Akzentgrün wäre für Nutzende nicht als Fehler
@@ -91,6 +108,10 @@
     --color-chart-3: #8fe0c0;
 
     --color-grid: rgb(255 255 255 / 0.09);
+
+    /* Im Dunkeln nur eine Stufe über der Fläche statt eines harten Sprungs. */
+    --color-statement: #1e1e22;
+    --color-statement-ink: #f4f4f6;
 
     --color-danger: #ff8a80;
   }
@@ -179,10 +200,11 @@
      Schriftfarbe. Für echte Überschriften wird diese Klasse nicht benutzt.
   ------------------------------------------------------------------------- */
   .u-label {
+    font-family: var(--font-mono);
     font-size: 11px;
     line-height: 1;
-    font-weight: 600;
-    letter-spacing: 0.14em;
+    font-weight: 500;
+    letter-spacing: 0.1em;
     text-transform: uppercase;
     color: var(--color-muted);
     font-variant-numeric: tabular-nums;
@@ -194,6 +216,15 @@
   .u-nums {
     font-variant-numeric: tabular-nums;
     letter-spacing: -0.01em;
+  }
+
+  /* Zahlen, die als Messwert gelesen werden sollen: Kennwerte, Beträge,
+     Diagrammachsen. Die Monospace macht sie spaltentreu und hebt sie
+     hörbar vom Fließtext ab. */
+  .u-data {
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.02em;
   }
 
   /* Feines Korn gegen die Sterilität reiner Flächen.
@@ -215,6 +246,29 @@
   @media (prefers-color-scheme: dark) {
     .u-grain::after {
       opacity: 0.055;
+    }
+  }
+
+  /* Karte, die auf den Zeiger reagiert. Anheben und ein Hauch Akzent in
+     der Kontur, mehr nicht: eine Karte, die sich beim Überfahren vergrößert
+     oder färbt, schiebt das Raster daneben optisch weg.
+
+     Nur dort, wo der Zeiger auch wirklich schwebt. Auf dem Telefon gibt es
+     kein Hover, dort würde der Zustand am Finger kleben bleiben. */
+  @media (hover: hover) and (pointer: fine) {
+    .u-lift {
+      transition:
+        transform 0.35s var(--ease-out-soft),
+        border-color 0.35s var(--ease-out-soft),
+        box-shadow 0.35s var(--ease-out-soft);
+    }
+
+    .u-lift:hover {
+      transform: translateY(-3px);
+      border-color: color-mix(in oklab, var(--color-accent) 40%, var(--color-hairline));
+      box-shadow:
+        0 1px 2px rgb(29 29 31 / 0.05),
+        0 22px 44px -26px rgb(29 29 31 / 0.4);
     }
   }
 
@@ -269,5 +323,36 @@
 @media (max-width: 767px) {
   .u-reveal {
     animation: none;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Parallaxe im Bild
+
+   Das Bild wandert langsamer als die Seite. Umgesetzt über dieselbe
+   Scroll-Timeline wie die Eintrittsbewegung, also ohne JavaScript und ohne
+   Scroll-Listener, der bei jedem Rad-Tick Layout anfasst.
+
+   Der Maßstab ist überzogen, damit das Verschieben nicht am Rand vorbeiläuft
+   und eine Blöße zeigt. Ohne Unterstützung, ohne Bewegungswunsch und auf
+   schmalen Geräten steht das Bild einfach still.
+--------------------------------------------------------------------------- */
+@keyframes u-drift {
+  from {
+    transform: translate3d(0, -3.5%, 0) scale(1.12);
+  }
+  to {
+    transform: translate3d(0, 3.5%, 0) scale(1.12);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) and (min-width: 768px) {
+  @supports (animation-timeline: view()) {
+    .u-drift img {
+      animation: u-drift linear both;
+      animation-timeline: view();
+      animation-range: entry 0% exit 100%;
+      will-change: transform;
+    }
   }
 }

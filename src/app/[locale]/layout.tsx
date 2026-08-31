@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
+import { GeistSans } from "geist/font/sans";
+import { GeistMono } from "geist/font/mono";
 import { notFound } from "next/navigation";
 import { isDraft } from "@/app/robots";
 import { SiteHeader } from "@/components/site-header";
@@ -56,7 +58,10 @@ export default async function LocaleLayout({
   const typed = locale as Locale;
 
   return (
-    <html lang={htmlLang[typed]} suppressHydrationWarning>
+    <html lang={htmlLang[typed]}
+      className={`${GeistSans.variable} ${GeistMono.variable}`}
+      suppressHydrationWarning
+    >
       <head>
         {/* Farbe der Systemleisten in beiden Modi, passend zur Canvas-Fläche. */}
         <meta name="theme-color" content="#fbfbfd" media="(prefers-color-scheme: light)" />

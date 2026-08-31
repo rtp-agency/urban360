@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
+import { GeistSans } from "geist/font/sans";
+import { GeistMono } from "geist/font/mono";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { APPLICATION_LOCALES, DEFAULT_APP_LOCALE, isAppLocale } from "@/content/recruiting";
@@ -48,7 +50,10 @@ export default async function JobLayout({
   if (!isAppLocale(lang)) notFound();
 
   return (
-    <html lang={HTML_LANG[lang]} suppressHydrationWarning>
+    <html lang={HTML_LANG[lang]}
+      className={`${GeistSans.variable} ${GeistMono.variable}`}
+      suppressHydrationWarning
+    >
       <head>
         <meta name="theme-color" content="#fbfbfd" media="(prefers-color-scheme: light)" />
         <meta name="theme-color" content="#0b0b0c" media="(prefers-color-scheme: dark)" />

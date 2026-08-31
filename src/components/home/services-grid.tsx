@@ -31,7 +31,7 @@ export function ServicesGrid({ locale }: { locale: Locale }) {
 
       <div className="mt-12 grid gap-4">
         <Reveal>
-          <article className="u-panel grid gap-8 p-6 md:grid-cols-[0.95fr_1.05fr] md:items-center md:gap-10 md:p-8">
+          <article className="u-panel u-lift grid gap-8 p-6 md:grid-cols-[0.95fr_1.05fr] md:items-center md:gap-10 md:p-8">
             <div>
               <Icon name={feature.icon} size={24} className="text-accent" />
               <h3 className="mt-5 text-2xl font-semibold tracking-tight text-ink md:text-[28px]">
@@ -66,7 +66,7 @@ export function ServicesGrid({ locale }: { locale: Locale }) {
           {rest.map((pack, index) => (
             <Reveal key={pack.id} className="flex">
               <article
-                className={`u-panel flex w-full flex-col p-6 ${
+                className={`u-panel u-lift flex w-full flex-col p-6 ${
                   index === 1 ? "bg-accent-soft" : ""
                 }`}
               >

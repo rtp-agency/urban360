@@ -25,6 +25,11 @@ export const home = {
   },
   heroSecondary: { de: "Leistungen ansehen", en: "See the services" },
 
+  heroEyebrow: {
+    de: "Hausmeisterservice · Reinigung · Grünpflege",
+    en: "Caretaking · Cleaning · Grounds care",
+  },
+
   /* Kennwerte unter dem Hero. Jeder Wert ist entweder abgezählt (Anzahl der
      Leistungsgruppen aus services.ts), steht in der Konfiguration
      (Einsatzgebiet) oder hängt an einem claims-Schalter. Es steht hier
