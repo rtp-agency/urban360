@@ -92,7 +92,16 @@ export function SectionHead({
 }) {
   return (
     <div className={`max-w-[42ch] ${className}`}>
-      {label ? <p className="u-label mb-4">{label}</p> : null}
+      {label ? (
+        /* Das Etikett trägt jetzt die Akzentfarbe und einen Punkt davor.
+           In Grau war es zwar korrekt untergeordnet, aber es verschwand:
+           acht Sektionen begannen sichtbar mit derselben grauen Zeile.
+           Der Punkt ist dekorativ und deshalb aria-hidden. */
+        <p className="u-label mb-4 flex items-center gap-2 text-accent">
+          <span aria-hidden className="size-1.5 rounded-full bg-accent" />
+          {label}
+        </p>
+      ) : null}
       <h2 className="text-3xl font-semibold tracking-tight text-balance text-ink md:text-[42px] md:leading-[1.08]">
         {title}
       </h2>

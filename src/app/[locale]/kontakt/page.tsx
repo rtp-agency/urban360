@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { ContactForm } from "@/components/contact-form";
+import { PageHeader } from "@/components/page-header";
 import { Reveal } from "@/components/reveal";
 import { contactPage, meta, nav } from "@/content/copy";
 import { contact } from "@/content/site.config";
@@ -37,23 +38,19 @@ export default async function ContactPageRoute({
   ];
 
   return (
-    <section className="u-shell pt-14 pb-24 md:pt-24 md:pb-28">
-      <Reveal>
-        <h1 className="text-[40px] leading-[1.07] font-semibold tracking-tight text-ink md:text-[56px]">
-          {t(contactPage.title, locale)}
-        </h1>
-        <p className="mt-6 max-w-[52ch] text-[17px] leading-relaxed text-muted md:text-xl">
-          {t(contactPage.lead, locale)}
-        </p>
-      </Reveal>
-
+    <PageHeader
+      eyebrow={t(nav.kontakt, locale)}
+      title={t(contactPage.title, locale)}
+      lead={t(contactPage.lead, locale)}
+      className="pb-24 md:pb-28"
+    >
       <div className="mt-14 grid gap-12 lg:grid-cols-[1.15fr_0.85fr] lg:gap-20">
         <Reveal>
           <ContactForm locale={locale} />
         </Reveal>
 
         <Reveal>
-          <div className="border-t border-hairline pt-6 lg:border-t-0 lg:pt-0">
+          <div className="u-panel p-7 md:p-8">
             <h2 className="text-xl font-semibold tracking-tight text-ink">
               {t(contactPage.directTitle, locale)}
             </h2>
@@ -93,6 +90,6 @@ export default async function ContactPageRoute({
           </div>
         </Reveal>
       </div>
-    </section>
+    </PageHeader>
   );
 }

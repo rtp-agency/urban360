@@ -14,10 +14,17 @@ import { href, t } from "@/lib/i18n";
  * Die Fläche ist in beiden Modi dunkel. Ein Band, das im Dunkelmodus nach
  * Weiß kippt, wäre mitten in einer ruhigen Seite ein Blitz. Die Tokens dafür
  * stehen in globals.css.
+ *
+ * Neu darüber liegt ein Lichtfeld in Akzentfarbe, das von unten in die
+ * Fläche hineinleuchtet (.u-mesh-dark). Reines Dunkelgrün ist am Ende einer
+ * hellen Seite ein Loch; mit dem Schein wirkt der Block wie beleuchtet und
+ * die Schaltfläche darin bekommt einen Grund, dort zu stehen.
  */
 export function ContactBand({ locale }: { locale: Locale }) {
   return (
-    <section className="u-grain relative bg-statement text-statement-ink">
+    <section className="u-grain relative isolate overflow-hidden bg-statement text-statement-ink">
+      <div aria-hidden className="u-mesh-dark absolute inset-0 -z-10" />
+
       <div className="u-shell py-24 md:py-32">
         <Reveal className="mx-auto max-w-[58ch] text-center">
           <p className="u-label !text-statement-ink/55">

@@ -19,10 +19,20 @@ export const home = {
     de: "Ihre Immobilie in verlässlichen Händen.",
     en: "Your property, reliably looked after.",
   },
+  /* Kurz gehalten. Über dem ersten Bildschirm liest niemand drei Zeilen:
+     wer die Zielgruppen sehen will, findet sie eine Sektion weiter unten
+     als Kacheln. */
   heroText: {
-    de: "Hausmeisterservice, Reinigung und Grünpflege für Wohnanlagen, Hotels, Gastronomie und Büros. Feste Teams, dokumentierte Einsätze.",
-    en: "Caretaking, cleaning and grounds care for residential buildings, hotels, hospitality and offices. Fixed teams, documented visits.",
+    de: "Hausmeisterservice, Reinigung und Grünpflege aus einer Hand.",
+    en: "Caretaking, cleaning and grounds care from a single provider.",
   },
+
+  /* Drei Zusagen als Etiketten unter der Schlagzeile. Bewusst keine Zahl
+     und kein Superlativ: jede Angabe hier ist entweder an einen Schalter in
+     claims gebunden oder eine Beschreibung der Arbeitsweise. */
+  heroChipTeams: { de: "Feste Teams je Objekt", en: "A fixed team per property" },
+  heroChipLog: { de: "Einsätze dokumentiert", en: "Every visit documented" },
+  heroChipTax: { de: "20 % absetzbar nach § 35a", en: "20 % deductible under § 35a" },
   heroSecondary: { de: "Leistungen ansehen", en: "See the services" },
 
   heroEyebrow: {
@@ -50,8 +60,8 @@ export const home = {
     en: "Who we work for",
   },
   segmentsText: {
-    de: "Der Bedarf einer Wohnanlage sieht anders aus als der eines Hotels. Deshalb wird jeder Ablauf am Objekt festgelegt, nicht im Katalog.",
-    en: "A residential block needs something different from a hotel. So the routine is set at the property, not in a catalogue.",
+    de: "Der Ablauf wird am Objekt festgelegt, nicht im Katalog.",
+    en: "The routine is set at the property, not in a catalogue.",
   },
 
   servicesTitle: {
@@ -59,8 +69,8 @@ export const home = {
     en: "Five areas, one contract",
   },
   servicesText: {
-    de: "Kombinierbar in jedem Umfang. Wer nur den Winterdienst braucht, bekommt nur den Winterdienst.",
-    en: "Combine them in any scope. If you only need winter service, you only get winter service.",
+    de: "Wer nur den Winterdienst braucht, bekommt nur den Winterdienst.",
+    en: "If you only need winter service, you only get winter service.",
   },
   servicesLink: { de: "Alle Leistungen im Detail", en: "All services in detail" },
 
@@ -86,6 +96,19 @@ export const home = {
   assuranceTitle: {
     de: "Woran Sie uns messen können",
     en: "What you can hold us to" ,
+  },
+
+  /* Vollflächiges Bildband. Es sagt nichts Neues, sondern zeigt, wovon die
+     Seite die ganze Zeit redet: eigenes Fahrzeug, eigenes Gerät, ein Team,
+     das ankommt. Der Text darauf bleibt deshalb auf drei Zeilen. */
+  bandEyebrow: { de: "Im Einsatz", en: "On site" },
+  bandTitle: {
+    de: "Eigenes Team, eigenes Gerät, feste Termine",
+    en: "Our own team, our own kit, fixed dates",
+  },
+  bandText: {
+    de: "Kein Subunternehmer, der wechselt. Dieselben Leute, die das Haus schon kennen.",
+    en: "No rotating subcontractors. The same people, who already know the building.",
   },
 
   contactTitle: {
@@ -124,9 +147,17 @@ export const processSteps: { title: L; text: L }[] = [
 
 /** Zusagen. Jeder Eintrag ist an ein Flag in claims gebunden und
  *  verschwindet, solange die Zusage nicht belegt ist. */
-export const assurances: { claim: "liabilityInsurance" | "keyLossCoverage" | "documentedVisits" | "fixedContact" | "chamberRegistered"; title: L; text: L }[] = [
+export const assurances: {
+  claim: "liabilityInsurance" | "keyLossCoverage" | "documentedVisits" | "fixedContact" | "chamberRegistered";
+  /** Name eines Icons aus src/components/icons.tsx. Das Symbol zeigt die
+      Zusage an, es ersetzt sie nicht: der Titel steht immer daneben. */
+  icon: "phone" | "clipboard" | "shield" | "key" | "seal";
+  title: L;
+  text: L;
+}[] = [
   {
     claim: "fixedContact",
+    icon: "phone",
     title: { de: "Ein Ansprechpartner je Objekt", en: "One contact per property" },
     text: {
       de: "Sie rufen nicht in einer Zentrale an, sondern bei der Person, die Ihr Objekt kennt.",
@@ -135,6 +166,7 @@ export const assurances: { claim: "liabilityInsurance" | "keyLossCoverage" | "do
   },
   {
     claim: "documentedVisits",
+    icon: "clipboard",
     title: { de: "Jeder Einsatz wird dokumentiert", en: "Every visit is documented" },
     text: {
       de: "Leistungsnachweis mit Datum, Umfang und Foto. Beim Winterdienst als Räum- und Streuprotokoll, das vor Gericht Bestand hat.",
@@ -143,6 +175,7 @@ export const assurances: { claim: "liabilityInsurance" | "keyLossCoverage" | "do
   },
   {
     claim: "liabilityInsurance",
+    icon: "shield",
     title: { de: "Betriebshaftpflicht mit Winterdienst", en: "Liability cover including winter service" },
     text: {
       de: "Die Verkehrssicherungspflicht geht mit dem Auftrag auf uns über. Der Versicherungsschutz deckt genau diesen Fall ab.",
@@ -151,6 +184,7 @@ export const assurances: { claim: "liabilityInsurance" | "keyLossCoverage" | "do
   },
   {
     claim: "keyLossCoverage",
+    icon: "key",
     title: { de: "Schlüsselverlust ist abgesichert", en: "Key loss is covered" },
     text: {
       de: "Ein verlorener Zentralschlüssel bedeutet eine neue Schließanlage. Dieser Fall ist versichert, nicht nur bedauert.",
@@ -159,6 +193,7 @@ export const assurances: { claim: "liabilityInsurance" | "keyLossCoverage" | "do
   },
   {
     claim: "chamberRegistered",
+    icon: "seal",
     title: { de: "Eingetragen bei der Handwerkskammer", en: "Registered with the chamber of crafts" },
     text: {
       de: "Reinigungsleistungen setzen die Eintragung im Verzeichnis der zulassungsfreien Handwerke voraus. Die liegt vor.",

@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import { Figure } from "@/components/figure";
+import { PageHeader } from "@/components/page-header";
 import { Reveal } from "@/components/reveal";
 import { ContactBand } from "@/components/home/contact-band";
-import { about, meta } from "@/content/copy";
+import { about, meta, nav } from "@/content/copy";
 import { contact } from "@/content/site.config";
 import { resolveLocale, t } from "@/lib/i18n";
 
@@ -30,16 +31,11 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
 
   return (
     <>
-      <section className="u-shell pt-14 pb-16 md:pt-24 md:pb-20">
-        <Reveal>
-          <h1 className="max-w-[20ch] text-[40px] leading-[1.07] font-semibold tracking-tight text-balance text-ink md:text-[56px]">
-            {t(about.title, locale)}
-          </h1>
-          <p className="mt-6 max-w-[54ch] text-[17px] leading-relaxed text-muted md:text-xl">
-            {t(about.lead, locale)}
-          </p>
-        </Reveal>
-
+      <PageHeader
+        eyebrow={t(nav.ueber, locale)}
+        title={t(about.title, locale)}
+        lead={t(about.lead, locale)}
+      >
         <Reveal className="mt-12 md:mt-16">
           <Figure
             src="/images/team-fahrzeug.jpg"
@@ -52,9 +48,10 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
             imgClassName="object-[50%_60%] sm:object-center"
             sizes="100vw"
             brief=""
+            className="u-tone"
           />
         </Reveal>
-      </section>
+      </PageHeader>
 
       <section className="u-shell pb-16 md:pb-20">
         <div className="grid gap-x-16 gap-y-12 md:grid-cols-2">

@@ -33,18 +33,34 @@
     var(--font-geist-mono), ui-monospace, SFMono-Regular, "SF Mono", Menlo,
     Consolas, monospace;
 
-  /* Neutrale Basis. Kühl, nicht warm. Eine Palette für die ganze Seite. */
-  --color-canvas: #fbfbfd;
+  /* Basis. Nicht mehr kühlgrau, sondern minimal ins Grün gezogen: dieselbe
+     Ruhe, aber die Seite steht damit auf der Markenfarbe statt daneben.
+     Es bleibt EINE Palette und EIN Farbton für die ganze Seite. */
+  --color-canvas: #fbfcfb;
   --color-surface: #ffffff;
-  --color-sunken: #f2f2f4;
-  --color-ink: #1d1d1f;
-  --color-muted: #62626a;
-  --color-hairline: rgb(0 0 0 / 0.09);
+  --color-sunken: #eef4f0;
+  --color-ink: #0e1f18;
+  --color-muted: #5a6b63;
+  --color-hairline: rgb(10 40 28 / 0.10);
 
-  /* Ein einziger Akzent, immergrün. Gilt für jede Sektion, ohne Ausnahme. */
-  --color-accent: #0f6b4f;
+  /* Ein einziger Akzent, immergrün, in drei Aufgaben getrennt.
+
+     accent        trägt Text und Flächen, auf denen Text steht. Weiß darauf
+                   liegt bei 5,3:1 und erfüllt damit WCAG AA.
+     accent-vivid  ist die helle, gesättigte Stufe. Sie ist ausdrücklich NUR
+                   für Flächen, Verläufe und Grafik zugelassen und nie für
+                   Text: als Textfarbe fiele sie unter den Kontrastwert.
+     accent-deep   ist die dunkle Stufe für Verläufe und Schlussflächen.
+
+     Das ist kein zweiter Markenton, sondern eine Helligkeitsrampe eines
+     einzigen Farbtons. Genau daraus kommt die Helligkeit der Seite: aus
+     Fläche, nicht aus einer zweiten Farbe. */
+  --color-accent: #0c7a53;
   --color-accent-ink: #ffffff;
-  --color-accent-soft: #e8f2ee;
+  --color-accent-vivid: #18b878;
+  --color-accent-deep: #063d2b;
+  --color-accent-soft: #ddf2e7;
+  --color-accent-tint: #f1f9f5;
 
   /* Sequentielle Rampe für Diagramme. EIN Ton in drei Stufen, aus dem
      Akzent abgeleitet, kein zweiter Farbkreis. Stufe 3 trägt immer den
@@ -54,19 +70,19 @@
      Abstand je Stufe >= 0.06 L, und die hellste Stufe erreicht 2,13:1
      gegen Weiß. Eine hellere Stufe verschwindet auf der Fläche und wäre
      als Datenwert nicht mehr ablesbar. */
-  --color-chart-1: #7cbfa5;
-  --color-chart-2: #3d9174;
-  --color-chart-3: #0f6b4f;
+  --color-chart-1: #8ad9b8;
+  --color-chart-2: #2ba377;
+  --color-chart-3: #0c7a53;
 
   /* Achsen und Netz liegen unter den Daten und dürfen nie mit ihnen
      konkurrieren. Deshalb Hairline-Stärke, nicht Akzent. */
-  --color-grid: rgb(0 0 0 / 0.07);
+  --color-grid: rgb(10 40 28 / 0.08);
 
   /* Fläche für den Schlussblock. Sie ist IMMER dunkel, in beiden Modi.
      Ein Band, das im Dunkelmodus nach Weiß kippt, blendet mitten in einer
      sonst ruhigen Seite; hier bleibt es ein Kontrast, kein Blitz. */
-  --color-statement: #141416;
-  --color-statement-ink: #f4f4f6;
+  --color-statement: #071813;
+  --color-statement-ink: #eef7f2;
 
   /* Zustandsfarbe für Formularfehler. Kein zweiter Markenakzent, sondern
      Semantik: ein Fehler in Akzentgrün wäre für Nutzende nicht als Fehler
@@ -88,30 +104,33 @@
    die sich einzeln umstellen könnte. */
 @media (prefers-color-scheme: dark) {
   :root {
-    --color-canvas: #0b0b0c;
-    --color-surface: #151517;
-    --color-sunken: #1c1c1f;
-    --color-ink: #f2f2f4;
-    --color-muted: #9c9ca4;
-    --color-hairline: rgb(255 255 255 / 0.11);
+    --color-canvas: #071310;
+    --color-surface: #0e1c17;
+    --color-sunken: #12231c;
+    --color-ink: #eaf4ef;
+    --color-muted: #8ea79c;
+    --color-hairline: rgb(190 255 225 / 0.12);
 
-    --color-accent: #3fbc90;
-    --color-accent-ink: #06231a;
-    --color-accent-soft: #142a23;
+    --color-accent: #45d29d;
+    --color-accent-ink: #04231a;
+    --color-accent-vivid: #57e3ac;
+    --color-accent-deep: #042017;
+    --color-accent-soft: #102c23;
+    --color-accent-tint: #0b1f19;
 
     /* Im Dunkeln kehrt sich die Rampe um: die kräftigste Stufe ist die
        hellste. Kein automatisches Umdrehen der hellen Werte, sondern
        eigene Stufen, gegen die dunkle Fläche geprüft (2,66:1 am
        schwächsten Ende). */
-    --color-chart-1: #2f6450;
-    --color-chart-2: #3fbc90;
-    --color-chart-3: #8fe0c0;
+    --color-chart-1: #2b6b54;
+    --color-chart-2: #45d29d;
+    --color-chart-3: #9defc9;
 
-    --color-grid: rgb(255 255 255 / 0.09);
+    --color-grid: rgb(190 255 225 / 0.10);
 
     /* Im Dunkeln nur eine Stufe über der Fläche statt eines harten Sprungs. */
-    --color-statement: #1e1e22;
-    --color-statement-ink: #f4f4f6;
+    --color-statement: #0a1f19;
+    --color-statement-ink: #eef7f2;
 
     --color-danger: #ff8a80;
   }
@@ -182,7 +201,7 @@
     background: var(--color-surface);
     border: 1px solid var(--color-hairline);
     border-radius: var(--radius-panel);
-    box-shadow: 0 1px 2px rgb(29 29 31 / 0.04), 0 12px 32px -20px rgb(29 29 31 / 0.28);
+    box-shadow: 0 1px 2px rgb(6 40 28 / 0.05), 0 14px 34px -22px rgb(6 40 28 / 0.32);
   }
 
   @media (prefers-color-scheme: dark) {
@@ -267,8 +286,8 @@
       transform: translateY(-3px);
       border-color: color-mix(in oklab, var(--color-accent) 40%, var(--color-hairline));
       box-shadow:
-        0 1px 2px rgb(29 29 31 / 0.05),
-        0 22px 44px -26px rgb(29 29 31 / 0.4);
+        0 1px 2px rgb(6 40 28 / 0.06),
+        0 26px 48px -26px rgb(6 40 28 / 0.42);
     }
   }
 
@@ -353,6 +372,190 @@
       animation-timeline: view();
       animation-range: entry 0% exit 100%;
       will-change: transform;
+    }
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   FLÄCHEN MIT LICHT
+
+   Die Seite bestand vorher aus Weiß, Grau und drei kleinen grünen Punkten.
+   Das ist ruhig, aber es verkauft nichts: nichts auf der Seite zieht den
+   Blick, und wer scrollt, sieht acht Mal dieselbe Fläche.
+
+   Die folgenden Klassen bringen die Markenfarbe auf die FLÄCHE statt auf
+   den Text. Sie sind alle rein dekorativ, tragen nie Information allein und
+   arbeiten ohne eine einzige externe Datei: Verläufe kommen aus CSS, Muster
+   als data:-URI. Die CSP bleibt damit unangetastet.
+--------------------------------------------------------------------------- */
+@layer components {
+  /* Weiches Farbfeld aus mehreren radialen Verläufen. Bewusst kein linearer
+     45-Grad-Verlauf: der ist gleichmäßig und liest sich als Schablone. Drei
+     versetzte Radien ergeben eine unregelmäßige Aufhellung, die eher wie
+     Licht auf einer Fläche wirkt als wie ein Farbverlauf. */
+  .u-mesh {
+    background-image:
+      radial-gradient(
+        58rem 42rem at 0% -6%,
+        color-mix(in oklab, var(--color-accent-vivid) 46%, transparent),
+        transparent 66%
+      ),
+      radial-gradient(
+        46rem 34rem at 88% -14%,
+        color-mix(in oklab, var(--color-accent) 30%, transparent),
+        transparent 62%
+      ),
+      radial-gradient(
+        52rem 30rem at 34% 104%,
+        color-mix(in oklab, var(--color-accent-vivid) 24%, transparent),
+        transparent 68%
+      );
+  }
+
+  /* Dieselbe Idee auf dunklem Grund: das Licht kommt von unten und hält den
+     Schlussblock davon ab, ein schwarzes Loch zu sein. */
+  .u-mesh-dark {
+    background-image:
+      radial-gradient(
+        56rem 36rem at 50% 122%,
+        color-mix(in oklab, var(--color-accent-vivid) 55%, transparent),
+        transparent 64%
+      ),
+      radial-gradient(
+        40rem 28rem at 4% -12%,
+        color-mix(in oklab, var(--color-accent) 38%, transparent),
+        transparent 66%
+      );
+  }
+
+  /* Vollflächiger Akzent für die Blöcke, die etwas verkaufen sollen. */
+  .u-accent-field {
+    background-color: var(--color-accent);
+    background-image:
+      radial-gradient(
+        44rem 30rem at 100% 0%,
+        color-mix(in oklab, var(--color-accent-vivid) 78%, transparent),
+        transparent 60%
+      ),
+      radial-gradient(
+        36rem 26rem at 0% 100%,
+        color-mix(in oklab, var(--color-accent-deep) 70%, transparent),
+        transparent 62%
+      );
+    color: var(--color-accent-ink);
+  }
+
+  /* Glaskarte, die über einem Bild liegt.
+
+     Nicht nur backdrop-filter: dazu eine helle Innenkante und ein getönter
+     Schlagschatten. Ohne die Innenkante sieht die Karte aus wie ein
+     unscharfer Fleck, mit ihr wie eine Scheibe mit Rand. */
+  .u-glass {
+    background: color-mix(in oklab, var(--color-surface) 58%, transparent);
+    backdrop-filter: blur(20px) saturate(170%);
+    -webkit-backdrop-filter: blur(20px) saturate(170%);
+    border: 1px solid color-mix(in oklab, var(--color-surface) 60%, var(--color-hairline));
+    box-shadow:
+      inset 0 1px 0 0 color-mix(in oklab, white 45%, transparent),
+      0 28px 56px -30px rgb(6 40 28 / 0.55);
+  }
+
+  /* Icon-Kachel. Ersetzt das nackte 22-px-Icon: ein Symbol auf einer Fläche
+     wird als Marke gelesen, ein freistehendes Symbol als Aufzählungszeichen. */
+  .u-tile {
+    display: grid;
+    place-items: center;
+    width: 3rem;
+    height: 3rem;
+    border-radius: 15px;
+    color: var(--color-accent-ink);
+    background-image: linear-gradient(
+      142deg,
+      var(--color-accent-vivid),
+      var(--color-accent)
+    );
+    box-shadow: 0 12px 24px -16px color-mix(in oklab, var(--color-accent) 85%, transparent);
+  }
+
+  .u-tile-lg {
+    width: 3.5rem;
+    height: 3.5rem;
+    border-radius: 18px;
+  }
+
+  /* Ruhige Variante für Zeilen, in denen mehrere Kacheln untereinander
+     stehen. Vollflächig gefüllt wären es dort zu viele Farbblöcke. */
+  .u-tile-soft {
+    background-image: none;
+    background-color: var(--color-accent-soft);
+    color: var(--color-accent);
+    box-shadow: none;
+  }
+
+  /* Etikett mit Fläche. Trägt kurze Zusagen über dem ersten Bildschirm. */
+  .u-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    border-radius: 999px;
+    border: 1px solid color-mix(in oklab, var(--color-accent) 22%, transparent);
+    background: var(--color-accent-soft);
+    color: var(--color-accent);
+    padding: 0.4rem 0.85rem;
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 1;
+    white-space: nowrap;
+  }
+
+  /* Punktraster als Untergrund. Gibt leeren Flächen Textur, ohne dass ein
+     Muster erkennbar wird, das mit dem Inhalt konkurriert. */
+  .u-dots {
+    background-image: radial-gradient(
+      currentColor 1px,
+      transparent 1.1px
+    );
+    background-size: 22px 22px;
+    opacity: 0.12;
+  }
+
+  /* Große Ziffer als Grafik statt als Text. Nur Kontur, damit sie den
+     Titel daneben nicht erschlägt. */
+  .u-numeral {
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+    font-weight: 600;
+    line-height: 0.8;
+    letter-spacing: -0.04em;
+    color: transparent;
+    -webkit-text-stroke: 1.5px color-mix(in oklab, var(--color-accent) 45%, transparent);
+  }
+
+  /* Bild mit Farbschleier. Die Fotos sind grau und flau; ein Schleier in
+     Markenfarbe bindet sie an die Seite, statt sie als Fremdkörper
+     stehen zu lassen. Multiply behält die Zeichnung im Bild. */
+  .u-tone::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    border-radius: inherit;
+    mix-blend-mode: multiply;
+    background-image: linear-gradient(
+      200deg,
+      transparent 32%,
+      color-mix(in oklab, var(--color-accent-deep) 62%, transparent)
+    );
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .u-tone::after {
+      mix-blend-mode: normal;
+      background-image: linear-gradient(
+        200deg,
+        transparent 28%,
+        color-mix(in oklab, var(--color-canvas) 72%, transparent)
+      );
     }
   }
 }

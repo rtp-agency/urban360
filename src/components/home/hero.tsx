@@ -1,6 +1,7 @@
-import { ButtonLink, TextLink } from "@/components/ui";
+import { ButtonLink } from "@/components/ui";
 import { Figure } from "@/components/figure";
 import { Reveal } from "@/components/reveal";
+import { CheckIcon } from "@/components/icons";
 import { home, nav } from "@/content/copy";
 import { servicePackages } from "@/content/services";
 import { claims, contact, type Locale } from "@/content/site.config";
@@ -9,21 +10,27 @@ import { href, t } from "@/lib/i18n";
 /**
  * Kopf der Startseite.
  *
- * Ab lg sitzt das Bild absolut an der rechten Fensterkante statt in einer
- * Rasterspalte. Das ist der Unterschied zwischen einer Seite aus zwei gleich
- * großen Kästen und einer, die eine Richtung hat: links die Schlagzeile,
- * rechts ein Bild, das aus dem Bildschirm herausläuft.
+ * Drei Entscheidungen tragen diesen Block:
  *
- * Warum absolut und nicht per negativem Außenabstand: der Abstand bis zur
- * Fensterkante hängt von der Fensterbreite ab und müsste als calc über vw
- * geschrieben werden. Hier genügt right-0, der Browser rechnet selbst.
+ * 1. Die Fläche ist eingefärbt, nicht weiß. Unter dem Inhalt liegt ein
+ *    Farbfeld aus versetzten radialen Verläufen (.u-mesh). Der erste
+ *    Bildschirm war vorher weiß auf weiß, und eine Seite, die mit einer
+ *    leeren Fläche beginnt, wirkt nicht ruhig, sondern unfertig.
  *
- * Die zweite Rasterspalte bleibt leer stehen. Sie hält den Platz frei, damit
- * der Text nicht unter das Bild läuft: ein absolut gesetztes Element nimmt
- * am Raster nicht mehr teil.
+ * 2. Das Bild sitzt ab lg absolut an der rechten Fensterkante statt in einer
+ *    Rasterspalte. Das ist der Unterschied zwischen einer Seite aus zwei
+ *    gleich großen Kästen und einer, die eine Richtung hat. Die zweite
+ *    Rasterspalte bleibt leer stehen und hält den Platz frei, damit der Text
+ *    nicht unter das Bild läuft: ein absolut gesetztes Element nimmt am
+ *    Raster nicht mehr teil.
  *
- * Die Kennwerte stehen bewusst AUSSERHALB dieses Bereichs. Lägen sie darin,
- * würde das über die volle Höhe gezogene Bild über ihnen liegen.
+ * 3. Über der unteren Bildkante liegt eine Glaskarte mit der Zahl, die den
+ *    Auftraggeber am unmittelbarsten angeht. Die Überlappung ist der Grund
+ *    für die Karte: zwei Elemente, die sich überschneiden, erzeugen Tiefe,
+ *    zwei Elemente nebeneinander erzeugen ein Formular.
+ *
+ * KEIN overflow-hidden auf der Sektion. Die Eintrittsbewegung verschiebt
+ * Inhalt um einige Pixel, ein beschnittener Container kappt genau die.
  */
 export function Hero({ locale }: { locale: Locale }) {
   const specs = [
@@ -44,26 +51,60 @@ export function Hero({ locale }: { locale: Locale }) {
       : []),
   ];
 
+  /* Etiketten unter der Schlagzeile. Der mittlere hängt am selben Schalter
+     wie die zugehörige Zusage weiter unten: was in site.config nicht als
+     belegt markiert ist, wird auch hier nicht behauptet. */
+  const chips = [
+    ...(claims.fixedContact ? [t(home.heroChipTeams, locale)] : []),
+    ...(claims.documentedVisits ? [t(home.heroChipLog, locale)] : []),
+    t(home.heroChipTax, locale),
+  ];
+
   return (
-    <section className="pt-12 pb-20 md:pt-20 md:pb-28">
+    <section className="relative isolate pt-10 pb-10 md:pt-16 md:pb-16">
+      {/* Farbfeld. Läuft oben unter die durchsichtige Kopfzeile und endet
+          weich, damit keine sichtbare Kante zur nächsten Sektion entsteht. */}
+      <div
+        aria-hidden
+        className="u-mesh absolute inset-x-0 -top-[68px] -z-10 h-[560px] md:h-[760px] lg:h-[920px]"
+        style={{
+          maskImage: "linear-gradient(to bottom, black 62%, transparent)",
+          WebkitMaskImage: "linear-gradient(to bottom, black 62%, transparent)",
+        }}
+      />
+
       <div className="relative">
         <div className="u-shell">
-          <div className="grid items-center lg:grid-cols-[1fr_0.82fr] lg:gap-16">
-            <Reveal className="lg:py-10">
-              <p className="u-label">{t(home.heroEyebrow, locale)}</p>
+          <div className="grid items-center lg:grid-cols-[1fr_0.86fr] lg:gap-16">
+            <Reveal className="lg:py-14">
+              {/* Dasselbe Etikettenmuster wie in jeder Sektion darunter:
+                  Punkt, Versalien, Akzentfarbe. */}
+              <p className="u-label flex items-center gap-2 text-accent">
+                <span aria-hidden className="size-1.5 rounded-full bg-accent" />
+                {t(home.heroEyebrow, locale)}
+              </p>
 
               {/* clamp statt drei Breakpoint-Stufen: die Schlagzeile wächst
                   stufenlos mit dem Fenster und kippt nie zwischen zwei
                   Größen. */}
-              <h1 className="mt-6 text-[clamp(2.6rem,5.4vw,4.5rem)] leading-[0.97] font-semibold tracking-[-0.03em] text-balance text-ink">
+              <h1 className="mt-6 text-[clamp(2.75rem,5.8vw,4.9rem)] leading-[0.95] font-semibold tracking-[-0.035em] text-balance text-ink">
                 {t(home.heroTitle, locale)}
               </h1>
 
-              <p className="mt-7 max-w-[42ch] text-[17px] leading-relaxed text-muted md:text-xl">
+              <p className="mt-6 max-w-[34ch] text-[19px] leading-snug font-medium text-muted md:text-[22px]">
                 {t(home.heroText, locale)}
               </p>
 
-              <div className="mt-10 flex flex-wrap items-center gap-3">
+              <ul className="mt-8 flex flex-wrap gap-2">
+                {chips.map((chip) => (
+                  <li key={chip} className="u-chip">
+                    <CheckIcon size={13} weight="bold" aria-hidden />
+                    {chip}
+                  </li>
+                ))}
+              </ul>
+
+              <div className="mt-9 flex flex-wrap items-center gap-3">
                 <ButtonLink href={href(locale, "kontakt")} large>
                   {t(nav.cta, locale)}
                 </ButtonLink>
@@ -78,7 +119,7 @@ export function Hero({ locale }: { locale: Locale }) {
         {/* Unter lg ein gewöhnlicher Block unter dem Text, ab lg an der
             Fensterkante. Die Innenabstände bilden bis dahin die Hülle nach,
             damit das Bild auf dem Telefon nicht am Rand klebt. */}
-        <div className="mt-12 px-5 md:px-8 lg:absolute lg:inset-y-0 lg:right-0 lg:mt-0 lg:w-[44vw] lg:px-0">
+        <div className="relative mt-12 px-5 md:px-8 lg:absolute lg:inset-y-0 lg:right-0 lg:mt-0 lg:w-[46vw] lg:px-0">
           <Figure
             src="/images/hero-gebaeude.jpg"
             alt={
@@ -91,11 +132,26 @@ export function Hero({ locale }: { locale: Locale }) {
                Fassade. Der Ausschnitt wandert nach unten, damit Weg, Hecke
                und Person im Bild bleiben. */
             imgClassName="object-[50%_72%] lg:object-center"
-            className="u-drift lg:rounded-tr-none lg:rounded-br-none"
+            className="u-drift u-tone lg:rounded-tr-none lg:rounded-br-none"
             priority
-            sizes="(min-width: 1024px) 46vw, 100vw"
+            sizes="(min-width: 1024px) 48vw, 100vw"
             brief=""
           />
+
+          {/* Die Karte liegt über der unteren Bildkante und ragt links
+              heraus. Auf dem Telefon säße sie sonst über der Person im
+              Bild, deshalb rückt sie dort an den unteren Rand. */}
+          <div className="u-glass absolute bottom-4 left-8 w-[13.5rem] rounded-[18px] px-5 py-4 md:bottom-7 md:left-12 md:w-[15rem] lg:bottom-14 lg:-left-8">
+            <p className="u-label">{t(home.taxEyebrow, locale)}</p>
+            <p className="u-data mt-2 text-[34px] leading-none font-semibold text-accent md:text-[42px]">
+              20&thinsp;%
+            </p>
+            <p className="mt-2.5 text-[13px] leading-snug text-muted">
+              {locale === "de"
+                ? "der Arbeitskosten für Privatkunden absetzbar"
+                : "of labour costs deductible for private clients"}
+            </p>
+          </div>
         </div>
       </div>
 
@@ -107,25 +163,23 @@ export function Hero({ locale }: { locale: Locale }) {
           gezählt, das Gebiet steht in der Konfiguration, und der feste
           Ansprechpartner erscheint nur, solange claims.fixedContact gesetzt
           ist. Damit kann hier keine Zusage stehen, die nicht auch in
-          site.config als zutreffend markiert wurde. */}
+          site.config als zutreffend markiert wurde.
+
+          Der senkrechte Strich in Akzentfarbe ersetzt die frühere Hairline
+          über der ganzen Zeile: er bindet den Wert an sein Etikett, statt
+          drei Angaben unter einer gemeinsamen Linie aufzureihen. */}
       <div className="u-shell">
-        <Reveal className="u-rule mt-16 pt-7 md:mt-24 md:pt-8">
-          <dl className="grid gap-7 sm:grid-cols-3 sm:gap-6">
+        <Reveal className="mt-14 md:mt-20">
+          <dl className="grid gap-8 sm:grid-cols-3 sm:gap-6">
             {specs.map((spec) => (
-              <div key={spec.label}>
+              <div key={spec.label} className="border-l-2 border-accent/35 pl-4">
                 <dt className="u-label">{spec.label}</dt>
-                <dd className="u-data mt-3 text-[17px] leading-snug font-medium text-ink">
+                <dd className="u-data mt-2.5 text-[19px] leading-snug font-medium text-ink">
                   {spec.value}
                 </dd>
               </div>
             ))}
           </dl>
-
-          <div className="mt-8">
-            <TextLink href={href(locale, "kontakt")}>
-              {locale === "de" ? "Objekt anfragen" : "Ask about your property"}
-            </TextLink>
-          </div>
         </Reveal>
       </div>
     </section>
