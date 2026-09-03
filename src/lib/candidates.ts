@@ -1,5 +1,6 @@
 import { and, desc, eq, ilike, inArray, or, sql } from "drizzle-orm";
 import {
+  candidateAbilities,
   candidateAvailability,
   candidateLanguages,
   candidatePermits,
@@ -11,6 +12,7 @@ import {
   postalCodes,
 } from "@/db";
 import type { Shift, Skill, Status } from "@/content/recruiting";
+import type { Ability } from "@/content/abilities";
 import { distanceKm, type MatchCandidate } from "./matching";
 
 /**
@@ -25,6 +27,10 @@ const aggregate = {
   skills: sql<string[]>`coalesce((
     select array_agg(${candidateSkills.skill})
     from ${candidateSkills} where ${candidateSkills.candidateId} = ${candidates.id}
+  ), '{}')`,
+  abilities: sql<string[]>`coalesce((
+    select array_agg(${candidateAbilities.ability})
+    from ${candidateAbilities} where ${candidateAbilities.candidateId} = ${candidates.id}
   ), '{}')`,
   tags: sql<string[]>`coalesce((
     select array_agg(${candidateTags.tag})
@@ -53,6 +59,8 @@ export type CandidateFilters = {
   status?: Status;
   tag?: string;
   skill?: Skill;
+  /** Fähigkeit aus dem Katalog, siehe src/content/abilities.ts. */
+  ability?: Ability;
   hasCar?: boolean;
 };
 
@@ -83,6 +91,11 @@ export async function listCandidates(filters: CandidateFilters = {}) {
   if (filters.skill) {
     conditions.push(
       sql`exists (select 1 from ${candidateSkills} where ${candidateSkills.candidateId} = ${candidates.id} and ${candidateSkills.skill} = ${filters.skill})`,
+    );
+  }
+  if (filters.ability) {
+    conditions.push(
+      sql`exists (select 1 from ${candidateAbilities} where ${candidateAbilities.candidateId} = ${candidates.id} and ${candidateAbilities.ability} = ${filters.ability})`,
     );
   }
 
@@ -117,6 +130,7 @@ export async function getCandidate(id: number) {
     .select({
       candidate: candidates,
       skills: aggregate.skills,
+      abilities: aggregate.abilities,
       tags: aggregate.tags,
       shifts: aggregate.shifts,
       availability: aggregate.availability,
@@ -132,6 +146,7 @@ export async function getCandidate(id: number) {
   return {
     ...row.candidate,
     skills: row.skills as Skill[],
+    abilities: row.abilities as Ability[],
     tags: row.tags,
     shifts: row.shifts as Shift[],
     availability: row.availability,
@@ -227,6 +242,40 @@ export async function usedTags(): Promise<string[]> {
     .from(candidateTags)
     .orderBy(candidateTags.tag);
   return rows.map((row) => row.tag);
+}
+
+/**
+ * Auswertung der Fähigkeiten: wie viele Menschen können was.
+ *
+ * Gezählt werden Menschen, nicht Zeilen: der Primärschlüssel der Tabelle
+ * schließt Wiederholungen je Mensch zwar aus, aber count(distinct) macht die
+ * Aussage unabhängig davon lesbar.
+ *
+ * Anonymisierte Datensätze bleiben drin. Nach der Anonymisierung ist die
+ * Zeile kein Personenbezug mehr, und genau dafür ist eine Statistik da: die
+ * Aussage "achtzehn Leute konnten Fliesen legen" soll nicht dadurch kaputt
+ * gehen, dass sechs davon inzwischen gelöscht wurden.
+ */
+export async function abilityCounts(): Promise<Record<string, number>> {
+  const rows = await db
+    .select({
+      ability: candidateAbilities.ability,
+      count: sql<number>`count(distinct ${candidateAbilities.candidateId})::int`,
+    })
+    .from(candidateAbilities)
+    .groupBy(candidateAbilities.ability);
+  return Object.fromEntries(rows.map((row) => [row.ability, row.count]));
+}
+
+/** Freitexteinträge, die im Katalog fehlen. Grundlage für dessen Pflege. */
+export async function abilityFreeText(): Promise<{ id: number; ref: string; text: string }[]> {
+  const rows = await db
+    .select({ id: candidates.id, ref: candidates.ref, text: candidates.abilitiesOther })
+    .from(candidates)
+    .where(sql`${candidates.abilitiesOther} is not null and ${candidates.abilitiesOther} <> ''`)
+    .orderBy(desc(candidates.createdAt))
+    .limit(200);
+  return rows.map((row) => ({ id: row.id, ref: row.ref, text: row.text ?? "" }));
 }
 
 export async function candidateCounts() {

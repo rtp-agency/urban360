@@ -1,5 +1,7 @@
 import Link from "next/link";
 import { SKILLS, STATUSES, type Skill, type Status } from "@/content/recruiting";
+import { abilityLabels, isKnownAbility, type Ability } from "@/content/abilities";
+import { tr } from "@/content/application";
 import { STATUS_LABEL, t } from "@/content/admin";
 import { candidateCounts, listCandidates, usedTags } from "@/lib/candidates";
 import { retentionNote } from "@/lib/retention";
@@ -10,6 +12,7 @@ type Search = Promise<{
   status?: string;
   tag?: string;
   skill?: string;
+  ability?: string;
   auto?: string;
 }>;
 
@@ -29,6 +32,9 @@ export default async function CandidatesPage({ searchParams }: { searchParams: S
   const sp = await searchParams;
   const status = STATUSES.includes(sp.status as Status) ? (sp.status as Status) : undefined;
   const skill = SKILLS.includes(sp.skill as Skill) ? (sp.skill as Skill) : undefined;
+  /* Фильтр приходит из сводки по навыкам. Значение проверяем по каталогу:
+     в запрос не должно попасть ничего, чего в нём нет. */
+  const ability = sp.ability && isKnownAbility(sp.ability) ? (sp.ability as Ability) : undefined;
 
   const [rows, tags, counts] = await Promise.all([
     listCandidates({
@@ -36,6 +42,7 @@ export default async function CandidatesPage({ searchParams }: { searchParams: S
       status,
       tag: sp.tag,
       skill,
+      ability,
       hasCar: sp.auto === "1" ? true : undefined,
     }),
     usedTags(),
@@ -43,7 +50,14 @@ export default async function CandidatesPage({ searchParams }: { searchParams: S
   ]);
 
   const total = Object.values(counts).reduce((sum, n) => sum + n, 0);
-  const base = { q: sp.q, status: sp.status, tag: sp.tag, skill: sp.skill, auto: sp.auto };
+  const base = {
+    q: sp.q,
+    status: sp.status,
+    tag: sp.tag,
+    skill: sp.skill,
+    ability: ability,
+    auto: sp.auto,
+  };
 
   return (
     <>
@@ -51,6 +65,21 @@ export default async function CandidatesPage({ searchParams }: { searchParams: S
         <h1 className="text-2xl font-semibold tracking-tight text-ink">{t.listTitle}</h1>
         <p className="text-[14px] text-muted">{t.listShown(rows.length, total)}</p>
       </div>
+
+      {/* Фильтр по навыку приходит со страницы сводки. Без видимой плашки
+          список выглядел бы просто неполным без объяснения. */}
+      {ability ? (
+        <p className="mt-4 flex flex-wrap items-center gap-2 text-[14px] text-muted">
+          {t.fAbilities}:
+          <Link
+            href={buildHref(base, { ability: undefined })}
+            className="inline-flex items-center gap-1.5 rounded-full bg-accent-soft px-3 py-1 text-[14px] font-medium text-accent"
+          >
+            {tr(abilityLabels[ability], "ru")}
+            <span aria-hidden>×</span>
+          </Link>
+        </p>
+      ) : null}
 
       {/* Обычная форма без JavaScript: список должен работать и тогда,
           когда в дороге скрипт не догрузился. */}
@@ -64,6 +93,7 @@ export default async function CandidatesPage({ searchParams }: { searchParams: S
         />
         {status ? <input type="hidden" name="status" value={status} /> : null}
         {sp.tag ? <input type="hidden" name="tag" value={sp.tag} /> : null}
+        {ability ? <input type="hidden" name="ability" value={ability} /> : null}
         <button
           type="submit"
           className="inline-flex h-11 shrink-0 items-center rounded-full bg-accent px-5 text-[15px] font-medium text-accent-ink"

@@ -49,6 +49,14 @@ export const candidates = pgTable(
     licenses: text("licenses").array().notNull().default([]),
 
     experienceNote: text("experience_note"),
+    /**
+     * Freitext für Fähigkeiten, die im Katalog nicht vorkommen. Der Katalog
+     * in src/content/abilities.ts ist umfangreich, aber nie vollständig, und
+     * ein Mensch, der seine Fertigkeit dort nicht findet, soll sie trotzdem
+     * nennen können. Bleibt bewusst unstrukturiert: was hier gehäuft
+     * auftaucht, gehört beim nächsten Durchgang in den Katalog.
+     */
+    abilitiesOther: text("abilities_other"),
     availableFrom: date("available_from"),
     hoursPerWeek: integer("hours_per_week"),
 
@@ -95,6 +103,29 @@ export const candidateSkills = pgTable(
   (table) => [
     primaryKey({ columns: [table.candidateId, table.skill] }),
     index("candidate_skills_skill_idx").on(table.skill),
+  ],
+);
+
+/**
+ * Fähigkeiten des Menschen: was er kann, unabhängig davon, worauf wir ihn
+ * einsetzen. Bewusst eine eigene Tabelle neben candidate_skills und nicht
+ * dieselbe: die beiden Listen beantworten verschiedene Fragen, und nur
+ * candidate_skills geht in die Auswahl ein. Siehe src/content/abilities.ts.
+ *
+ * Der Index auf ability trägt die Auswertung: "wie viele können Poolreinigung"
+ * ist eine Gruppierung über genau diese Spalte.
+ */
+export const candidateAbilities = pgTable(
+  "candidate_abilities",
+  {
+    candidateId: integer("candidate_id")
+      .notNull()
+      .references(() => candidates.id, { onDelete: "cascade" }),
+    ability: text("ability").notNull(),
+  },
+  (table) => [
+    primaryKey({ columns: [table.candidateId, table.ability] }),
+    index("candidate_abilities_ability_idx").on(table.ability),
   ],
 );
 

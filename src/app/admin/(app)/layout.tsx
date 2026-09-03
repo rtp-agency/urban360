@@ -17,6 +17,7 @@ export default async function AppLayout({ children }: { children: ReactNode }) {
   const nav = [
     { href: "/admin/kandidaten", label: t.navCandidates },
     { href: "/admin/auftrag", label: t.navOrder },
+    { href: "/admin/navyki", label: t.navAbilities },
   ];
 
   return (

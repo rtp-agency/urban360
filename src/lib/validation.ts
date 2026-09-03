@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { ABILITIES, type Ability } from "@/content/abilities";
 import {
   AVAILABILITY_KINDS,
   APPLICATION_LOCALES,
@@ -31,6 +32,13 @@ const phone = z
   .max(32)
   .regex(/^[+0-9][0-9\s()/.-]{5,31}$/, "phone");
 
+/**
+ * Der Katalog steht als readonly Ability[] zur Verfügung, z.enum erwartet ein
+ * nicht leeres Tupel. Die Zusicherung ist an dieser einen Stelle gekapselt,
+ * damit die Liste weiter aus den Gruppen abgeleitet bleibt.
+ */
+const abilityEnum = z.enum(ABILITIES as unknown as [Ability, ...Ability[]]);
+
 const optionalText = (max: number) =>
   z
     .string()
@@ -61,6 +69,16 @@ export const applicationSchema = z.object({
     .max(LANGUAGES.length),
   skills: z.array(z.enum(SKILLS)).min(1, "skills").max(SKILLS.length),
   experienceNote: optionalText(2000),
+
+  /**
+   * Was der Mensch kann. Ohne Mindestanzahl: die Angabe ist freiwillig, und
+   * ein Pflichtfeld mit über hundert Möglichkeiten kostet mehr abgebrochene
+   * Bögen, als es Erkenntnis bringt. Die Obergrenze ist die Kataloglänge,
+   * damit ein manipulierter Aufruf die Tabelle nicht mit Wiederholungen
+   * flutet; doppelte Schlüssel fängt ohnehin der Primärschlüssel ab.
+   */
+  abilities: z.array(abilityEnum).max(ABILITIES.length),
+  abilitiesOther: optionalText(240),
 
   availability: z.array(z.enum(AVAILABILITY_KINDS)).max(AVAILABILITY_KINDS.length),
   shifts: z.array(z.enum(SHIFTS)).max(SHIFTS.length),

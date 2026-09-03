@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { ABILITY_GROUPS, abilityLabels } from "@/content/abilities";
 import { notFound } from "next/navigation";
 import {
   LEVELS,
@@ -112,6 +113,19 @@ export default async function CandidatePage({ params }: { params: Promise<{ id: 
             <Row label={t.fSkills}>
               {candidate.skills.map((s) => tr(skillLabels[s as Skill], "ru")).join(", ")}
             </Row>
+            {/* Nach Gruppen sortiert und nicht in Eingabereihenfolge: bei
+                zwanzig Einträgen ist "alles aus dem Bau, dann alles aus der
+                Technik" lesbar, eine Aufzählung in Klickreihenfolge nicht. */}
+            <Row label={t.fAbilities}>
+              {ABILITY_GROUPS.flatMap((group) =>
+                group.abilities.filter((ability) =>
+                  (candidate.abilities as string[]).includes(ability),
+                ),
+              )
+                .map((ability) => tr(abilityLabels[ability], "ru"))
+                .join(", ")}
+            </Row>
+            <Row label={t.fAbilitiesOther}>{candidate.abilitiesOther ?? ""}</Row>
             <Row label={t.fExperience}>
               {candidate.experienceNote ? (
                 <span className="whitespace-pre-line">{candidate.experienceNote}</span>

@@ -1,6 +1,7 @@
 "use server";
 
 import {
+  candidateAbilities,
   candidateAvailability,
   candidateLanguages,
   candidatePermits,
@@ -63,6 +64,7 @@ export async function submitApplication(raw: unknown, trap: string): Promise<Sub
           hasCar: input.hasCar,
           licenses: input.licenses,
           experienceNote: input.experienceNote ?? null,
+          abilitiesOther: input.abilitiesOther ?? null,
           availableFrom: input.availableFrom ?? null,
           hoursPerWeek: input.hoursPerWeek ?? null,
           locale: input.locale,
@@ -79,6 +81,11 @@ export async function submitApplication(raw: unknown, trap: string): Promise<Sub
         await tx
           .insert(candidateSkills)
           .values(input.skills.map((skill) => ({ candidateId: row.id, skill })));
+      }
+      if (input.abilities.length) {
+        await tx
+          .insert(candidateAbilities)
+          .values(input.abilities.map((ability) => ({ candidateId: row.id, ability })));
       }
       if (input.languages.length) {
         await tx.insert(candidateLanguages).values(

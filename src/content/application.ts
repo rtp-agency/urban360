@@ -37,11 +37,15 @@ export const ui = {
     uk: "Анкета кандидата",
     en: "Application",
   },
+  /* Die Schrittzahl steht im Text und muss zu STEPS in application-form.tsx
+     passen. Sie wird bewusst ausgeschrieben und nicht eingesetzt: eine Zahl
+     aus der Variablen wäre in vier Sprachen grammatisch nicht sicher zu
+     beugen. Wer einen Schritt ergänzt, ändert hier vier Zeilen mit. */
   intro: {
-    de: "Fünf kurze Schritte, etwa drei Minuten. Danach melden wir uns, sobald ein passender Einsatz da ist.",
-    ru: "Пять коротких шагов, примерно три минуты. Мы свяжемся, как только появится подходящая работа.",
-    uk: "П’ять коротких кроків, приблизно три хвилини. Ми зв’яжемося, щойно з’явиться відповідна робота.",
-    en: "Five short steps, about three minutes. We get in touch as soon as suitable work comes up.",
+    de: "Sechs kurze Schritte, etwa vier Minuten. Danach melden wir uns, sobald ein passender Einsatz da ist.",
+    ru: "Шесть коротких шагов, примерно четыре минуты. Мы свяжемся, как только появится подходящая работа.",
+    uk: "Шість коротких кроків, приблизно чотири хвилини. Ми звʼяжемося, щойно зʼявиться відповідна робота.",
+    en: "Six short steps, about four minutes. We get in touch as soon as suitable work comes up.",
   },
   stepOf: { de: "Schritt", ru: "Шаг", uk: "Крок", en: "Step" },
   of: { de: "von", ru: "из", uk: "з", en: "of" },
@@ -127,6 +131,64 @@ export const ui = {
     ru: "Например: два года уборка номеров в отеле, потом офисы",
     uk: "Наприклад: два роки прибирання номерів у готелі, потім офіси",
     en: "For example: two years cleaning hotel rooms, then offices",
+  },
+
+  /* ---- Fähigkeiten. Eigener Schritt, siehe ability-picker.tsx ---- */
+  stepAbilities: {
+    de: "Fähigkeiten",
+    ru: "Что вы умеете",
+    uk: "Що ви вмієте",
+    en: "Your skills",
+  },
+  abilities: {
+    de: "Was können Sie?",
+    ru: "Что вы умеете?",
+    uk: "Що ви вмієте?",
+    en: "What can you do?",
+  },
+  /* Der Hinweis erklärt den Unterschied zur Frage im vorigen Schritt. Ohne
+     ihn wirken die beiden Fragen wie dieselbe, zweimal gestellt. */
+  abilitiesHint: {
+    de: "Alles ankreuzen, was Sie schon gemacht haben, auch wenn wir es heute nicht anbieten. Freiwillig.",
+    ru: "Отметьте всё, что уже делали, даже если мы этим сейчас не занимаемся. Необязательно.",
+    uk: "Позначте все, що вже робили, навіть якщо ми цим зараз не займаємось. Необовʼязково.",
+    en: "Tick everything you have done before, even if we do not offer it today. Optional.",
+  },
+  abilitySearch: {
+    de: "Suchen, zum Beispiel Fliesen",
+    ru: "Поиск, например плитка",
+    uk: "Пошук, наприклад плитка",
+    en: "Search, for example tiling",
+  },
+  abilitiesSelected: {
+    de: "Ausgewählt",
+    ru: "Выбрано",
+    uk: "Обрано",
+    en: "Selected",
+  },
+  abilityRemove: {
+    de: "entfernen",
+    ru: "убрать",
+    uk: "прибрати",
+    en: "remove",
+  },
+  abilityNoMatch: {
+    de: "Nichts gefunden. Tragen Sie es unten selbst ein.",
+    ru: "Ничего не найдено. Впишите ниже сами.",
+    uk: "Нічого не знайдено. Впишіть нижче самі.",
+    en: "Nothing found. Add it yourself below.",
+  },
+  abilitiesOther: {
+    de: "Etwas, das oben fehlt",
+    ru: "Что-то, чего нет в списке",
+    uk: "Щось, чого немає у списку",
+    en: "Something the list is missing",
+  },
+  abilitiesOtherHint: {
+    de: "Zum Beispiel: Kälteanlagen, Hufschmied, Bühnentechnik",
+    ru: "Например: холодильное оборудование, кузнец, сценическая техника",
+    uk: "Наприклад: холодильне обладнання, коваль, сценічна техніка",
+    en: "For example: refrigeration, farrier, stage rigging",
   },
 
   availability: { de: "Umfang", ru: "Занятость", uk: "Зайнятість", en: "Type of work" },

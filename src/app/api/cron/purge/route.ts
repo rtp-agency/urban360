@@ -41,6 +41,12 @@ export async function GET(request: Request) {
       whatsapp: null,
       email: null,
       experienceNote: null,
+      /* Freitext zu den Fähigkeiten. Wird mit gelöscht, weil ein Mensch dort
+         alles Mögliche hineinschreibt, auch frühere Arbeitgeber und Orte.
+         Die angekreuzten Fähigkeiten selbst bleiben stehen: sie sind ohne
+         Namen und Anschrift kein Personenbezug mehr und tragen die
+         Auswertung unter /admin/navyki. */
+      abilitiesOther: null,
       adminNote: null,
       city: "",
       status: "inaktiv",

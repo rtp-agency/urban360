@@ -31,6 +31,7 @@ export const t = {
   brandSuffix: "База персонала",
   navCandidates: "Кандидаты",
   navOrder: "Подбор под заказ",
+  navAbilities: "Навыки",
   signOut: "Выйти",
 
   loginTitle: "Urban360 — вход",
@@ -45,6 +46,18 @@ export const t = {
 
   // Список
   listTitle: "Кандидаты",
+
+  /* Страница со сводкой по навыкам. */
+  abilitiesTitle: "Навыки кандидатов",
+  abilitiesLead:
+    "Сколько человек в базе владеет каждым навыком. Это ответ на вопрос «что мы вообще можем взять», а не на вопрос «кого поставить на объект» — подбор считается по видам работ.",
+  abilitiesEmpty: "Пока никто не отметил навыки.",
+  abilitiesPeople: (n: number) => `${n} чел.`,
+  abilitiesOtherTitle: "Чего не хватило в списке",
+  abilitiesOtherLead:
+    "Свободный текст из анкет. Если что-то повторяется, это кандидат на добавление в каталог src/content/abilities.ts.",
+  abilitiesOtherEmpty: "Пока пусто.",
+  abilitiesFilterHint: "Показать кандидатов",
   listShown: (shown: number, total: number) => `показано ${shown} из ${total}`,
   searchPlaceholder: "Имя, телефон, номер анкеты или город",
   searchSubmit: "Найти",
@@ -77,6 +90,10 @@ export const t = {
   fLicense: "Права",
   fLanguages: "Языки",
   fSkills: "Виды работ",
+  /* Два разных поля, и разница в названии умышленная: «Виды работ» — то,
+     на что мы человека ставим, «Умеет» — то, что он вообще может. */
+  fAbilities: "Умеет",
+  fAbilitiesOther: "Своими словами",
   fExperience: "Опыт",
   fScope: "Занятость",
   fShift: "Время суток",

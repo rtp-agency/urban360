@@ -31,6 +31,8 @@ import {
   tr,
   ui,
 } from "@/content/application";
+import { AbilityPicker } from "./ability-picker";
+import type { Ability } from "@/content/abilities";
 import { submitApplication } from "./actions";
 
 /* Eingaben tragen 16px Schriftgröße. Darunter zoomt iOS beim Antippen
@@ -41,7 +43,7 @@ const field =
   "h-12 text-[16px] text-ink transition-colors duration-200 " +
   "focus:border-accent focus:outline-none";
 
-const STEPS = 5;
+const STEPS = 6;
 
 type FormState = {
   firstName: string;
@@ -58,6 +60,8 @@ type FormState = {
   languages: Partial<Record<LanguageCode, LanguageLevel>>;
   skills: Skill[];
   experienceNote: string;
+  abilities: Ability[];
+  abilitiesOther: string;
   availability: AvailabilityKind[];
   shifts: Shift[];
   availableFrom: string;
@@ -81,6 +85,8 @@ const EMPTY: FormState = {
   languages: {},
   skills: [],
   experienceNote: "",
+  abilities: [],
+  abilitiesOther: "",
   availability: [],
   shifts: [],
   availableFrom: "",
@@ -203,7 +209,7 @@ export function ApplicationForm({ locale }: { locale: AppLocale }) {
       if (data.skills.length === 0) next.skills = T.skills;
     }
 
-    if (current === 4) {
+    if (current === 5) {
       if (!data.consent) next.consent = T.consent;
     }
 
@@ -248,6 +254,8 @@ export function ApplicationForm({ locale }: { locale: AppLocale }) {
           .map(([language, level]) => ({ language, level })),
         skills: data.skills,
         experienceNote: data.experienceNote.trim(),
+        abilities: data.abilities,
+        abilitiesOther: data.abilitiesOther.trim(),
         availability: data.availability,
         shifts: data.shifts,
         availableFrom: data.availableFrom,
@@ -548,7 +556,42 @@ export function ApplicationForm({ locale }: { locale: AppLocale }) {
         </div>
       ) : null}
 
+      {/* Fähigkeiten. Eigener Schritt und nicht an den vorigen angehängt:
+          der Katalog ist über hundert Einträge lang und würde jede andere
+          Frage auf demselben Bildschirm erdrücken.
+
+          Der Schritt hat bewusst keine Pflichtprüfung. Die Angabe ist eine
+          Erhebung für uns, kein Zulassungskriterium; ein Pflichtfeld hier
+          kostet ausgefüllte Bögen. */}
       {step === 3 ? (
+        <div className="flex flex-col gap-8">
+          <fieldset>
+            <Legend hint={tr(ui.abilitiesHint, locale)}>{tr(ui.abilities, locale)}</Legend>
+            <AbilityPicker
+              locale={locale}
+              selected={data.abilities}
+              onToggle={(ability) => set("abilities", toggle(data.abilities, ability))}
+            />
+          </fieldset>
+
+          <Field
+            label={tr(ui.abilitiesOther, locale)}
+            hint={tr(ui.optional, locale)}
+            htmlFor="abilitiesOther"
+          >
+            <input
+              id="abilitiesOther"
+              value={data.abilitiesOther}
+              onChange={(e) => set("abilitiesOther", e.target.value)}
+              placeholder={tr(ui.abilitiesOtherHint, locale)}
+              maxLength={240}
+              className={`${field} placeholder:text-muted/60`}
+            />
+          </Field>
+        </div>
+      ) : null}
+
+      {step === 4 ? (
         <div className="flex flex-col gap-8">
           <fieldset>
             <Legend hint={tr(ui.chooseMultiple, locale)}>{tr(ui.availability, locale)}</Legend>
@@ -614,7 +657,7 @@ export function ApplicationForm({ locale }: { locale: AppLocale }) {
         </div>
       ) : null}
 
-      {step === 4 ? (
+      {step === 5 ? (
         <div className="flex flex-col gap-8">
           <fieldset>
             <Legend hint={tr(ui.optional, locale)}>{tr(ui.permits, locale)}</Legend>
@@ -703,6 +746,13 @@ export function ApplicationForm({ locale }: { locale: AppLocale }) {
 }
 
 function stepTitle(step: number, locale: AppLocale): string {
-  const titles = [ui.stepContact, ui.stepLocation, ui.stepSkills, ui.stepAvailability, ui.stepStatus];
+  const titles = [
+    ui.stepContact,
+    ui.stepLocation,
+    ui.stepSkills,
+    ui.stepAbilities,
+    ui.stepAvailability,
+    ui.stepStatus,
+  ];
   return tr(titles[step], locale);
 }
