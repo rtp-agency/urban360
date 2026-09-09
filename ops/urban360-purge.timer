@@ -1,0 +1,12 @@
+[Unit]
+Description=Urban360: Loeschlauf taeglich um 03:00
+
+[Timer]
+OnCalendar=*-*-* 03:00:00
+# Faengt einen Lauf nach, der wegen eines Neustarts ausgefallen ist. Eine
+# uebersprungene Frist waere sonst dauerhaft ueberschritten.
+Persistent=true
+RandomizedDelaySec=300
+
+[Install]
+WantedBy=timers.target

@@ -1,0 +1,59 @@
+# ---------------------------------------------------------------------------
+# Betrieb auf dem eigenen Server.
+#
+# Zwei Dienste, beide ausschliesslich auf 127.0.0.1 veroeffentlicht. Nach
+# aussen sichtbar ist nur Caddy, der auf dieser Maschine bereits laeuft und
+# auch ein fremdes Produktivsystem bedient. Ein Dienst, der hier auf 0.0.0.0
+# lauscht, waere trotz Firewall ein unnoetiges zweites Tor.
+#
+# Die Datenbank bekommt einen eigenen Container und ein eigenes Volume und
+# teilt sich nichts mit dem danebenliegenden Projekt: es geht um
+# Bewerberdaten, und deren Lebenszyklus darf nicht an einem fremden
+# docker compose down haengen.
+#
+# Geheimnisse stehen in .env auf dem Server und nie im Repository.
+# ---------------------------------------------------------------------------
+
+name: urban360
+
+services:
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: urban360
+      POSTGRES_USER: urban360
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?POSTGRES_PASSWORD fehlt in .env}
+      # Ohne feste Locale legt das Abbild die Datenbank in C an; Sortierung
+      # von Umlauten waere dann falsch.
+      LANG: de_DE.utf8
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    # Veroeffentlicht nur lokal. Der Zugang von aussen laeuft ueber einen
+    # SSH-Tunnel, etwa fuer Schemapflege und Sicherungen.
+    ports:
+      - "127.0.0.1:5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U urban360 -d urban360"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  web:
+    build:
+      context: .
+    restart: unless-stopped
+    environment:
+      DATABASE_URL: postgres://urban360:${POSTGRES_PASSWORD}@db:5432/urban360
+      CRON_SECRET: ${CRON_SECRET:?CRON_SECRET fehlt in .env}
+      TELEGRAM_BOT_TOKEN: ${TELEGRAM_BOT_TOKEN:-}
+      TELEGRAM_CHAT_ID: ${TELEGRAM_CHAT_ID:-}
+      CONTACT_WEBHOOK_URL: ${CONTACT_WEBHOOK_URL:-}
+    ports:
+      - "127.0.0.1:3000:3000"
+    depends_on:
+      db:
+        condition: service_healthy
+
+volumes:
+  db-data:

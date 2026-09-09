@@ -15,6 +15,17 @@ const isDev = process.env.NODE_ENV === "development";
 const nextConfig = {
   reactStrictMode: true,
 
+  /**
+   * Eigenstaendiger Server statt eines Abbilds mit dem ganzen Projekt darin.
+   * Next legt unter .next/standalone einen Server ab, der nur die zur
+   * Laufzeit erreichbaren Module mitbringt. Das Abbild wird dadurch klein,
+   * und im laufenden Container liegt kein Quelltext.
+   *
+   * Wird nur beim Bauen des Containers ausgewertet; `next dev` beruehrt es
+   * nicht.
+   */
+  output: "standalone",
+
   // Alle Assets liegen lokal. Es gibt bewusst keine remotePatterns:
   // jede externe Bildquelle wäre ein Drittland-/Drittanbieter-Request
   // und würde die einwilligungsfreie Architektur der Seite brechen.

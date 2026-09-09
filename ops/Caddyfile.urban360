@@ -1,0 +1,45 @@
+# ---------------------------------------------------------------------------
+# Anzuhaengen an /etc/caddy/Caddyfile auf dem Server.
+#
+# Die Anwendung laeuft als Container auf 127.0.0.1:3000, nach aussen sichtbar
+# ist ausschliesslich Caddy. Auf derselben Maschine bedient Caddy bereits ein
+# fremdes Produktivsystem, deshalb wird hier nur angehaengt und nichts
+# Bestehendes angefasst.
+#
+# ZUGRIFFSPROTOKOLL, NICHT OHNE GRUND SO:
+# Die Datenschutzerklaerung sagt zwei Dinge zu, eine gekuerzte IP-Adresse und
+# Loeschung nach spaetestens sieben Tagen. Beides steht deshalb ausdruecklich
+# hier und bleibt nicht der Voreinstellung ueberlassen: ip_mask schneidet bei
+# IPv4 das letzte Oktett und bei IPv6 die unteren 96 Bit ab, roll_keep_days
+# haelt die Frist. Wer daran etwas aendert, aendert eine rechtlich bindende
+# Zusage aus src/content/legal.ts.
+# ---------------------------------------------------------------------------
+
+www.urban360.space {
+	redir https://urban360.space{uri} permanent
+}
+
+urban360.space {
+	encode zstd gzip
+	reverse_proxy 127.0.0.1:3000
+
+	log {
+		output file /var/log/caddy/urban360.log {
+			roll_size 10MiB
+			roll_keep_days 7
+		}
+		format filter {
+			wrap json
+			fields {
+				request>remote_ip ip_mask {
+					ipv4 24
+					ipv6 32
+				}
+				request>client_ip ip_mask {
+					ipv4 24
+					ipv6 32
+				}
+			}
+		}
+	}
+}
