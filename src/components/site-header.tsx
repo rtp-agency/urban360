@@ -154,7 +154,10 @@ export function SiteHeader({ locale }: { locale: Locale }) {
                     key={code}
                     href={swapLocale(code)}
                     hrefLang={code}
-                    className={`rounded-full border border-hairline px-3 py-1.5 text-xs font-medium uppercase ${
+                    /* min-h-11 statt py-1.5: 30px hohe Schaltflächen sind mit
+                       dem Daumen nicht sicher zu treffen. 44px ist das Mass,
+                       unter dem Fehlgriffe anfangen. */
+                    className={`inline-flex min-h-11 min-w-11 items-center justify-center rounded-full border border-hairline px-4 text-xs font-medium uppercase ${
                       code === locale ? "bg-ink text-canvas" : "text-muted"
                     }`}
                   >

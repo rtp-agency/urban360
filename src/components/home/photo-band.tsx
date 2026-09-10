@@ -50,12 +50,24 @@ export function PhotoBand({ locale }: { locale: Locale }) {
           className="object-cover object-[60%_60%]"
         />
 
-        {/* Zwei Verläufe: einer waagerecht für die Lesbarkeit der Textseite,
-            einer senkrecht, damit die Kanten oben und unten nicht hart auf
-            die angrenzenden Sektionen stoßen. */}
+        {/* Der Schleier ist je nach Breite ein anderer, und das ist der
+            Kern der Sache: waagerecht deckt er auf dem Telefon nichts ab,
+            weil dort kein Platz neben dem Text ist. Der Satz lag dann auf
+            der hellen Fassade und war nicht mehr zu lesen.
+
+            Unter sm deshalb ein senkrechter, fast deckender Verlauf; ab sm
+            der waagerechte, der die rechte Bildhälfte frei lässt. */}
         <div
           aria-hidden
-          className="absolute inset-0"
+          className="absolute inset-0 sm:hidden"
+          style={{
+            backgroundImage:
+              "linear-gradient(to top, var(--color-statement) 26%, color-mix(in oklab, var(--color-statement) 80%, transparent) 60%, color-mix(in oklab, var(--color-statement) 42%, transparent))",
+          }}
+        />
+        <div
+          aria-hidden
+          className="absolute inset-0 hidden sm:block"
           style={{
             backgroundImage:
               "linear-gradient(100deg, var(--color-statement) 8%, color-mix(in oklab, var(--color-statement) 82%, transparent) 42%, transparent 78%)",
@@ -97,8 +109,8 @@ export function PhotoBand({ locale }: { locale: Locale }) {
               ))}
             </ul>
 
-            <div className="mt-9">
-              <ButtonLink href={href(locale, "kontakt")} large>
+            <div className="mt-8 md:mt-9">
+              <ButtonLink href={href(locale, "kontakt")} large className="w-full sm:w-auto">
                 {t(nav.cta, locale)}
               </ButtonLink>
             </div>

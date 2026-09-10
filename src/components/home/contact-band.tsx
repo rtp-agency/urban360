@@ -25,7 +25,7 @@ export function ContactBand({ locale }: { locale: Locale }) {
     <section className="u-grain relative isolate overflow-hidden bg-statement text-statement-ink">
       <div aria-hidden className="u-mesh-dark absolute inset-0 -z-10" />
 
-      <div className="u-shell py-24 md:py-32">
+      <div className="u-shell py-20 md:py-32">
         <Reveal className="mx-auto max-w-[58ch] text-center">
           <p className="u-label !text-statement-ink/55">
             {locale === "de" ? "Nächster Schritt" : "Next step"}
@@ -39,8 +39,8 @@ export function ContactBand({ locale }: { locale: Locale }) {
             {t(home.contactText, locale)}
           </p>
 
-          <div className="mt-10 flex flex-wrap items-center justify-center gap-3">
-            <ButtonLink href={href(locale, "kontakt")} large>
+          <div className="mt-9 flex flex-col items-stretch gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:justify-center md:mt-10">
+            <ButtonLink href={href(locale, "kontakt")} large className="w-full sm:w-auto">
               {t(nav.cta, locale)}
             </ButtonLink>
 
@@ -49,7 +49,7 @@ export function ContactBand({ locale }: { locale: Locale }) {
                 tokens der hellen Seite und wäre hier unlesbar. */}
             <a
               href={contact.phoneHref}
-              className="u-data inline-flex h-12 items-center justify-center rounded-full border border-statement-ink/25 px-7 text-base font-medium whitespace-nowrap text-statement-ink transition-colors duration-200 hover:bg-statement-ink/10 active:scale-[0.98]"
+              className="u-data inline-flex h-12 w-full items-center justify-center rounded-full border border-statement-ink/25 px-7 text-base font-medium whitespace-nowrap text-statement-ink transition-colors duration-200 hover:bg-statement-ink/10 active:scale-[0.98] sm:w-auto"
             >
               {contact.phone}
             </a>

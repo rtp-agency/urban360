@@ -47,19 +47,25 @@ export function ProcessRail({ locale }: { locale: Locale }) {
           }}
         />
 
-        <ol className="grid gap-10 border-l border-grid pl-7 md:grid-cols-3 md:gap-10 md:border-l-0 md:pl-0 lg:gap-16">
+        <ol className="grid gap-9 border-l border-grid pl-7 md:grid-cols-3 md:gap-10 md:border-l-0 md:pl-0 lg:gap-16">
           {processSteps.map((step, index) => (
             <Reveal key={step.title.de}>
               <li className="relative md:pt-9">
                 {/* Knoten auf der Schiene. Der Ring in Flächenfarbe hält die
                     Linie vom Punkt ab: ohne ihn wachsen beide zusammen und der
-                    Knoten verliert seine Kontur. */}
+                    Knoten verliert seine Kontur.
+
+                    Unter md sitzt er auf der SENKRECHTEN Linie, also um die
+                    Innenabstandsbreite nach links versetzt. Mit left-0 landete
+                    er auf der Kante des Inhalts und damit mitten auf der
+                    grossen Ziffer; auf dem Telefon sah das aus wie ein Fehler
+                    im Zeichensatz. */}
                 <span
                   aria-hidden
-                  className="absolute top-[0.5rem] left-0 size-[10px] -translate-x-1/2 rounded-full bg-accent ring-4 ring-canvas md:top-0 md:-translate-y-1/2"
+                  className="absolute top-[0.5rem] -left-7 size-[10px] -translate-x-1/2 rounded-full bg-accent ring-4 ring-canvas md:top-0 md:left-0 md:-translate-y-1/2"
                 />
 
-                <p className="u-numeral text-[64px] md:text-[76px]" aria-hidden>
+                <p className="u-numeral text-[56px] md:text-[76px]" aria-hidden>
                   {String(index + 1).padStart(2, "0")}
                 </p>
 

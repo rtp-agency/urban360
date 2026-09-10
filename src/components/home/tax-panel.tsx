@@ -32,13 +32,19 @@ export function TaxPanel({ locale }: { locale: Locale }) {
 
                 {/* Die Prozentzahl steht über der Überschrift und nicht
                     darin: als Ziffer wird sie beim Scrollen erfasst, als
-                    Wort am Satzanfang nicht. */}
+                    Wort am Satzanfang nicht.
+
+                    Auf dem Telefon entfällt sie. Dort stehen Ziffer und
+                    Überschrift unmittelbar untereinander, und dieselbe Zahl
+                    zweimal in zwei Zeilen liest sich nicht als Betonung,
+                    sondern als Versehen. Der Verlust ist keiner: die
+                    Überschrift beginnt selbst mit der Zahl. */}
                 <p
                   aria-hidden
                   /* Die Zahl steht so auch in der Überschrift darunter. Für
                      die Vorlesesoftware wäre sie damit doppelt, sichtbar ist
                      sie der Grund, warum der Block überhaupt gelesen wird. */
-                  className="u-data mt-4 text-[76px] leading-[0.85] font-semibold text-accent-ink md:text-[104px]"
+                  className="u-data mt-4 hidden text-[76px] leading-[0.85] font-semibold text-accent-ink sm:block md:text-[104px]"
                 >
                   20&thinsp;%
                 </p>

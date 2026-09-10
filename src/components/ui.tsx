@@ -59,7 +59,10 @@ export function TextLink({
   return (
     <Link
       href={href}
-      className={`group inline-flex items-center gap-1.5 text-[15px] font-medium text-accent transition-opacity duration-200 hover:opacity-70 ${className}`}
+      /* -my-2 py-2 vergroessert die Trefferfläche auf 44px, ohne den
+         Textfluss zu verschieben: auf dem Telefon ist eine 20px hohe
+         Zeile mit dem Daumen kaum zu treffen. */
+      className={`group -my-2 inline-flex items-center gap-1.5 py-2 text-[15px] font-medium text-accent transition-opacity duration-200 hover:opacity-70 ${className}`}
     >
       {children}
       <ArrowRightIcon
@@ -129,7 +132,7 @@ export function Section({
       /* scroll-mt hält die Überschrift beim Sprung auf einen Anker frei.
          Ohne das schiebt sich die kopfzeilenhohe Fläche der klebenden
          Navigation über den Titel, besonders auf dem Telefon. */
-      className={`${tone === "sunken" ? "bg-sunken" : ""} scroll-mt-20 py-16 md:py-28 ${className}`}
+      className={`${tone === "sunken" ? "bg-sunken" : ""} scroll-mt-20 py-14 md:py-28 ${className}`}
     >
       <div className="u-shell">{children}</div>
     </section>

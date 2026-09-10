@@ -218,15 +218,24 @@
      darunter konkurrieren. Deshalb klein, gesperrt und in der gedämpften
      Schriftfarbe. Für echte Überschriften wird diese Klasse nicht benutzt.
   ------------------------------------------------------------------------- */
+  /* 12px auf dem Telefon, 11px ab der Tablettbreite. Elf Pixel Versalien
+     sind am Bildschirm eines Telefons an der Grenze des Lesbaren, und die
+     Etiketten tragen hier durchgehend Orientierung. */
   .u-label {
     font-family: var(--font-mono);
-    font-size: 11px;
+    font-size: 12px;
     line-height: 1;
     font-weight: 500;
     letter-spacing: 0.1em;
     text-transform: uppercase;
     color: var(--color-muted);
     font-variant-numeric: tabular-nums;
+  }
+
+  @media (min-width: 640px) {
+    .u-label {
+      font-size: 11px;
+    }
   }
 
   /* Ziffern mit fester Laufweite. In Diagrammen und Preisangaben springen
@@ -496,16 +505,27 @@
   .u-chip {
     display: inline-flex;
     align-items: center;
-    gap: 0.4rem;
+    gap: 0.35rem;
     border-radius: 999px;
     border: 1px solid color-mix(in oklab, var(--color-accent) 22%, transparent);
     background: var(--color-accent-soft);
     color: var(--color-accent);
-    padding: 0.4rem 0.85rem;
-    font-size: 13px;
+    padding: 0.35rem 0.7rem;
+    font-size: 12.5px;
     font-weight: 500;
     line-height: 1;
     white-space: nowrap;
+  }
+
+  /* Ab der Tablettbreite darf das Etikett wieder etwas Luft haben. Auf dem
+     Telefon zaehlt jeder Millimeter: enger gesetzt passen zwei Etiketten in
+     eine Zeile statt eines, und der Kopf wird eine Zeile kuerzer. */
+  @media (min-width: 640px) {
+    .u-chip {
+      gap: 0.4rem;
+      padding: 0.4rem 0.85rem;
+      font-size: 13px;
+    }
   }
 
   /* Punktraster als Untergrund. Gibt leeren Flächen Textur, ohne dass ein

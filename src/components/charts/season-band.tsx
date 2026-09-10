@@ -99,7 +99,11 @@ export function SeasonBand({ locale }: { locale: Locale }) {
             {months.map((month) => (
               <span
                 key={month}
-                className="u-label text-center text-[9px] tracking-[0.06em] sm:text-[10px]"
+                /* Auf dem Telefon steht hier nur der Anfangsbuchstabe, der
+                    braucht die neun Pixel nicht: elf sind lesbar und passen
+                    in die 26 Pixel breite Spalte immer noch. Ab sm steht der
+                    ganze Monatsname, dort bleibt es klein. */
+                className="u-label text-center text-[11px] tracking-[0.06em] sm:text-[10px]"
               >
                 <span className="sm:hidden">{month.slice(0, 1)}</span>
                 <span className="hidden sm:inline">{month}</span>

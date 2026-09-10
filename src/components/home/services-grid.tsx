@@ -39,10 +39,10 @@ export function ServicesGrid({ locale }: { locale: Locale }) {
         />
       </Reveal>
 
-      <div className="mt-12 grid gap-4">
+      <div className="mt-9 sm:mt-12 grid gap-4">
         <Reveal>
           <article className="u-accent-field u-grain relative overflow-hidden rounded-[var(--radius-panel)]">
-            <div className="grid gap-8 p-6 md:grid-cols-[0.95fr_1.05fr] md:items-center md:gap-10 md:p-9">
+            <div className="grid gap-7 p-5 sm:p-6 md:grid-cols-[0.95fr_1.05fr] md:items-center md:gap-10 md:p-9">
               <div>
                 {/* Auf farbigem Grund trägt die Kachel keinen zweiten
                     Verlauf, sondern eine durchscheinende Fläche. Ein
@@ -93,7 +93,7 @@ export function ServicesGrid({ locale }: { locale: Locale }) {
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {rest.map((pack) => (
             <Reveal key={pack.id} className="flex">
-              <article className="u-panel u-lift flex w-full flex-col p-6">
+              <article className="u-panel u-lift flex w-full flex-col p-5 sm:p-6">
                 <span className="u-tile u-tile-soft">
                   <Icon name={pack.icon} size={24} />
                 </span>
@@ -101,7 +101,7 @@ export function ServicesGrid({ locale }: { locale: Locale }) {
                 <h3 className="mt-5 text-lg font-semibold tracking-tight text-ink">
                   {t(pack.title, locale)}
                 </h3>
-                <p className="mt-2 mb-6 text-[15px] leading-relaxed text-muted">
+                <p className="mt-2 mb-5 text-[15px] leading-relaxed text-muted sm:mb-6">
                   {t(pack.summary, locale)}
                 </p>
 
@@ -113,7 +113,7 @@ export function ServicesGrid({ locale }: { locale: Locale }) {
                     beginnt sie in jeder Karte auf einer anderen Höhe, weil
                     die Zusammenfassungen unterschiedlich lang sind, und die
                     vier Trennlinien stehen dann treppenförmig versetzt. */}
-                <ul className="mt-auto space-y-2.5 border-t border-hairline pt-5 text-[15px] text-muted">
+                <ul className="mt-auto space-y-2 border-t border-hairline pt-4 text-[15px] text-muted sm:space-y-2.5 sm:pt-5">
                   {pack.items.slice(0, 3).map((item) => (
                     <li key={item.de} className="flex gap-2">
                       <CheckIcon

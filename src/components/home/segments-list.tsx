@@ -31,18 +31,18 @@ export function SegmentsList({ locale }: { locale: Locale }) {
         />
       </Reveal>
 
-      <ul className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-6">
+      <ul className="mt-9 sm:mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-6">
         {segments.map((segment, index) => (
           <Reveal
             key={segment.id}
             className={`flex ${index < 3 ? "lg:col-span-2" : "lg:col-span-3"}`}
           >
-            <li className="u-panel u-lift flex w-full flex-col p-6">
+            <li className="u-panel u-lift flex w-full flex-col p-5 sm:p-6">
               <span className="u-tile">
                 <Icon name={segment.icon} size={24} />
               </span>
 
-              <h3 className="mt-5 text-[17px] leading-snug font-semibold text-ink">
+              <h3 className="mt-4 text-[17px] leading-snug font-semibold text-ink sm:mt-5">
                 {t(segment.label, locale)}
               </h3>
               <p className="mt-2 text-[15px] leading-relaxed text-muted">

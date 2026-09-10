@@ -95,7 +95,7 @@ export function Hero({ locale }: { locale: Locale }) {
                 {t(home.heroText, locale)}
               </p>
 
-              <ul className="mt-8 flex flex-wrap gap-2">
+              <ul className="mt-7 flex flex-wrap gap-2 md:mt-8">
                 {chips.map((chip) => (
                   <li key={chip} className="u-chip">
                     <CheckIcon size={13} weight="bold" aria-hidden />
@@ -104,11 +104,20 @@ export function Hero({ locale }: { locale: Locale }) {
                 ))}
               </ul>
 
-              <div className="mt-9 flex flex-wrap items-center gap-3">
-                <ButtonLink href={href(locale, "kontakt")} large>
+              {/* Auf dem Telefon volle Breite und untereinander. Zwei
+                  Schaltflächen mit Innenabstand nach Textlänge stehen dort
+                  sonst unterschiedlich breit untereinander, und das liest
+                  sich wie ein Fehler statt wie eine Auswahl. */}
+              <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center md:mt-9">
+                <ButtonLink href={href(locale, "kontakt")} large className="w-full sm:w-auto">
                   {t(nav.cta, locale)}
                 </ButtonLink>
-                <ButtonLink href={href(locale, "leistungen")} tone="secondary" large>
+                <ButtonLink
+                  href={href(locale, "leistungen")}
+                  tone="secondary"
+                  large
+                  className="w-full sm:w-auto"
+                >
                   {t(home.heroSecondary, locale)}
                 </ButtonLink>
               </div>
@@ -119,7 +128,7 @@ export function Hero({ locale }: { locale: Locale }) {
         {/* Unter lg ein gewöhnlicher Block unter dem Text, ab lg an der
             Fensterkante. Die Innenabstände bilden bis dahin die Hülle nach,
             damit das Bild auf dem Telefon nicht am Rand klebt. */}
-        <div className="relative mt-12 px-5 md:px-8 lg:absolute lg:inset-y-0 lg:right-0 lg:mt-0 lg:w-[46vw] lg:px-0">
+        <div className="relative mt-10 px-5 md:px-8 lg:absolute lg:inset-y-0 lg:right-0 lg:mt-0 lg:w-[46vw] lg:px-0">
           <Figure
             src="/images/hero-gebaeude.jpg"
             alt={
@@ -169,12 +178,12 @@ export function Hero({ locale }: { locale: Locale }) {
           über der ganzen Zeile: er bindet den Wert an sein Etikett, statt
           drei Angaben unter einer gemeinsamen Linie aufzureihen. */}
       <div className="u-shell">
-        <Reveal className="mt-14 md:mt-20">
+        <Reveal className="mt-12 md:mt-20">
           <dl className="grid gap-8 sm:grid-cols-3 sm:gap-6">
             {specs.map((spec) => (
               <div key={spec.label} className="border-l-2 border-accent/35 pl-4">
                 <dt className="u-label">{spec.label}</dt>
-                <dd className="u-data mt-2.5 text-[19px] leading-snug font-medium text-ink">
+                <dd className="u-data mt-2 text-[17px] leading-snug font-medium text-ink sm:mt-2.5 sm:text-[19px]">
                   {spec.value}
                 </dd>
               </div>

@@ -32,9 +32,12 @@ const EXAMPLE = {
 const RATE = 0.2;
 const refund = Math.round(EXAMPLE.labour * RATE);
 
+/* Geschuetztes Leerzeichen zwischen Zahl und Waehrung, kein gewoehnliches.
+   Auf schmalen Geraeten brach "184 €" sonst zwischen Zahl und Zeichen um,
+   und die Zahl stand allein auf einer Zeile. */
 const money = (value: number, locale: Locale) =>
   locale === "de"
-    ? `${value.toLocaleString("de-DE")} €`
+    ? `${value.toLocaleString("de-DE")}\u00a0€`
     : `€${value.toLocaleString("en-GB")}`;
 
 export function TaxBar({ locale }: { locale: Locale }) {

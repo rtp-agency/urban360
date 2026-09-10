@@ -31,12 +31,12 @@ export function SiteFooter({ locale }: { locale: Locale }) {
 
           <nav aria-label={t(footer.companyHeading, locale)}>
             <p className="text-[13px] font-medium text-ink">{t(footer.companyHeading, locale)}</p>
-            <ul className="mt-3 space-y-2">
+            <ul className="mt-1 sm:mt-3 sm:space-y-2">
               {company.map((item) => (
                 <li key={item.path}>
                   <Link
                     href={href(locale, item.path)}
-                    className="text-[15px] text-muted transition-colors duration-200 hover:text-ink"
+                    className="inline-flex min-h-11 items-center text-[15px] text-muted transition-colors duration-200 hover:text-ink sm:min-h-0"
                   >
                     {item.label}
                   </Link>
@@ -47,12 +47,12 @@ export function SiteFooter({ locale }: { locale: Locale }) {
 
           <nav aria-label={t(footer.legalHeading, locale)}>
             <p className="text-[13px] font-medium text-ink">{t(footer.legalHeading, locale)}</p>
-            <ul className="mt-3 space-y-2">
+            <ul className="mt-1 sm:mt-3 sm:space-y-2">
               {legalLinks.map((item) => (
                 <li key={item.path}>
                   <Link
                     href={href(locale, item.path)}
-                    className="text-[15px] text-muted transition-colors duration-200 hover:text-ink"
+                    className="inline-flex min-h-11 items-center text-[15px] text-muted transition-colors duration-200 hover:text-ink sm:min-h-0"
                   >
                     {item.label}
                   </Link>
@@ -63,7 +63,7 @@ export function SiteFooter({ locale }: { locale: Locale }) {
 
           <div>
             <p className="text-[13px] font-medium text-ink">{t(footer.contactHeading, locale)}</p>
-            <address className="mt-3 space-y-2 text-[15px] not-italic text-muted">
+            <address className="mt-3 space-y-1 text-[15px] not-italic text-muted sm:space-y-2">
               <p>
                 {contact.street}
                 <br />
@@ -72,14 +72,14 @@ export function SiteFooter({ locale }: { locale: Locale }) {
               <p>
                 <a
                   href={contact.phoneHref}
-                  className="transition-colors duration-200 hover:text-ink"
+                  className="inline-flex min-h-11 items-center transition-colors duration-200 hover:text-ink sm:min-h-0"
                 >
                   {contact.phone}
                 </a>
                 <br />
                 <a
                   href={`mailto:${contact.email}`}
-                  className="transition-colors duration-200 hover:text-ink"
+                  className="inline-flex min-h-11 items-center transition-colors duration-200 hover:text-ink sm:min-h-0"
                 >
                   {contact.email}
                 </a>

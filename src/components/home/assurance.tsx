@@ -32,10 +32,10 @@ export function Assurance({ locale }: { locale: Locale }) {
         />
       </Reveal>
 
-      <div className={`mt-12 grid gap-4 sm:grid-cols-2 ${columns}`}>
+      <div className={`mt-9 sm:mt-12 grid gap-4 sm:grid-cols-2 ${columns}`}>
         {visible.map((entry) => (
           <Reveal key={entry.claim} className="flex">
-            <div className="u-panel u-lift flex w-full gap-5 p-6 md:p-7">
+            <div className="u-panel u-lift flex w-full gap-4 p-5 sm:gap-5 sm:p-6 md:p-7">
               <span className="u-tile u-tile-soft shrink-0">
                 <Icon name={entry.icon} size={24} />
               </span>
