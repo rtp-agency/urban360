@@ -57,12 +57,44 @@ Caddy vergeblich, ein Zertifikat zu holen.
 
 ```bash
 sudo cp /etc/caddy/Caddyfile /etc/caddy/Caddyfile.bak-$(date +%F)
+
+# Protokollverzeichnis. Beide Zeilen sind noetig, nicht nur die erste.
 sudo mkdir -p /var/log/caddy && sudo chown caddy:caddy /var/log/caddy
+sudo semanage fcontext -a -t httpd_log_t "/var/log/caddy(/.*)?"
+sudo restorecon -Rv /var/log/caddy
+
 sudo sh -c 'cat /home/opc/urban360/ops/Caddyfile.urban360 >> /etc/caddy/Caddyfile'
 sudo caddy validate --config /etc/caddy/Caddyfile --adapter caddyfile
 sudo systemctl reload caddy
 curl -sI https://chystyi.site | head -1   # Nachbar muss unveraendert antworten
 ```
+
+### Warum der SELinux-Schritt notwendig ist
+
+Oracle Linux faehrt SELinux im Modus enforcing, und der Caddy-Prozess laeuft
+in der Domaene `httpd_t`. Diese Domaene darf ausschliesslich in Dateien vom
+Typ `httpd_log_t` schreiben. Ein frisch angelegtes `/var/log/caddy` bekommt
+aber `var_log_t`, und Caddy scheitert dann beim Neuladen mit einem
+schlichten `permission denied`, obwohl Eigentuemer und Rechte richtig
+aussehen.
+
+Zwei Stolperfallen dabei:
+
+- `sudo -u caddy touch ...` schlaegt NICHT fehl und beweist deshalb nichts:
+  eine Shell laeuft in `unconfined_t`, nicht in `httpd_t`.
+- `caddy validate` unter sudo legt die Protokolldatei als `root` an. Danach
+  gehoert sie root und Caddy kommt auch mit richtigem Kontext nicht mehr
+  hinein. Dann `sudo chown caddy:caddy /var/log/caddy/urban360.log`.
+
+`semanage` statt `chcon`, weil `chcon` beim naechsten Relabel des Dateisystems
+verloren geht.
+
+### Wenn das Neuladen scheitert
+
+`systemctl reload caddy` laedt die neue Fassung ueber die Verwaltungs-API.
+Wird sie abgelehnt, laeuft der alte Stand einfach weiter: der Nachbar auf
+derselben Maschine geht dabei nicht mit unter. Ursache steht im Klartext in
+`journalctl -u caddy --since '5 min ago'`.
 
 ## Was automatisch laeuft
 

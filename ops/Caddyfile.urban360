@@ -10,9 +10,12 @@
 # Die Datenschutzerklaerung sagt zwei Dinge zu, eine gekuerzte IP-Adresse und
 # Loeschung nach spaetestens sieben Tagen. Beides steht deshalb ausdruecklich
 # hier und bleibt nicht der Voreinstellung ueberlassen: ip_mask schneidet bei
-# IPv4 das letzte Oktett und bei IPv6 die unteren 96 Bit ab, roll_keep_days
+# IPv4 das letzte Oktett und bei IPv6 die unteren 96 Bit ab, roll_keep_for
 # haelt die Frist. Wer daran etwas aendert, aendert eine rechtlich bindende
 # Zusage aus src/content/legal.ts.
+#
+# roll_keep_for erwartet eine Dauer, keine Anzahl Tage: 168h sind die sieben
+# Tage aus der Datenschutzerklaerung.
 # ---------------------------------------------------------------------------
 
 www.urban360.space {
@@ -26,7 +29,7 @@ urban360.space {
 	log {
 		output file /var/log/caddy/urban360.log {
 			roll_size 10MiB
-			roll_keep_days 7
+			roll_keep_for 168h
 		}
 		format filter {
 			wrap json
