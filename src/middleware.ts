@@ -52,5 +52,11 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/((?!_next|api|images|favicon.ico|robots.txt|sitemap.xml).*)"],
+  /* Alles, was KEINE Seite ist, muss hier ausgenommen sein, sonst haengt die
+     Weiterleitung auf die Sprachfassung eine Sprachkennung davor.
+
+     icon.png und apple-icon.png erzeugt der App Router selbst aus
+     src/app/. Ohne Ausnahme hat der Browser sie unter /icon.png angefragt,
+     eine 307 auf /de/icon.png bekommen und gar kein Symbol angezeigt. */
+  matcher: ["/((?!_next|api|images|favicon.ico|icon.png|apple-icon.png|robots.txt|sitemap.xml).*)"],
 };
