@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Wordmark } from "@/components/wordmark";
 import { contact, legal, site, type Locale } from "@/content/site.config";
 import { footer, nav } from "@/content/copy";
 import { href, t } from "@/lib/i18n";
@@ -23,7 +24,7 @@ export function SiteFooter({ locale }: { locale: Locale }) {
       <div className="u-shell py-14 md:py-16">
         <div className="grid gap-10 md:grid-cols-[1.4fr_1fr_1fr_1.2fr]">
           <div>
-            <p className="text-[17px] font-semibold tracking-tight text-ink">{site.name}</p>
+            <Wordmark height={22} />
             <p className="mt-2 max-w-[30ch] text-[15px] leading-relaxed text-muted">
               {t(site.tagline, locale)}
             </p>

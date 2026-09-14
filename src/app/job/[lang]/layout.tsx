@@ -6,6 +6,7 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { APPLICATION_LOCALES, DEFAULT_APP_LOCALE, isAppLocale } from "@/content/recruiting";
 import { localeNames, tr, ui } from "@/content/application";
+import { Wordmark } from "@/components/wordmark";
 import { site } from "@/content/site.config";
 import "../../globals.css";
 
@@ -55,15 +56,15 @@ export default async function JobLayout({
       suppressHydrationWarning
     >
       <head>
-        <meta name="theme-color" content="#fbfbfd" media="(prefers-color-scheme: light)" />
-        <meta name="theme-color" content="#0b0b0c" media="(prefers-color-scheme: dark)" />
+        <meta name="theme-color" content="#fbfcfb" media="(prefers-color-scheme: light)" />
+        <meta name="theme-color" content="#071310" media="(prefers-color-scheme: dark)" />
       </head>
       <body>
         <header className="border-b border-hairline">
           <div className="mx-auto flex max-w-[640px] items-center justify-between gap-4 px-5 py-4">
-            <Link href="/de" className="text-[16px] font-semibold tracking-tight text-ink">
-              {site.name}
-              <span className="ml-1.5 font-normal text-muted">Work</span>
+            <Link href="/de" className="inline-flex items-baseline gap-1.5" aria-label={`${site.name} Work`}>
+              <Wordmark height={20} />
+              <span className="text-[15px] font-normal text-muted">Work</span>
             </Link>
 
             {/* Sprachumschalter gehört nach oben und nicht ins Fußende:

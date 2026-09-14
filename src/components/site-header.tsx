@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion, useMotionValueEvent, useReducedMotion, useScroll } from "motion/react";
 import { ListIcon, XIcon } from "@phosphor-icons/react";
+import { Wordmark } from "@/components/wordmark";
 import { LOCALES, site, type Locale } from "@/content/site.config";
 import { nav } from "@/content/copy";
 import { href, t } from "@/lib/i18n";
@@ -60,10 +61,10 @@ export function SiteHeader({ locale }: { locale: Locale }) {
         <div className="u-shell flex h-[68px] items-center justify-between gap-6">
           <Link
             href={href(locale)}
-            className="text-[17px] font-semibold tracking-tight text-ink"
+            className="inline-flex items-center"
             aria-label={site.name}
           >
-            {site.name}
+            <Wordmark height={26} />
           </Link>
 
           <nav className="hidden items-center gap-8 lg:flex" aria-label="Hauptnavigation">
