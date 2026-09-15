@@ -3,6 +3,7 @@
 import { resolveLocale } from "@/lib/i18n";
 import { contactPage } from "@/content/copy";
 import type { EnquiryState } from "@/lib/enquiry";
+import { deliverEnquiry, hasDelivery } from "@/lib/mail";
 
 const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
@@ -16,9 +17,12 @@ const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
  * Besucher nie ausfüllen.
  *
  * ZUSTELLUNG, VOR DEM LIVEGANG EINRICHTEN:
- * Setzen Sie CONTACT_WEBHOOK_URL auf einen Endpunkt, der die Anfrage per
- * Mail an das Postfach aus site.config weiterreicht. Ohne diese Variable
- * wird die Anfrage nur im Serverlog vermerkt und erreicht niemanden.
+ * Der Weg steht in src/lib/mail.ts. Bevorzugt SMTP über das Postfach der
+ * eigenen Domain, ersatzweise ein HTTP-Endpunkt. Ist keines von beidem
+ * eingerichtet, bekommt die Besucherin einen Fehler zu sehen und NICHT die
+ * Erfolgsmeldung: eine vorgetäuschte Zustellung ist schlimmer als eine
+ * sichtbare Störung, weil dann jemand wochenlang auf eine Antwort wartet,
+ * die niemand je gelesen hat.
  */
 export async function submitEnquiry(
   _prev: EnquiryState,
@@ -56,32 +60,29 @@ export async function submitEnquiry(
     return { status: "error", message: "", fieldErrors };
   }
 
-  const endpoint = process.env.CONTACT_WEBHOOK_URL;
-
-  if (!endpoint) {
+  if (!hasDelivery()) {
     console.warn(
-      "[kontakt] CONTACT_WEBHOOK_URL ist nicht gesetzt. Die Anfrage wurde NICHT zugestellt.",
-      { name: data.name, email: data.email, subject: data.subject },
+      "[kontakt] Kein Zustellweg eingerichtet (SMTP_HOST oder CONTACT_WEBHOOK_URL). " +
+        "Die Anfrage wurde NICHT zugestellt.",
+      { subject: data.subject },
     );
     return { status: "error", message: contactPage.formError[locale], fieldErrors: {} };
   }
 
   try {
-    const response = await fetch(endpoint, {
-      method: "POST",
-      headers: { "content-type": "application/json" },
-      body: JSON.stringify({
-        name: data.name,
-        company: data.company,
-        email: data.email,
-        phone: data.phone,
-        subject: data.subject,
-        message: data.message,
-        locale,
-      }),
+    await deliverEnquiry({
+      name: data.name,
+      company: data.company,
+      email: data.email,
+      phone: data.phone,
+      subject: data.subject,
+      message: data.message,
+      locale,
     });
-    if (!response.ok) throw new Error(`Webhook antwortete mit ${response.status}`);
   } catch (error) {
+    /* Im Protokoll steht die Störung, nicht die Anfrage: Name, Adresse und
+       Nachricht gehören nicht in ein Logfile, das länger lebt und von mehr
+       Leuten gelesen wird als das Postfach. */
     console.error("[kontakt] Zustellung fehlgeschlagen", error);
     return { status: "error", message: contactPage.formError[locale], fieldErrors: {} };
   }

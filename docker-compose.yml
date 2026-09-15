@@ -48,7 +48,15 @@ services:
       CRON_SECRET: ${CRON_SECRET:?CRON_SECRET fehlt in .env}
       TELEGRAM_BOT_TOKEN: ${TELEGRAM_BOT_TOKEN:-}
       TELEGRAM_CHAT_ID: ${TELEGRAM_CHAT_ID:-}
+      # Zustellung des Kontaktformulars. SMTP hat Vorrang, siehe lib/mail.ts.
+      SMTP_HOST: ${SMTP_HOST:-}
+      SMTP_PORT: ${SMTP_PORT:-465}
+      SMTP_USER: ${SMTP_USER:-}
+      SMTP_PASS: ${SMTP_PASS:-}
+      SMTP_FROM: ${SMTP_FROM:-}
+      CONTACT_TO: ${CONTACT_TO:-}
       CONTACT_WEBHOOK_URL: ${CONTACT_WEBHOOK_URL:-}
+      CONTACT_WEBHOOK_KEY: ${CONTACT_WEBHOOK_KEY:-}
     ports:
       - "127.0.0.1:3000:3000"
     depends_on:
